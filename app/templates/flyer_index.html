@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for msg in messages %}
+<div class="alert alert-success alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>¡Cuidado!</strong> {{ msg }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<br/>
+<br />
+<button onclick="document.location.href='/flyer/create'" formmethod="GET" class="btn btn-primary">
+    Agregar
+    <span class="glyphicon glyphicon-plus"></span>
+</button>
+<br />
+<br />
+
+<table class="table table-bordered">
+    <thead class="thead-light">
+        <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Flyer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for flyer in listFlyer %}
+        <tr>
+            <td>{{ flyer.name }}</td>
+            <td>{{ flyer.description }}</td>
+            <td><img src="/static/img/{{ flyer.imagen }}" style="width:150px; height:200px; max-width:100%; height:auto" />
+            </td>
+            <td>
+                <button onclick="document.location.href='/flyer/edit/{{ flyer.id }}'" class="btn btn-info">
+                    Editar
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <button onclick="document.location.href='/flyer/delete/{{ flyer.id }}'" class="btn btn-danger">
+                    Eliminar
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4" style="width:40%">
+            <img src="./static/img/logo.png" style="width:90%" />
+        </div>
+        <div class="col-sm-6" style="width:50%">
+            <p style="text-align:center; padding-top:3em">
+                <font size="24">La Casa Del Turismo</Font><br />
+                <Font size="6">VIAJES Y TURISMO</Font><br />
+                <Font size="4">Calle 48 # 49 – 73 Tel. 219 09 36</Font><br />
+                <Font size="4">Cel. 311 752 0216 – 312 490 2409</Font><br />
+                <Font size="4">RNT 35238</Font><br />
+                <Font size="4">SEDE LA CASA DEL AFICHE.</Font><br />
+            </p>
+        </div>
+    </div>
+</div>
+
+<form action="/flyer/create" method="GET">
+    <h1>Prueba de Codigo</h1>
+    <input type="submit" value ="Crear Flyer">
+</form>
+{% endblock %}

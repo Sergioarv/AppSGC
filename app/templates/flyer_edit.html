@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>Editar</h2>
+<div class="row">
+    <div class="col-lg-12">
+        <form method="POST" enctype="multipart/form-data">
+            <label>Nombre</label>
+            <input value="{{ myFlyer.name }}" type="text" class="form-control" name="name">
+
+            <label>Descripción</label>
+            <input value="{{ myFlyer.description }}" type="text" class="form-control" name="description">
+
+            <label>Imagen</label>
+            <br />
+            <input type="file" name="fileImagen">
+            <br />
+            <br />
+            <div>
+                <input type="submit" class="btn btn-success" value="Agregar2" />
+                <button onclick="document.location.href='/flyer'" type="button" class="btn btn-dark">Volver</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
