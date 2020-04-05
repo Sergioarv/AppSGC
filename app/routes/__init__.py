@@ -57,7 +57,7 @@ def flyer_create():
 @app.route('/flyer/delete/<string:id>')
 def flyer_delete(id):
     oFlyer = Flyer.query.filter_by(id = id).first()
-    os.remove(os.path.join(app.config['UPLOAD_FOLDER'], oFlyer.imagen))
+    #os.remove(os.path.join(app.config['UPLOAD_FOLDER'], oFlyer.imagen))
     db.session.delete(oFlyer)
     db.session.commit()
     flash('Se elimino exitosamente')
@@ -67,7 +67,6 @@ def flyer_delete(id):
 @app.route('/flyer/edit/<string:id>', methods=["GET", "POST"])
 def flyer_edit(id):
     #se accede a base de base de datos
-    
     if request.method == 'POST':
         oFlyer = Flyer.query.filter_by(id = id).first()
         nombre = request.form['name']
@@ -78,7 +77,7 @@ def flyer_edit(id):
             filename = f.filename
             #Verifica que tengo un nombre y extension valida la imagen
             if f and allowed_file(filename):
-                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], oFlyer.imagen))
+                #os.remove(os.path.join(app.config['UPLOAD_FOLDER'], oFlyer.imagen))
                 f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 img = filename
                 oFlyer.imagen =  img
