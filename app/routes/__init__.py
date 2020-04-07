@@ -6,6 +6,7 @@ import os
 #ruta estatica de imagenes
 UPLOAD_FOLDER = os.path.abspath("./app/static/img/")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 #formatos permitidos de imagen
 ALLOWED_EXTENDSIONS = set (["png","jpge","jpg","gif"])
 
@@ -40,7 +41,7 @@ def flyer_create():
         f = request.files['archivo']
         if f and allowed_file(f.filename):
             img = f.filename
-            #f.save(os.path.join(app.config['UPLOAD_FOLDER'], img))
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], img))
             oFlyer = Flyer(name = nombre, description = descripcion, imagen = img)
             db.session.add(oFlyer)
             db.session.commit()
@@ -77,7 +78,7 @@ def flyer_edit(id):
             filename = f.filename
             #Verifica que tengo un nombre y extension valida la imagen
             if f and allowed_file(filename):
-                #os.remove(os.path.join(app.config['UPLOAD_FOLDER'], oFlyer.imagen))
+                #f.remove(app.root_path+'/static/img/'+filename))
                 f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 img = filename
                 oFlyer.imagen =  img
