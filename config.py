@@ -1,7 +1,7 @@
 import os
 
 # Base en Produccion Online
-DBURL = 'postgres://wviqnqyhdeqzse:c870122ac441bd00ce0c905849e29247b819822df9e07dd2f8eb01270e6f84f9@ec2-3-91-112-166.compute-1.amazonaws.com:5432/d9dh9aftbst1tp'
+DBURL = 'postgres://vmrcezxgjwbrpt:90d2fa1f9c1c70555d59405d8d86d59739b91a32b92810e6675c6d6ec1ddc898@ec2-52-201-55-4.compute-1.amazonaws.com:5432/d7daj79bdhcjoi'
 # Base Local
 # DBURL = 'sqlite:///'+ os.path.abspath('./dbsgc.db')
 
