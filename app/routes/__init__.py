@@ -40,7 +40,7 @@ def flyer_create():
         f = request.files['archivo']
         if f and allowed_file(f.filename):
             img = f.filename
-            f.save(os.path.join(app.config['UPLOAD_FOLDER'], img))
+            #f.save(os.path.join(app.config['UPLOAD_FOLDER'], img))
             oFlyer = Flyer(name = nombre, description = descripcion, imagen = img)
             db.session.add(oFlyer)
             db.session.commit()
