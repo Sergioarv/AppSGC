@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<br />
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, msg in messages %}
+<div class="alert alert-{{ category }} alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ msg }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<br />
+<br />
+
+<table class="table table-bordered justify-content-center">
+    <thead class="thead-light">
+        <tr>
+            <th>Cliente</th>
+            <th>Correo</th>
+            <th>Telefono</th>
+            <th>Destino</th>
+            <th>Origen</th>
+            <th>Descripcion</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for request in listRequest %}
+        <tr>
+            <td>{{ request.name }} {{ request.address }}</td>
+            <td>{{ request.email }}</td>
+            <td>{{ request.phone }}</td>
+            <td>{{ request.destino }}</td>
+            <td>{{ request.origin }}</td>
+            <td style="min-width:150px;width:30%;max-width:200px;text-align: justify;">
+                <p style="overflow-wrap: break-word;">{{ request.description }}</p>
+            </td>
+            <td>
+                <button onclick="document.location.href='/flyer/edit/{{ request.id }}'" class="btn btn-info">
+                    Editar
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <button onclick="document.location.href='/flyer/delete/{{ request.id }}'" class="btn btn-danger">
+                    Eliminar
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

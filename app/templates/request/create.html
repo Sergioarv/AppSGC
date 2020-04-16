@@ -1,6 +1,17 @@
 {% extends "layout.html" %}
-{% block content %}
-
+{% block content -%}
+<br />
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, msg in messages %}
+<div class="alert alert-{{category}} alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>{{ category }}</strong> {{ msg }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<br />
 <h2>Solicitar Cotización</h2>
 
 <!-- para funcion de validacion was-validated -->
@@ -57,7 +68,7 @@
         </div>
         <div class="form-group col-sm-12">
             <label>Descripción de la Solicitud</label>
-            <textarea class="form-control" name="descriptioC" id="descriptioC" rows="3"
+            <textarea class="form-control" name="descriptionC" id="descriptionC" rows="3"
                 placeholder="Ingrese una descripcion de lo que solicita" required></textarea>
             <span class="valid-feedback">Ok</span>
             <span class="invalid-feedback">Debe completar el campo</span>
@@ -80,4 +91,4 @@
     </div>
 </form>
 
-{% endblock %}
+{%- endblock %}

@@ -7,7 +7,7 @@ DBURL = 'postgres://vmrcezxgjwbrpt:90d2fa1f9c1c70555d59405d8d86d59739b91a32b9281
 
 class Config(object):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = DBURL
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///'+ os.path.abspath('./dbsgc.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = 'mysecretkey'
 
