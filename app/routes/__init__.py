@@ -14,7 +14,7 @@ ALLOWED_EXTENDSIONS = set (["png","jpge","jpg","gif"])
 @app.route('/', methods = ['GET'])
 def index():
     flyers = Flyer.query.all()
-    return render_template("/home.html", listFlyer = flyers)
+    return render_template("home.html", listFlyer = flyers)
 
 #Ruta alternativa
 @app.route('/about')
