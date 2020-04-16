@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h2>FlyerDetails</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <h1>{{ myFlyer.name }}</h1>
+            </p>
+        </div>
+        <div class="col-md-6" style="justify-content: center; align-items: center; display: flex;">
+            <img src="/static/img/{{ myFlyer.imagen }}" alt="Image" style="width: fit-content; max-width: 90%;" />
+        </div>
+        <div class="col-md-6">
+            <p style="overflow-wrap: break-word;">{{ myFlyer.description }}</p>
+        </div>
+    </div>
+    <br>
+    <div> <button onclick="document.location.href='/request/create/{{ myFlyer.id }}'" type="button"
+            class="btn btn-sm btn-primary">
+            Solicitar Cotización
+            <span class="glyphicon-envelope"></span>
+        </button>
+        <button onclick="document.location.href='/'" type="button" class="btn btn-sm btn-secondary">
+            Volver
+            <span class="glyphicon glyphicon-refresh"></span>
+        </button>
+    </div>
+
+    {% endblock %}

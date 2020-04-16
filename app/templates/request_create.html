@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Solicitar Cotización</h2>
+
+<!-- para funcion de validacion was-validated -->
+<form id="request" name="request" method="POST" class="needs-validation" novalidate>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Nombre</label>
+            <input type="text" class="form-control" name="nameC" id="nameC" placeholder="Ingrese su nombre" required>
+            <div class="valid-feedback">Ok</div>
+            <div class="invalid-feedback">Debe completar el campo</div>
+            <br />
+        </div>
+        <div class="col-md-6">
+            <label>Apellido</label>
+            <input type="text" class="form-control" name="addressC" id="addressC" placeholder="Ingrese su apellido"
+                required>
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
+            <br />
+        </div>
+        <div class="col-md-6">
+            <label>Correo</label>
+            <input type="email" class="form-control" name="emailC" id="emailC" placeholder="Ingrese su correo" required>
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
+            <br />
+        </div>
+        <div class="form-group col-md-6">
+            <label>Telefono</label>
+            <input type="number" class="form-control" name="phoneC" id="phoneC" placeholder="Ingrese su telefono"
+                required>
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
+            <br />
+        </div>
+        <div class="form-group col-sm-6">
+            <label>Destino</label>
+            {% if myFlyer %}
+            <input type="text" class="form-control" name="destinoC" id="destinoC" value="{{ myFlyer.name }}" required>
+            {% else %}
+            <input type="text" class="form-control" name="destinoC" id="destinoC" placeholder="Ingrese el destino"
+                required>
+            {% endif %}
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
+        </div>
+        <div class="form-group col-sm-6">
+            <label>Origen</label>
+            <input type="text" class="form-control" name="originC" id="originC" placeholder="Ingrese su origen"
+                required>
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
+            <br />
+        </div>
+        <div class="form-group col-sm-12">
+            <label>Descripción de la Solicitud</label>
+            <textarea class="form-control" name="descriptioC" id="descriptioC" rows="3"
+                placeholder="Ingrese una descripcion de lo que solicita" required></textarea>
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
+            <br />
+            <br />
+        </div>
+        <br />
+        <br />
+        <div>
+            <!-- <input type="submit" class="btn btn-success" value="Aceptar"> -->
+            <button type="submit" id="acept" class="btn btn-success">
+                Aceptar
+                <span class="glyphicon glyphicon-check"></span>
+            </button>
+            <button onclick="document.location.href='/'" type="button" class="btn btn-danger">
+                Cancelar
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
