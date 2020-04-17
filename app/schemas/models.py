@@ -15,3 +15,7 @@ class Request(db.Model):
     destino = db.Column(db.String(100), nullable=False)
     origin = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(100), nullable=False)
+    state = db.Column(db.String(50), nullable=False)
+    dateI = db.Column(db.String(30))
+    dateO = db.Column(db.String(30))
+    

@@ -1,31 +1,40 @@
 {% extends "layout.html" %}
-{% block content -%}
+
+{% block content %}
 <br />
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
 {% for category, msg in messages %}
-<div class="alert alert-{{category}} alert-dismissable">
+<div class="alert alert-{{ category }} alert-dismissable">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>{{ category }}</strong> {{ msg }}
+    {{ msg }}
 </div>
 {% endfor %}
 {% endif %}
 {% endwith %}
-<br />
-<h2>Solicitar Cotización</h2>
+<br>
+<h2>Generar Cotización</h2>
+<br>
 
 <form id="request" name="request" method="POST" class="needs-validation" novalidate>
     <div class="row">
         <div class="col-md-6">
+            <label>Dirigido a</label>
+            <input type="text" class="form-control" name="form_to" id="form_to" placeholder="Señor, Señora, Señores" required>
+            <div class="valid-feedback">Ok</div>
+            <div class="invalid-feedback">Debe completar el campo</div>
+            <br />
+        </div>
+        <div class="col-md-6">
             <label>Nombre</label>
-            <input type="text" class="form-control" name="nameC" id="nameC" placeholder="Ingrese su nombre" required>
+            <input type="text" class="form-control" name="nameC" id="nameC" value="{{ myRequest.name }}" required>
             <div class="valid-feedback">Ok</div>
             <div class="invalid-feedback">Debe completar el campo</div>
             <br />
         </div>
         <div class="col-md-6">
             <label>Apellido</label>
-            <input type="text" class="form-control" name="addressC" id="addressC" placeholder="Ingrese su apellido"
+            <input type="text" class="form-control" name="addressC" id="addressC" value="{{ myRequest.address }}"
                 required>
             <span class="valid-feedback">Ok</span>
             <span class="invalid-feedback">Debe completar el campo</span>
@@ -33,34 +42,42 @@
         </div>
         <div class="col-md-6">
             <label>Correo</label>
-            <input type="email" class="form-control" name="emailC" id="emailC" placeholder="Ingrese su correo" required>
+            <input type="email" class="form-control" name="emailC" id="emailC" value="{{ myRequest.email }}" required>
             <span class="valid-feedback">Ok</span>
             <span class="invalid-feedback">Debe completar el campo</span>
             <br />
         </div>
         <div class="form-group col-md-6">
-            <label>Telefono</label>
-            <input type="number" class="form-control" name="phoneC" id="phoneC" placeholder="Ingrese su telefono"
-                required>
+            <label>Asunto</label>
+            <input type="text" class="form-control" name="asuntoC" id="asuntoC" placeholder="Ingrese el asunto" required>
             <span class="valid-feedback">Ok</span>
             <span class="invalid-feedback">Debe completar el campo</span>
             <br />
         </div>
         <div class="form-group col-sm-6">
-            <label>Destino</label>
-            {% if myFlyer %}
-            <input type="text" class="form-control" name="destinoC" id="destinoC" value="{{ myFlyer.name }}" required>
-            {% else %}
-            <input type="text" class="form-control" name="destinoC" id="destinoC" placeholder="Ingrese el destino"
+            <label>Valor</label>
+            <input type="number" class="form-control" name="valueC" id="valueC" placeholder="Ingrese el valor en numeros"
                 required>
-            {% endif %}
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
+        </div>
+        <div class="form-group col-sm-6">
+            <label>Valor Letras</label>
+            <input type="text" class="form-control" name="value_textC" id="value_textC" placeholder="Ingrese el valor en letras"
+                required>
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
+        </div>
+        <div class="form-group col-sm-6">
+            <label>Destino</label>
+            <input type="text" class="form-control" name="destinoC" id="destinoC" value="{{ myRequest.destino }}"
+                required>
             <span class="valid-feedback">Ok</span>
             <span class="invalid-feedback">Debe completar el campo</span>
         </div>
         <div class="form-group col-sm-6">
             <label>Origen</label>
-            <input type="text" class="form-control" name="originC" id="originC" placeholder="Ingrese su origen"
-                required>
+            <input type="text" class="form-control" name="originC" id="originC" value="{{ myRequest.origin }}" required>
             <span class="valid-feedback">Ok</span>
             <span class="invalid-feedback">Debe completar el campo</span>
             <br />
@@ -68,20 +85,28 @@
         <div class="form-group col-sm-12">
             <label>Descripción de la Solicitud</label>
             <textarea class="form-control" name="descriptionC" id="descriptionC" rows="3"
-                placeholder="Ingrese una descripcion de lo que solicita" required></textarea>
+                required>{{ myRequest.description }}</textarea>
             <span class="valid-feedback">Ok</span>
             <span class="invalid-feedback">Debe completar el campo</span>
             <br />
             <br />
         </div>
         <br />
+        <br />
+        <div class="form-group col-sm-6">
+            <label>Fecha Respuesta</label>
+            <input type="text" class="form-control" name="originC" id="originC" value="{{ myRequest.dateO }}" required>
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
+            <br />
+        </div>
         <div>
             <!-- <input type="submit" class="btn btn-success" value="Aceptar"> -->
             <button type="submit" id="acept" class="btn btn-success">
                 Aceptar
                 <span class="glyphicon glyphicon-check"></span>
             </button>
-            <button onclick="document.location.href='/'" type="button" class="btn btn-danger">
+            <button onclick="document.location.href='/request'" type="button" class="btn btn-danger">
                 Cancelar
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
@@ -89,4 +114,5 @@
     </div>
 </form>
 
-{%- endblock %}
+
+{% endblock %}

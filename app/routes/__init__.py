@@ -1,6 +1,7 @@
 from flask import render_template, redirect, request, url_for, send_from_directory, flash, abort
 from app import app, db
 from app.schemas.models import Flyer, Request
+from datetime import date, datetime
 import os
 
 #ruta estatica de imagenes
@@ -115,7 +116,10 @@ def request_create(id):
         destino = request.form['destinoC']
         origin = request.form['originC']
         description = request.form['descriptionC']
-        oRequest = Request(name = name, address = address, email = email, phone = phone, destino = destino, origin = origin, description = description)
+        fecha = datetime.now()
+        dateI = ''+fecha.strftime("%d-%m-%Y")
+        state = 'Solicitado'
+        oRequest = Request(name = name, address = address, email = email, phone = phone, destino = destino, origin = origin, description = description, dateI = dateI, state = state)
         db.session.add(oRequest)
         db.session.commit()
         return redirect('/')
@@ -123,9 +127,30 @@ def request_create(id):
         oFlyer = Flyer.query.filter_by(id = id).first()
         return render_template('/request/create.html', myFlyer = oFlyer)
 
-# Ruta Index solicitudes
-#Ruta de index Flyer
+#Ruta Index solicitudes
 @app.route('/request')
 def request_index():
-    requests = Request.query.all()
+    requests = Request.query.filter_by(state = 'Solicitado').all()
     return render_template('/request/index.html', listRequest = requests)
+
+#Ruta responder solicitudes
+@app.route('/request/answer/<string:id>', methods=["GET", "POST"])
+def request_answer(id):
+    if request.method == 'POST':
+        form_to = request.form["form_to"],
+        name = request.form["nameC"],
+        address = request.form["addressC"],
+        asunto = request.form["asuntoC"],
+        value = request.form["valueC"],
+        value_text = request.form["value_textC"]
+        data = [form_to, name, address, asunto, value, value_text]
+        return render_template('/home.html')
+    else:
+        oRequest = Request.query.filter_by(id = id).first()
+        return render_template('/request/answer.html', myRequest = oRequest)
+
+#Ruta responder Cotizacion
+@app.route('/quotation/<string:id>')
+def quotation(id):
+    oRequest = Request.query.filter_by(id = id).first()
+    return render_template('/quotation.html', myRequest = oRequest)

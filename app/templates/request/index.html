@@ -15,36 +15,34 @@
 <br />
 <br />
 
-<table class="table table-bordered justify-content-center">
+<table class="table table-bordered justify-content-center" style="width: 100%">
     <thead class="thead-light">
         <tr>
-            <th>Cliente</th>
-            <th>Correo</th>
-            <th>Telefono</th>
-            <th>Destino</th>
-            <th>Origen</th>
-            <th>Descripcion</th>
+            <th style="width: 100px;">Cliente</th>
+            <th style="width: 100px;">Correo</th>
+            <th style="width: 100px;">Telefono</th>
+            <th style="width: 100px;">Destino</th>
+            <th style="width: 100px;">Origen</th>
+            <th style="width: 100px;">Fecha de Solicitud</th>
+            <th style="width: 100px;">Descripcion</th>
         </tr>
     </thead>
     <tbody>
         {% for request in listRequest %}
         <tr>
-            <td>{{ request.name }} {{ request.address }}</td>
+            <td style="overflow-wrap: break-word;">{{ request.name }} {{ request.address }}</td>
             <td>{{ request.email }}</td>
             <td>{{ request.phone }}</td>
             <td>{{ request.destino }}</td>
             <td>{{ request.origin }}</td>
-            <td style="min-width:150px;width:30%;max-width:200px;text-align: justify;">
+            <td>{{ request.dateI }}</td>
+            <td>
                 <p style="overflow-wrap: break-word;">{{ request.description }}</p>
             </td>
-            <td>
-                <button onclick="document.location.href='/flyer/edit/{{ request.id }}'" class="btn btn-info">
-                    Editar
+            <td style="min-width:150px;width:20%;max-width:200px;text-align: justify;">
+                <button onclick="document.location.href='/request/answer/{{ request.id }}'" class="btn btn-info">
+                    Responder solicitud
                     <span class="glyphicon glyphicon-pencil"></span>
-                </button>
-                <button onclick="document.location.href='/flyer/delete/{{ request.id }}'" class="btn btn-danger">
-                    Eliminar
-                    <span class="glyphicon glyphicon-trash"></span>
                 </button>
             </td>
         </tr>
