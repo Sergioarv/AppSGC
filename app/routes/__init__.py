@@ -1,12 +1,15 @@
-from flask import render_template, redirect, request, url_for, send_from_directory, flash, abort
+from flask import render_template, redirect, request, url_for, send_from_directory, flash, session
 from app import app, db
 from app.schemas.models import Flyer, Request
-from datetime import date, datetime
-import os
+from datetime import date, datetime, timedelta
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import os, smtplib
 
 #ruta estatica de imagenes
 UPLOAD_FOLDER = os.path.abspath("./app/static/img/")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.permanent_session_lifetime = timedelta(minutes=1)
 
 #formatos permitidos de imagen
 ALLOWED_EXTENDSIONS = set (["png","jpge","jpg","gif"])
@@ -130,21 +133,25 @@ def request_create(id):
 #Ruta Index solicitudes
 @app.route('/request')
 def request_index():
-    requests = Request.query.filter_by(state = 'Solicitado').all()
-    return render_template('/request/index.html', listRequest = requests)
+    if "admin" in session:
+        admin = session['admin']
+        print (admin)
+        requests = Request.query.filter_by(state = 'Solicitado').all()
+        return render_template('/request/index.html', listRequest = requests)
+    else:
+        return redirect('/login')
 
 #Ruta responder solicitudes
 @app.route('/request/answer/<string:id>', methods=["GET", "POST"])
 def request_answer(id):
     if request.method == 'POST':
-        form_to = request.form["form_to"],
-        name = request.form["nameC"],
-        address = request.form["addressC"],
-        asunto = request.form["asuntoC"],
-        value = request.form["valueC"],
+        para = request.form["para"]
+        name = request.form["nameC"]
+        address = request.form["addressC"]
+        asunto = request.form["asuntoC"]
+        value = request.form["valueC"]
         value_text = request.form["value_textC"]
-        data = [form_to, name, address, asunto, value, value_text]
-        return render_template('/home.html')
+        return render_template('/')
     else:
         oRequest = Request.query.filter_by(id = id).first()
         return render_template('/request/answer.html', myRequest = oRequest)
@@ -154,3 +161,25 @@ def request_answer(id):
 def quotation(id):
     oRequest = Request.query.filter_by(id = id).first()
     return render_template('/quotation.html', myRequest = oRequest)
+
+@app.route('/login', methods=["GET","POST"])
+def login_in():
+    if request.method == 'POST':
+        session.permanent = True
+        user = request.form['emailC']
+        password = request.form['passwordC']
+        session['admin'] = user
+        return redirect('/')
+    else:
+        return render_template('/login.html')
+
+def enviarMensaje(emailto):
+    msg = MIMEMultipart()
+    message = 'Hola'
+    msg.attach(MIMEText(message, 'plain'))
+    server = smtplib.SMTP('smtp.gmail.com:587')
+    server.starttls()
+    server.login(app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD'])
+    server.sendmail(app.config['MAIL_USERNAME'], emailto, msg.as_string())
+    server.quit()
+    print ("successfully sent email to %s:" %(emailto))
