@@ -176,7 +176,7 @@ def login_in():
 
 def enviarMensaje(oRequest):
     msg = MIMEMultipart()
-    message = "Señor "+ str(oRequest.name)+ " "+ str(oRequest.address) + "su solicitud se encuentra en espera, le responderemos en breve, favor no contestar este mensaje"
+    message = "Señor "+ str(oRequest.name)+ " "+ str(oRequest.address) + " su solicitud se encuentra en espera, le responderemos en breve, favor no contestar este mensaje"
     password = "nxmgrqskcwbticku"
     msg['From'] = "sarv9208@gmail.com"
     msg['To'] = oRequest.email
