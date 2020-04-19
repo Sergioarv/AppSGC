@@ -4,7 +4,7 @@ from app.schemas.models import Flyer, Request
 from datetime import date, datetime, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import os, smtplib
+import os, smtplib, requests
 
 #ruta estatica de imagenes
 UPLOAD_FOLDER = os.path.abspath("./app/static/img/")
@@ -125,6 +125,7 @@ def request_create(id):
         oRequest = Request(name = name, address = address, email = email, phone = phone, destino = destino, origin = origin, description = description, dateI = dateI, state = state)
         db.session.add(oRequest)
         db.session.commit()
+        enviarMensaje(oRequest)
         return redirect('/')
     else:
         oFlyer = Flyer.query.filter_by(id = id).first()
@@ -173,13 +174,17 @@ def login_in():
     else:
         return render_template('/login.html')
 
-def enviarMensaje(emailto):
+def enviarMensaje(oRequest):
     msg = MIMEMultipart()
-    message = 'Hola'
+    message = "Señor "+ str(oRequest.name)+ " "+ str(oRequest.address) + "su solicitud se encuentra en espera, le responderemos en breve, favor no contestar este mensaje"
+    password = "nxmgrqskcwbticku"
+    msg['From'] = "sarv9208@gmail.com"
+    msg['To'] = oRequest.email
+    msg['Subject'] = "Solicitud"
     msg.attach(MIMEText(message, 'plain'))
-    server = smtplib.SMTP('smtp.gmail.com:587')
+    server = smtplib.SMTP('smtp.gmail.com: 587')
     server.starttls()
-    server.login(app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD'])
-    server.sendmail(app.config['MAIL_USERNAME'], emailto, msg.as_string())
+    server.login(msg['From'], password)
+    server.sendmail(msg['From'], msg['To'], msg.as_string())
     server.quit()
-    print ("successfully sent email to %s:" %(emailto))
+    print ("successfully sent email to %s:" %(msg['To']))
