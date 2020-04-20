@@ -7,7 +7,7 @@
 {% for category, msg in messages %}
 <div class="alert alert-{{category}} alert-dismissable">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>{{ category }}</strong> {{ msg }}
+    {{ msg }}
 </div>
 {% endfor %}
 {% endif %}

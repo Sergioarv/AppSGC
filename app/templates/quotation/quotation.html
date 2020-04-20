@@ -30,18 +30,22 @@
             {{ para }}<br>{{ name }}<br>E.&nbsp;&nbsp;S.&nbsp;&nbsp;M.<br>{{ city }}</p>
         <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Asunto: Cotización
             <br>{{ asunto }}</p>
-        {% if itemA %}
+        {% if itemsA %}
         <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">El plan incluye:</p>
         <ul class="list-group">
+            {% for itemA in itemsA %}
             <li class="list-group-item"
                 style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">{{ itemA }}</li>
+            {% endfor %}
         </ul>
         {% endif %}
-        {% if itemR %}
+        {% if itemsR %}
         <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">El plan no incluye:</p>
         <ul class="list-group">
+            {% for itemR in itemsA %}
             <li class="list-group-item"
                 style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">{{ itemR }}</li>
+            {% endfor %}
         </ul>
         {% endif %}
         <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;">EL

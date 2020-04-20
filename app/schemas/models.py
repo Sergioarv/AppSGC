@@ -9,7 +9,7 @@ class Admin(db.Model):
 class Flyer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.String(100))
+    description = db.Column(db.String(100), nullable=False)
     imagen = db.Column(db.String(255))
 
 class Request(db.Model):
@@ -21,7 +21,8 @@ class Request(db.Model):
     destino = db.Column(db.String(100), nullable=False)
     origin = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(100), nullable=False)
-    state = db.Column(db.String(50), nullable=False)
-    dateI = db.Column(db.String(30))
-    dateO = db.Column(db.String(30))
-    
+    state = db.Column(db.String(100), nullable=False)
+    dateI = db.Column(db.String(50))
+    dateO = db.Column(db.String(50))
+    hourI = db.Column(db.String(50))
+    hourO = db.Column(db.String(50))

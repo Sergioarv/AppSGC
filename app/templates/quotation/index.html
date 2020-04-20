@@ -13,17 +13,17 @@
 {% endif %}
 {% endwith %}
 <br />
-<h2>Solicitudes Pendientes</h2>
+<h2>Cotizaciones</h2>
 <table class="table table-responsive justify-content-center">
     <thead class="thead-dark">
         <tr>
-            <th style="width: fit-content;" >Cliente</th>
-            <th style="width: fit-content;" >Correo</th>
-            <th style="width: fit-content;" >Telefono</th>
-            <th style="width: fit-content;" >Destino</th>
-            <th style="width: fit-content;" >Origen</th>
-            <th style="width: fit-content;" >Fecha Solicitud</th>
-            <th style="width: fit-content;" >Descripcion</th>
+            <th style="width: fit-content;">Cliente</th>
+            <th style="width: fit-content;">Correo</th>
+            <th style="width: fit-content;">Telefono</th>
+            <th style="width: fit-content;">Destino</th>
+            <th style="width: fit-content;">Origen</th>
+            <th style="width: fit-content;">Fecha Cotizacion</th>
+            <th style="width: fit-content;">Estado</th>
         </tr>
     </thead>
     <tbody>
@@ -34,12 +34,13 @@
             <td style="width: fit-content;">{{ request.phone }}</td>
             <td style="width: fit-content;">{{ request.destino }}</td>
             <td style="width: fit-content;">{{ request.origin }}</td>
-            <td style="width: fit-content;">{{ request.dateI }}</td>
+            <td style="width: fit-content;">{{ request.dateO }}</td>
             <td style="width: 100px; max-width: 150px; text-align: justify;">
-                <p style="overflow-wrap: break-word;">{{ request.description }}</p>
+                <p style="overflow-wrap: break-word;">{{ request.state }}</p>
             </td>
             <td style="width:fit-content; text-align: justify;">
-                <button onclick="document.location.href='/request/answer/{{ request.id }}'" class="btn btn-md btn-info">
+                <button onclick="document.location.href='/request/answer/{{ request.id }}'" class="btn btn-md btn-info"
+                    style="display: none;">
                     Responder
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>

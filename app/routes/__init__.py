@@ -150,12 +150,13 @@ def request_create(id):
         description = request.form['descriptionC']
         fecha = datetime.now()
         dateI = ''+fecha.strftime("%d-%m-%Y")
+        hourI = ''+fecha.strftime("%H:%M:%S")
         state = 'Solicitado'
-        oRequest = Request(name = name, address = address, email = email, phone = phone, destino = destino, origin = origin, description = description, dateI = dateI, state = state)
+        oRequest = Request(name = name, address = address, email = email, phone = phone, destino = destino, origin = origin, description = description, dateI = dateI, state = state, hourI = hourI)
         db.session.add(oRequest)
         db.session.commit()
-        enviarMensaje(oRequest)
-        flash ('Su solicitud esta en espera', 'success')
+        enviarMensaje(oRequest, 1)
+        flash ('Su solicitud está siendo procesada', 'success')
         return redirect('/')
     else:
         oFlyer = Flyer.query.filter_by(id = id).first()
@@ -174,16 +175,27 @@ def request_index():
 @app.route('/request/answer/<string:id>', methods=["GET", "POST"])
 def request_answer(id):
     if filtroS():
+        oRequest = Request.query.filter_by(id = id).first()
+        date = datetime.now().utcnow().strftime("%d de %m del %Y")
         if request.method == 'POST':
             para = request.form["inputTo"]
             name = request.form["nameC"]
             city = request.form["city"]
             asunto = request.form["asunto"]
             value = request.form["value"]
-            date = datetime.now().utcnow().strftime("%d de %m del %Y")
-            itemA = request.form['itemA']
-            itemR = request.form['itemR']
-            html = render_template('/quotation/quotation.html', date = date, para = para, name = name, city = city, asunto = asunto, value = value, itemA = itemA, itemR = itemR)
+            dateO = datetime.now().strftime("%d-%m-%Y")
+            hourO = datetime.now().strftime("%H:%M:%S")
+            itemsA = []
+            itemsR = []
+            for i in range(1, 15):
+                try:
+                    if i < 12:
+                        itemsA.append(request.form['item'+str(i)])
+                    else:
+                        itemsR.append(request.form['item'+str(i)])
+                except:
+                    pass
+            html = render_template('/quotation/quotation.html', date = date, para = para, name = name, city = city, asunto = asunto, value = value, itemsA = itemsA, itemsR = itemsR)
             option = {
                 'page-size': 'Letter',
                 'encoding': 'UTF-8',
@@ -192,19 +204,28 @@ def request_answer(id):
                 'margin-bottom': '0.75in',
                 'margin-left': '0.75in',
             }
-            pdfkit.from_string(html, 'Cotizacion'+str(name)+'.pdf', options=option)
-            return redirect('/')
+            pdfkit.from_string(html, 'Cotizacion '+str(name)+'.pdf', options=option)
+            oRequest.dateO = dateO
+            db.session.commit()
+            oRequest.hourO = hourO
+            db.session.commit()
+            oRequest.state = 'Procesado'
+            db.session.commit()
+            return redirect('/quotation')
         else:
-            date = datetime.now().utcnow().strftime("%d de %B del %Y")
-            oRequest = Request.query.filter_by(id = id).first()
             return render_template('/request/answer.html', myRequest = oRequest, date = date)
     else:
         return redirect('/login')
 
 #Ruta responder Cotizacion
 @app.route('/quotation')
-def quotation():
-    return redirect('/')
+def quotation_index():
+    if filtroS():
+        oRequest = Request.query.filter_by(state = 'Procesado').all()
+        return render_template('/quotation/index.html', listRequest = oRequest)
+    else:
+        redirect('/login')
+
 
 @app.route('/login', methods=["GET","POST"])
 def login_in():
@@ -218,7 +239,7 @@ def login_in():
             if oAdmin:  
                 session.permanent = True
                 session['admin'] = oAdmin.name
-                flash('Bienvenido'+str(oAdmin.name), 'success')
+                flash('Bienvenido '+str(oAdmin.name), 'success')
                 return redirect('/')
             else:
                 flash('El correo o la contraseña no coinciden', 'danger')
@@ -244,39 +265,30 @@ def recovery():
                 flash('El correo no existe, verifique','danger')
                 return render_template('/recovery.html')
             else:
-                recoveryPass(oAdmin)
+                enviarMensaje(oAdmin, 2)
                 flash('Se le ha enviado la contraseña al correo','success')
                 return render_template('/home.html')
         else:
-            return render_template('/recovery.html')
+            return render_template('/recovery.html')  
 
-def recoveryPass(oAdmin):
+def enviarMensaje(data, opc):
     msg = MIMEMultipart()
-    message = """%s su contraseña es %s""" %(oAdmin.name, oAdmin.password)
     password = 'nxmgrqskcwbticku'
     msg['From'] = 'sarv9208@gmail.com'
-    msg['To'] = oAdmin.email
-    msg['Subject'] = "Recuperar cuenta"
-    msg.attach(MIMEText(message, 'plain'))
+    msg['To'] = data.email
+    if opc == 1:
+        message = """Señor %s %s su solicitud se encuentra en espera, le responderemos en breve.
+    Por favor no contestar este mensaje""" %(data.name, data.address)
+        msg['Subject'] = "Solicitud"
+        msg.attach(MIMEText(message, 'plain'))
+    elif opc == 2:
+        message = """%s su contraseña es %s""" %(data.name, data.password)
+        msg['Subject'] = "Recuperar cuenta"
+        msg.attach(MIMEText(message, 'plain'))
+    else:
+        print ('Ultimo Caso')
     server = smtplib.SMTP('smtp.gmail.com: 587')
     server.starttls()
     server.login(msg['From'], password)
     server.sendmail(msg['From'], msg['To'], msg.as_string())
     server.quit()
-    print ("successfully sent email to %s:" %(msg['To']))    
-
-def enviarMensaje(oRequest):
-    msg = MIMEMultipart()
-    message = """Señor %s %s su solicitud se encuentra en espera, le responderemos en breve.
-Por favor no contestar este mensaje""" %(oRequest.name, oRequest.address)
-    password = 'nxmgrqskcwbticku'
-    msg['From'] = 'sarv9208@gmail.com'
-    msg['To'] = oRequest.email
-    msg['Subject'] = "Solicitud"
-    msg.attach(MIMEText(message, 'plain'))
-    server = smtplib.SMTP('smtp.gmail.com: 587')
-    server.starttls()
-    server.login(msg['From'], password)
-    server.sendmail(msg['From'], msg['To'], msg.as_string())
-    server.quit()
-    print ("successfully sent email to %s:" %(msg['To']))
