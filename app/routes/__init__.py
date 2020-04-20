@@ -167,7 +167,7 @@ def request_answer(id):
         pdfkit.from_string(html, 'Cotizacion'+str(name)+'.pdf', options=option)
         return redirect('/')
     else:
-        date = datetime.now().utcnow().strftime("%d de %m del %Y")
+        date = datetime.now().utcnow().strftime("%d de %b del %Y")
         oRequest = Request.query.filter_by(id = id).first()
         return render_template('/request/answer.html', myRequest = oRequest, date = date)
 
