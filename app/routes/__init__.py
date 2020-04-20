@@ -154,18 +154,9 @@ def request_answer(id):
         value = request.form["value"]
         locale.setlocale(locale.LC_ALL, "es_CO")
         date = datetime.now().utcnow().strftime("%d de %B del %Y")
-        itemsA = []
-        itemsR = []
-        for i in range(1, 15):
-            try:
-                item = request.form["item"+str(i)]
-                if i < 12:
-                    itemsA.append(item)
-                else:
-                    itemsR.append(item)
-            except:
-                print ('')
-        html = render_template('/quotation/quotation.html', date = date, para = para, name = name, city = city, asunto = asunto, value = value, itemsA = itemsA, itemsR = itemsR)
+        itemA = request.form['itemA']
+        itemR = request.form['itemR']
+        html = render_template('/quotation/quotation.html', date = date, para = para, name = name, city = city, asunto = asunto, value = value, itemA = itemA, itemR = itemR)
         option = {
             'page-size': 'Letter',
             'encoding': 'UTF-8',
@@ -183,7 +174,7 @@ def request_answer(id):
         return render_template('/request/answer.html', myRequest = oRequest, date = date)
 
 #Ruta responder Cotizacion
-@app.route('/quotation/')
+@app.route('/quotation')
 def quotation():
         return redirect('/')
 
