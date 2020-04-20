@@ -1,11 +1,10 @@
 {% extends "layout.html" %}
-
 {% block content %}
 
-<br />
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
 {% for category, msg in messages %}
+<br />
 <div class="alert alert-{{category}} alert-dismissable">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     {{ msg }}
@@ -14,7 +13,7 @@
 {% endif %}
 {% endwith %}
 <br />
-<h2>Editar</h2>
+<h2>Editar Flyer</h2>
 <div class="row">
     <div class="col-lg-12">
         <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>

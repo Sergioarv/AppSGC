@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
-
 {% block content %}
-<br />
+
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
 {% for category, msg in messages %}
+<br />
 <div class="alert alert-{{ category }} alert-dismissable">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     {{ msg }}
@@ -13,35 +13,34 @@
 {% endif %}
 {% endwith %}
 <br />
-<br />
-
-<table class="table table-bordered justify-content-center" style="width: 100%">
+<h2>Solicitudes Pendientes</h2>
+<table class="table table-bordered justify-content-center">
     <thead class="thead-light">
         <tr>
-            <th style="width: 100px;">Cliente</th>
-            <th style="width: 100px;">Correo</th>
-            <th style="width: 100px;">Telefono</th>
-            <th style="width: 100px;">Destino</th>
-            <th style="width: 100px;">Origen</th>
-            <th style="width: 100px;">Fecha de Solicitud</th>
-            <th style="width: 100px;">Descripcion</th>
+            <th style="width: fit-content;">Cliente</th>
+            <th style="width: fit-content;">Correo</th>
+            <th style="width: fit-content;">Telefono</th>
+            <th style="width: fit-content;">Destino</th>
+            <th style="width: fit-content;">Origen</th>
+            <th style="width: fit-content;">Fecha Solicitud</th>
+            <th style="width: fit-content;">Descripcion</th>
         </tr>
     </thead>
     <tbody>
         {% for request in listRequest %}
         <tr>
             <td style="overflow-wrap: break-word;">{{ request.name }} {{ request.address }}</td>
-            <td>{{ request.email }}</td>
-            <td>{{ request.phone }}</td>
-            <td>{{ request.destino }}</td>
-            <td>{{ request.origin }}</td>
-            <td>{{ request.dateI }}</td>
-            <td>
+            <td style="width: fit-content;">{{ request.email }}</td>
+            <td style="width: fit-content;">{{ request.phone }}</td>
+            <td style="width: fit-content;">{{ request.destino }}</td>
+            <td style="width: fit-content;">{{ request.origin }}</td>
+            <td style="width: fit-content;">{{ request.dateI }}</td>
+            <td style="width: 100px; max-width: 150px; text-align: justify;">
                 <p style="overflow-wrap: break-word;">{{ request.description }}</p>
             </td>
-            <td style="min-width:150px;width:20%;max-width:200px;text-align: justify;">
-                <button onclick="document.location.href='/request/answer/{{ request.id }}'" class="btn btn-info">
-                    Responder solicitud
+            <td style="width:fit-content; text-align: justify;">
+                <button onclick="document.location.href='/request/answer/{{ request.id }}'" class="btn btn-md btn-info">
+                    Responder
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>
             </td>

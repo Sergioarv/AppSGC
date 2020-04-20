@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
-
 {% block content %}
-<br />
+
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
 {% for category, msg in messages %}
+<br />
 <div class="alert alert-{{ category }} alert-dismissable">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     {{ msg }}
@@ -14,105 +14,189 @@
 {% endwith %}
 <br>
 <h2>Generar Cotización</h2>
-<br>
-
 <form id="request" name="request" method="POST" class="needs-validation" novalidate>
-    <div class="row">
-        <div class="col-md-6">
-            <label>Dirigido a</label>
-            <input type="text" class="form-control" name="para" id="para" placeholder="Señor, Señora, Señores" required>
-            <div class="valid-feedback">Ok</div>
-            <div class="invalid-feedback">Debe completar el campo</div>
-            <br />
-        </div>
-        <div class="col-md-6">
-            <label>Nombre</label>
-            <input type="text" class="form-control" name="nameC" id="nameC" value="{{ myRequest.name }}" required>
-            <div class="valid-feedback">Ok</div>
-            <div class="invalid-feedback">Debe completar el campo</div>
-            <br />
-        </div>
-        <div class="col-md-6">
-            <label>Apellido</label>
-            <input type="text" class="form-control" name="addressC" id="addressC" value="{{ myRequest.address }}"
-                required>
-            <span class="valid-feedback">Ok</span>
-            <span class="invalid-feedback">Debe completar el campo</span>
-            <br />
-        </div>
-        <div class="col-md-6">
-            <label>Correo</label>
-            <input type="email" class="form-control" name="emailC" id="emailC" value="{{ myRequest.email }}" required>
-            <span class="valid-feedback">Ok</span>
-            <span class="invalid-feedback">Debe completar el campo</span>
-            <br />
-        </div>
-        <div class="form-group col-md-6">
-            <label>Asunto</label>
-            <input type="text" class="form-control" name="asuntoC" id="asuntoC" placeholder="Ingrese el asunto" required>
-            <span class="valid-feedback">Ok</span>
-            <span class="invalid-feedback">Debe completar el campo</span>
-            <br />
-        </div>
-        <div class="form-group col-sm-6">
-            <label>Valor</label>
-            <input type="number" class="form-control" name="valueC" id="valueC" placeholder="Ingrese el valor en numeros"
-                required>
-            <span class="valid-feedback">Ok</span>
-            <span class="invalid-feedback">Debe completar el campo</span>
-        </div>
-        <div class="form-group col-sm-6">
-            <label>Valor Letras</label>
-            <input type="text" class="form-control" name="value_textC" id="value_textC" placeholder="Ingrese el valor en letras"
-                required>
-            <span class="valid-feedback">Ok</span>
-            <span class="invalid-feedback">Debe completar el campo</span>
-        </div>
-        <div class="form-group col-sm-6">
-            <label>Destino</label>
-            <input type="text" class="form-control" name="destinoC" id="destinoC" value="{{ myRequest.destino }}"
-                required>
-            <span class="valid-feedback">Ok</span>
-            <span class="invalid-feedback">Debe completar el campo</span>
-        </div>
-        <div class="form-group col-sm-6">
-            <label>Origen</label>
-            <input type="text" class="form-control" name="originC" id="originC" value="{{ myRequest.origin }}" required>
-            <span class="valid-feedback">Ok</span>
-            <span class="invalid-feedback">Debe completar el campo</span>
-            <br />
-        </div>
-        <div class="form-group col-sm-12">
-            <label>Descripción de la Solicitud</label>
-            <textarea class="form-control" name="descriptionC" id="descriptionC" rows="3"
-                required>{{ myRequest.description }}</textarea>
-            <span class="valid-feedback">Ok</span>
-            <span class="invalid-feedback">Debe completar el campo</span>
-            <br />
-            <br />
-        </div>
-        <br />
-        <br />
-        <div class="form-group col-sm-6">
-            <label>Fecha Respuesta</label>
-            <input type="text" class="form-control" name="originC" id="originC" value="{{ myRequest.dateO }}" required>
-            <span class="valid-feedback">Ok</span>
-            <span class="invalid-feedback">Debe completar el campo</span>
-            <br />
-        </div>
-        <div>
-            <!-- <input type="submit" class="btn btn-success" value="Aceptar"> -->
-            <button type="submit" id="acept" class="btn btn-success">
-                Aceptar
-                <span class="glyphicon glyphicon-check"></span>
-            </button>
-            <button onclick="document.location.href='/request'" type="button" class="btn btn-danger">
-                Cancelar
-                <span class="glyphicon glyphicon-remove"></span>
-            </button>
+    <div class="container">
+        <div class="container">
+            <div class="form-row">
+                <div class=" form-group col-sm-4">
+                    <img src="/static/img/Logo.png" style="width:98%" />
+                </div>
+                <div class="form-group col-sm-6" style="width:50%">
+                    <p style="text-align:center;">
+                        <Font size="24">La Casa Del Turismo</Font><br />
+                        <Font size="6">VIAJES Y TURISMO</Font><br />
+                        <Font size="4">Calle 48 # 49 – 73 Tel. 219 09 36</Font><br />
+                        <Font size="4">Cel. 311 752 0216 – 312 490 2409</Font><br />
+                        <Font size="4">RNT 35238</Font><br />
+                        <Font size="4">SEDE LA CASA DEL AFICHE.</Font><br />
+                    </p>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <input class="form-control" name="date" value="{{ date }}" disabled>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <select name="inputTo" id="inputTo" class="form-control" required>
+                        <option selected disabled value="">Seleccione...</option>
+                        <option>Señor:</option>
+                        <option>Señora:</option>
+                        <option>Señores:</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class=" form-group col-md-4">
+                    <input type="text" class="form-control" name="nameC" id="nameC"
+                        value="{{ myRequest.name }} {{ myRequest.address }}" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <input name="city" class="form-control" value="{{ myRequest.origin }}" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label class="form-control">E.&nbsp;&nbsp;S.&nbsp;&nbsp;M.</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label class="form-control">Asunto: Cotización</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <input class="form-control" name="asunto" value="Plan turístico, a {{ myRequest.destino }}"></input>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label class="form-control">El plan incluye:</label>
+
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item1" name="item1"
+                            value="Transporte terrestre Caicedonia – Aeropuerto – Caicedonia">
+                        <label class="custom-control-label" for="item1">Transporte terrestre Caicedonia – Aeropuerto –
+                            Caicedonia</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item2" name="item2"
+                            value="Traslados Aeropuerto – hotel en Cartagena – Hotel en Santa Marta – Aeropuerto">
+                        <label class="custom-control-label" for="item2">Traslados Aeropuerto – hotel en Cartagena –
+                            Hotel en Santa Marta – Aeropuerto</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item3" name="item3"
+                            value="Alojamiento 3 noches en el hotel Costa del Sol o similar">
+                        <label class="custom-control-label" for="item3">Alojamiento 3 noches en el hotel Costa del Sol o
+                            similar</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item4" name="item4"
+                            value="Alojamiento 2 noches en Hotel El Rodadero Beach o Similar">
+                        <label class="custom-control-label" for="item4">Alojamiento 2 noches en Hotel El Rodadero Beach
+                            o Similar</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item5" name="item5"
+                            value="Alimentación incluidas en los hoteles">
+                        <label class="custom-control-label" for="item5">Alimentación incluidas en los hoteles</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item6" name="item6"
+                            value="City tour en Cartagena, con ingreso al Castillo de San Felipe">
+                        <label class="custom-control-label" for="item6">City tour en Cartagena, con ingreso al Castillo
+                            de San Felipe</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item7" name="item7"
+                            value="Tour Terrestre a Playa Blanca Barú, incluye Almuerzo">
+                        <label class="custom-control-label" for="item7">Tour Terrestre a Playa Blanca Barú, incluye
+                            Almuerzo</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item8" name="item8"
+                            value="Visita panorámica en Lancha a las islas del Rosario, No incluye ingreso al Acuario">
+                        <label class="custom-control-label" for="item8">Visita panorámica en Lancha a las islas del
+                            Rosario, No incluye ingreso al Acuario</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item9" name="item9"
+                            value="Fiesta blanca o de graduandos en la Calle del Arsenal">
+                        <label class="custom-control-label" for="item9">Fiesta blanca o de graduandos en la Calle del
+                            Arsenal</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item10" name="item10"
+                            value="Impuestos hoteleros y aeroportuarios">
+                        <label class="custom-control-label" for="item10">Impuestos hoteleros y aeroportuarios</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item11" name="item11"
+                            value="Seguro de viaje">
+                        <label class="custom-control-label" for="item11">Seguro de viaje</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label class="form-control">El plan no incluye:</label>
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item12" name="item12"
+                            value="Servicios receptivos y alimentación no relacionada.">
+                        <label class="custom-control-label" for="item12">Servicios receptivos y alimentación no
+                            relacionada.</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item13" name="item13"
+                            value="Los cargos, suplementos e impuestos pueden variar.">
+                        <label class="custom-control-label" for="item13">Los cargos, suplementos e impuestos pueden
+                            variar.</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item14" name="item14"
+                            value="Tarifa por persona.">
+                        <label class="custom-control-label" for="item14">Tarifa por persona.</label>
+                    </div>
+                    <div class="custom-control custom-checkbox col-md-12">
+                        <input type="checkbox" class="custom-control-input" id="item15" name="item15"
+                            value="Tarifas sujetas a cambio sin previo aviso y a disponibilidad y reserva.">
+                        <label class="custom-control-label" for="item15">Tarifas sujetas a cambio sin previo aviso y a
+                            disponibilidad y reserva.</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="form-control" style="text-align: center;">EL PLAN TIENE UN PRECIO POR PERSONA</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <input class="form-control" type="number" name="value"
+                        placeholder="Ingrese el valor del Plan Por persona" required></input>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12" style="padding-bottom: 1em;">
+                    <textarea class="form-control" rows="5" style="text-align: justify;"
+                        disabled> La Casa del Turismo Liceísta, se compromete con: LEY 1336 DE 2009 Lucha contra la explotación, la pornografía, el turismo sexual y demás formas de abuso sexual con menores de edad. - Ley 397 de 1997 Protección de los Bienes de interés Cultural- Decreto 1377 de 2013 que comprende el manejo de la confidencialidad de los datos que sean suministrados a la agencia - Ley 1752 de 2015 por medio de la cual se modifica la Ley 1482 de 2011, para sancionar penalmente la discriminación contra las personas con discapacidad, la igualdad de raza o género. Ley 599 de 2000 y Decreto 1608 de 1978. Contra el tráfico de especies como flora y fauna silvestre.</textarea>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="form-group">
+        <button type="submit" id="acept" class="btn btn-success">
+            Aceptar
+            <span class="glyphicon glyphicon-check"></span>
+        </button>
+        <button onclick="document.location.href='/request'" type="button" class="btn btn-danger">
+            Cancelar
+            <span class="glyphicon glyphicon-remove"></span>
+        </button>
+    </div>
 </form>
-
 
 {% endblock %}

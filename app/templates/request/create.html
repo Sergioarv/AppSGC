@@ -1,9 +1,10 @@
 {% extends "layout.html" %}
 {% block content -%}
-<br />
+
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
 {% for category, msg in messages %}
+<br />
 <div class="alert alert-{{category}} alert-dismissable">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <strong>{{ category }}</strong> {{ msg }}
@@ -16,27 +17,24 @@
 
 <form id="request" name="request" method="POST" class="needs-validation" novalidate>
     <div class="row">
-        <div class="col-md-6">
+        <div class="form-group col-md-6">
             <label>Nombre</label>
             <input type="text" class="form-control" name="nameC" id="nameC" placeholder="Ingrese su nombre" required>
-            <div class="valid-feedback">Ok</div>
-            <div class="invalid-feedback">Debe completar el campo</div>
-            <br />
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
         </div>
-        <div class="col-md-6">
+        <div class="form-group col-md-6">
             <label>Apellido</label>
             <input type="text" class="form-control" name="addressC" id="addressC" placeholder="Ingrese su apellido"
                 required>
             <span class="valid-feedback">Ok</span>
             <span class="invalid-feedback">Debe completar el campo</span>
-            <br />
         </div>
-        <div class="col-md-6">
+        <div class="form-group col-md-6">
             <label>Correo</label>
             <input type="email" class="form-control" name="emailC" id="emailC" placeholder="Ingrese su correo" required>
             <span class="valid-feedback">Ok</span>
             <span class="invalid-feedback">Debe completar el campo</span>
-            <br />
         </div>
         <div class="form-group col-md-6">
             <label>Telefono</label>
@@ -44,7 +42,6 @@
                 required>
             <span class="valid-feedback">Ok</span>
             <span class="invalid-feedback">Debe completar el campo</span>
-            <br />
         </div>
         <div class="form-group col-sm-6">
             <label>Destino</label>
@@ -63,7 +60,6 @@
                 required>
             <span class="valid-feedback">Ok</span>
             <span class="invalid-feedback">Debe completar el campo</span>
-            <br />
         </div>
         <div class="form-group col-sm-12">
             <label>Descripción de la Solicitud</label>
@@ -71,8 +67,6 @@
                 placeholder="Ingrese una descripcion de lo que solicita" required></textarea>
             <span class="valid-feedback">Ok</span>
             <span class="invalid-feedback">Debe completar el campo</span>
-            <br />
-            <br />
         </div>
         <br />
         <div>

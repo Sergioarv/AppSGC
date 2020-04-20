@@ -4,7 +4,7 @@ from app.schemas.models import Flyer, Request
 from datetime import date, datetime, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import os, smtplib, requests
+import os, smtplib, requests, locale, pdfkit
 
 #ruta estatica de imagenes
 UPLOAD_FOLDER = os.path.abspath("./app/static/img/")
@@ -126,6 +126,7 @@ def request_create(id):
         db.session.add(oRequest)
         db.session.commit()
         enviarMensaje(oRequest)
+        flash ('Su solicitud esta en espera', 'success')
         return redirect('/')
     else:
         oFlyer = Flyer.query.filter_by(id = id).first()
@@ -146,22 +147,45 @@ def request_index():
 @app.route('/request/answer/<string:id>', methods=["GET", "POST"])
 def request_answer(id):
     if request.method == 'POST':
-        para = request.form["para"]
+        para = request.form["inputTo"]
         name = request.form["nameC"]
-        address = request.form["addressC"]
-        asunto = request.form["asuntoC"]
-        value = request.form["valueC"]
-        value_text = request.form["value_textC"]
-        return render_template('/')
+        city = request.form["city"]
+        asunto = request.form["asunto"]
+        value = request.form["value"]
+        locale.setlocale(locale.LC_ALL, "es_CO")
+        date = datetime.now().utcnow().strftime("%d de %B del %Y")
+        itemsA = []
+        itemsR = []
+        for i in range(1, 15):
+            try:
+                item = request.form["item"+str(i)]
+                if i < 12:
+                    itemsA.append(item)
+                else:
+                    itemsR.append(item)
+            except:
+                print ('')
+        html = render_template('/quotation/quotation.html', date = date, para = para, name = name, city = city, asunto = asunto, value = value, itemsA = itemsA, itemsR = itemsR)
+        option = {
+            'page-size': 'Letter',
+            'encoding': 'UTF-8',
+            'margin-top': '0.25in',
+            'margin-right': '0.75in',
+            'margin-bottom': '0.75in',
+            'margin-left': '0.75in',
+        }
+        pdfkit.from_string(html, 'Cotizacion'+str(name)+'.pdf', options=option)
+        return redirect('/')
     else:
+        locale.setlocale(locale.LC_ALL, "es_CO")
+        date = datetime.now().utcnow().strftime("%d de %B del %Y")
         oRequest = Request.query.filter_by(id = id).first()
-        return render_template('/request/answer.html', myRequest = oRequest)
+        return render_template('/request/answer.html', myRequest = oRequest, date = date)
 
 #Ruta responder Cotizacion
-@app.route('/quotation/<string:id>')
-def quotation(id):
-    oRequest = Request.query.filter_by(id = id).first()
-    return render_template('/quotation.html', myRequest = oRequest)
+@app.route('/quotation/')
+def quotation():
+        return redirect('/')
 
 @app.route('/login', methods=["GET","POST"])
 def login_in():
@@ -176,9 +200,10 @@ def login_in():
 
 def enviarMensaje(oRequest):
     msg = MIMEMultipart()
-    message = "Señor "+ str(oRequest.name)+ " "+ str(oRequest.address) + " su solicitud se encuentra en espera, le responderemos en breve, favor no contestar este mensaje"
-    password = "nxmgrqskcwbticku"
-    msg['From'] = "sarv9208@gmail.com"
+    message = """Señor %s %s su solicitud se encuentra en espera, le responderemos en breve.
+Por favor no contestar este mensaje""" %(oRequest.name, oRequest.address)
+    password = 'nxmgrqskcwbticku'
+    msg['From'] = 'sarv9208@gmail.com'
     msg['To'] = oRequest.email
     msg['Subject'] = "Solicitud"
     msg.attach(MIMEText(message, 'plain'))

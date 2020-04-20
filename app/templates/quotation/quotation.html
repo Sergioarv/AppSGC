@@ -1,0 +1,65 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <table style="border: hidden;">
+            <tr>
+                <td style="width: 45%;">
+                    <img src="https://scontent.fclo9-1.fna.fbcdn.net/v/t1.0-9/12821570_560137094151039_8870789361796236215_n.png?_nc_cat=109&_nc_sid=09cbfe&_nc_ohc=-3IddIyVIhUAX_dW-7N&_nc_ht=scontent.fclo9-1.fna&oh=867b41bb142c4a29bc1d625cdc1b2fd4&oe=5EC2C035"
+                        style="width: fit-content; max-width: 90%;" />
+                </td>
+                <td style="width: 70%;">
+                    <p style="text-align:center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                        <Font size="24">La Casa Del Turismo</Font><br />
+                        <Font size="6">VIAJES Y TURISMO</Font><br />
+                        <Font size="4">Calle 48 # 49 – 73 Tel. 219 09 36</Font><br />
+                        <Font size="4">Cel. 311 752 0216 – 312 490 2409</Font><br />
+                        <Font size="4">RNT 35238</Font><br />
+                        <Font size="4">SEDE LA CASA DEL AFICHE.</Font><br />
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">{{ date }}</p><br>
+        <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+            {{ para }}<br>{{ name }}<br>E.&nbsp;&nbsp;S.&nbsp;&nbsp;M.<br>{{ city }}</p>
+        <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Asunto: Cotización
+            <br>{{ asunto }}</p>
+        {% if itemsA %}
+        <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">El plan incluye:</p>
+        <ul class="list-group">
+            {% for itemA in itemsA %}
+            <li class="list-group-item"
+                style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">{{ itemA }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% if itemsR %}
+        <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">El plan no incluye:</p>
+        <ul class="list-group">
+            {% for itemR in itemsR %}
+            <li class="list-group-item"
+                style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">{{ itemR }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;">EL
+            PAQUETE TIENE UN PRECIO DE ${{ value }} POR PERSONA</p><br>
+    </div>
+</body>
+<footer>
+    <p style="text-align: justify; font-size: x-small; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">La
+        Casa del Turismo Liceísta, se compromete con: LEY 1336 DE 2009 Lucha contra la explotación, la pornografía, el
+        turismo sexual y demás formas de abuso sexual con menores de edad. - Ley 397 de 1997 Protección de los Bienes de
+        interés Cultural- Decreto 1377 de 2013 que comprende el manejo de la confidencialidad de los datos que sean
+        suministrados a la agencia - Ley 1752 de 2015 por medio de la cual se modifica la Ley 1482 de 2011, para
+        sancionar penalmente la discriminación contra las personas con discapacidad, la igualdad de raza o género. Ley
+        599 de 2000 y Decreto 1608 de 1978. Contra el tráfico de especies como flora y fauna silvestre.</p>
+</footer>
+
+</html>
