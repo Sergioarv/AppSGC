@@ -204,7 +204,7 @@ def request_answer(id):
                 'margin-bottom': '0.75in',
                 'margin-left': '0.75in',
             }
-            pdfkit.from_string(html, 'Cotizacion '+str(name)+'.pdf', options=option)
+            #pdfkit.from_string(html, 'Cotizacion '+str(name)+'.pdf', options=option)
             oRequest.dateO = dateO
             db.session.commit()
             oRequest.hourO = hourO
