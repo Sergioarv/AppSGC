@@ -4,7 +4,7 @@ from app.schemas.models import Flyer, Request
 from datetime import date, datetime, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import os, smtplib, requests, locale, pdfkit
+import os, smtplib, requests, pdfkit
 
 #ruta estatica de imagenes
 UPLOAD_FOLDER = os.path.abspath("./app/static/img/")
@@ -152,8 +152,7 @@ def request_answer(id):
         city = request.form["city"]
         asunto = request.form["asunto"]
         value = request.form["value"]
-        locale.setlocale(locale.LC_ALL, "es_CO")
-        date = datetime.now().utcnow().strftime("%d de %B del %Y")
+        date = datetime.now().utcnow().strftime("%d de %m del %Y")
         itemA = request.form['itemA']
         itemR = request.form['itemR']
         html = render_template('/quotation/quotation.html', date = date, para = para, name = name, city = city, asunto = asunto, value = value, itemA = itemA, itemR = itemR)
@@ -168,8 +167,7 @@ def request_answer(id):
         pdfkit.from_string(html, 'Cotizacion'+str(name)+'.pdf', options=option)
         return redirect('/')
     else:
-        locale.setlocale(locale.LC_ALL, "es_CO")
-        date = datetime.now().utcnow().strftime("%d de %B del %Y")
+        date = datetime.now().utcnow().strftime("%d de %m del %Y")
         oRequest = Request.query.filter_by(id = id).first()
         return render_template('/request/answer.html', myRequest = oRequest, date = date)
 

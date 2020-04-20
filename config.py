@@ -8,7 +8,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///'+ os.path.abspath('./dbsgc.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = 'mysecretkey'
-    MAIL_USERNAME = 'sarv9208@hotmail.com'
+    MAIL_USERNAME = 'sarv9208@gmail.com'
     MAIL_PASSWORD = 'nxmgrqskcwbticku'
 
 class ProductionConfig(Config):
