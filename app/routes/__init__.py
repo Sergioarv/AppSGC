@@ -7,7 +7,8 @@ from email.mime.text import MIMEText
 import os, smtplib, requests, pdfkit
 
 #ruta estatica de imagenes
-UPLOAD_FOLDER = os.path.abspath("./app/static/img/")
+UPLOAD_FOLDER = os.path.abspath(os.getcwd())+"/app/static/img/"
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.permanent_session_lifetime = timedelta(minutes=3)
 
@@ -58,7 +59,6 @@ def mission_vision():
 @app.route('/values')
 def values():
     return render_template("/about/values.html")
-
 
 #Rutas de Flyer
 #Ruta de index Flyer
