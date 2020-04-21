@@ -38,12 +38,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/flyer">Flyer</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/survey">Encuestas</a>
+                </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contactenos</a>
+                    <a class="nav-link" href="/contact">Contactenos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about">Quienes Somos</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Quienes Somos</a>
+                    <div class="dropdown-menu navbar-dark bg-dark">
+                        <a class="nav-link" href="/company">Nuestra Empresa</a>
+                        <a class="nav-link" href="/mission_vision">Mision-Vision</a>
+                        <a class="nav-link" href="/values">Nuestros Valores</a>
+                      </div>
                 </li>
                 {% if session['admin'] %}
                 <li class="nav-item">

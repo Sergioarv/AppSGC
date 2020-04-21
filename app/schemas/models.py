@@ -26,3 +26,12 @@ class Request(db.Model):
     dateO = db.Column(db.String(50))
     hourI = db.Column(db.String(50))
     hourO = db.Column(db.String(50))
+
+class Survey(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(50))
+    quest1 = db.Column(db.String(100))
+
+class Question(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    quest1 = db.Column(db.String(100))

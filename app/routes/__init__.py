@@ -41,10 +41,24 @@ def index():
     flyers = Flyer.query.all()
     return render_template("home.html", listFlyer = flyers)
 
-#Ruta alternativa
-@app.route('/about')
-def about():
-    return render_template("about.html")
+#Ruta contactos
+@app.route('/contact')
+def contact():
+    return render_template("/about/contact.html")
+
+#Ruta Quienes Somos
+@app.route('/company')
+def company():
+    return render_template("/about/company.html")
+
+@app.route('/mission_vision')
+def mission_vision():
+    return render_template("/about/mission_vision.html")
+
+@app.route('/values')
+def values():
+    return render_template("/about/values.html")
+
 
 #Rutas de Flyer
 #Ruta de index Flyer
@@ -224,8 +238,16 @@ def quotation_index():
         oRequest = Request.query.filter_by(state = 'Procesado').all()
         return render_template('/quotation/index.html', listRequest = oRequest)
     else:
-        redirect('/login')
+        return redirect('/login')
 
+#Rutas Encuestas
+#Encuesta index
+@app.route('/survey')
+def survey_index():
+    if filtroS():
+        print ('')
+    else:
+        return redirect('/login')
 
 @app.route('/login', methods=["GET","POST"])
 def login_in():
