@@ -37,7 +37,7 @@
         {% for flyer in listFlyer %}
         <div class="col mb-4">
             <div style="text-align: center;border-radius: 6px; border-style: solid; border-width: 1px; padding: .5em;">
-                <img src="/static/img/{{ flyer.imagen }}" class="card-img-top" style="max-height: max-content;">
+                <img src="data:image/png;base64,{{ flyer.imagen }}" class="card-img-top" style="max-width: max-content;">
                 <div class="card-body">
                     <h5 class="card-title">{{ flyer.name }}</h5>
                     <p style="overflow: hidden">{{ flyer.description }}</p>

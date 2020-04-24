@@ -4,6 +4,7 @@ from app.schemas.models import Flyer, Request, Admin
 from datetime import date, datetime, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from base64 import b64encode
 import os, smtplib, requests, pdfkit
 
 #ruta estatica de imagenes
@@ -40,6 +41,8 @@ def filtroS():
 def index():
     adminF()
     flyers = Flyer.query.all()
+    for f in flyers:
+        f.imagen = b64encode(f.imagen).decode("utf-8")
     return render_template("home.html", listFlyer = flyers)
 
 #Ruta contactos
@@ -66,6 +69,8 @@ def values():
 def flyer_index():
     if filtroS():
         flyers = Flyer.query.all()
+        for f in flyers:
+            f.imagen = b64encode(f.imagen).decode("utf-8")
         return render_template('/flyer/index.html', listFlyer = flyers)
     else:
         return redirect('/login')
@@ -79,8 +84,7 @@ def flyer_create():
             descripcion = request.form['descripcion']
             f = request.files['archivo']
             if f and allowed_file(f.filename):
-                img = f.filename
-                f.save(os.path.join(app.config['UPLOAD_FOLDER'], img))
+                img = f.read()
                 oFlyer = Flyer(name = nombre, description = descripcion, imagen = img)
                 db.session.add(oFlyer)
                 db.session.commit()
@@ -123,9 +127,7 @@ def flyer_edit(id):
             if filename:
                 #Verifica que tengo un nombre y extension valida la imagen
                 if f and allowed_file(filename):
-                    #f.remove(app.root_path+'/static/img/'+filename))
-                    f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    img = filename
+                    img = f.read()
                     oFlyer.imagen =  img
                     db.session.commit()
                 else:
@@ -148,6 +150,7 @@ def flyer_edit(id):
 @app.route('/flyer/detail/<string:id>')
 def flyer_detail(id):
     oFlyer = Flyer.query.filter_by(id = id).first()
+    oFlyer.imagen = b64encode(oFlyer.imagen).decode("utf-8")
     return render_template('/flyer/detail.html', myFlyer = oFlyer)
 
 # Rutas de Solicitud

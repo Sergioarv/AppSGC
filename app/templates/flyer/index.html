@@ -37,7 +37,7 @@
                 <p style="overflow-wrap: break-word;">{{ flyer.description }}</p>
             </td>
             <td style="min-width:200px; width:50%; max-width:350px; text-align: center; vertical-align: middle;">
-                <img src="/static/img/{{ flyer.imagen }}" style="width:fit-content; max-width: 80%;" />
+                <img src="data:image/png;base64,{{ flyer.imagen }}" style="width:fit-content; max-width: 80%;" />
             </td>
             <td>
                 <button onclick="document.location.href='/flyer/edit/{{ flyer.id }}'" class="btn btn-info">
