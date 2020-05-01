@@ -10,13 +10,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="icon"
-        href="https://scontent.fclo9-1.fna.fbcdn.net/v/t1.0-9/12821570_560137094151039_8870789361796236215_n.png?_nc_cat=109&_nc_sid=09cbfe&_nc_ohc=-3IddIyVIhUAX_dW-7N&_nc_ht=scontent.fclo9-1.fna&oh=867b41bb142c4a29bc1d625cdc1b2fd4&oe=5EC2C035"
+        href="https://imgur.com/xifoKDB"
         type="image/x-icon">
     <title>Casa del Turismo</title>
 </head>
 
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="/">Casa del Turismo</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -48,7 +47,7 @@
                         <a class="nav-link" href="/company">Nuestra Empresa</a>
                         <a class="nav-link" href="/mission_vision">Mision-Vision</a>
                         <a class="nav-link" href="/values">Nuestros Valores</a>
-                      </div>
+                    </div>
                 </li>
                 {% if session['admin'] %}
                 <li class="nav-item">
@@ -63,7 +62,7 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container" style="padding-right: 1vw; padding-left: 1vw;">
         {% block content %}
         {% endblock %}
     </div>
@@ -79,5 +78,15 @@
         crossorigin="anonymous"></script>
     <script src="/static/js/validar.js"></script>
 </body>
+<footer>
+    <br>
+    <p style="padding: 2em; font-size: x-small;">La Casa del Turismo Liceísta, se compromete con: LEY 1336 DE 2009 Lucha
+        contra la explotación, la pornografía, el turismo sexual y demás formas de abuso sexual con menores de edad. -
+        Ley 397 de 1997 Protección de los Bienes de interés Cultural- Decreto 1377 de 2013 que comprende el manejo de la
+        confidencialidad de los datos que sean suministrados a la agencia - Ley 1752 de 2015 por medio de la cual se
+        modifica la Ley 1482 de 2011, para sancionar penalmente la discriminación contra las personas con discapacidad,
+        la igualdad de raza o género. Ley 599 de 2000 y Decreto 1608 de 1978. Contra el tráfico de especies como flora y
+        fauna silvestre.</p>
+</footer>
 
 </html>

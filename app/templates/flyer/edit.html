@@ -14,38 +14,36 @@
 {% endwith %}
 <br />
 <h2>Editar Flyer</h2>
-<div class="row">
-    <div class="col-lg-12">
-        <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
-            <div class="col-md-6">
-                <label>Nombre</label>
-                <input value="{{ myFlyer.name }}" type="text" class="form-control" name="name" required>
-                <div class="valid-feedback">Ok</div>
-                <div class="invalid-feedback">Debe completar el campo</div>
-            </div>
-            <br>
-            <div class="col-md-6">
-                <label>Descripción</label>
-                <textarea class="form-control" name="description" id="descriptioC" rows="3"
-                    placeholder="Ingrese una descripcion de lo que solicita" required>{{ myFlyer.description }}</textarea>
-                <span class="valid-feedback">Ok</span>
-                <span class="invalid-feedback">Debe completar el campo</span>
-            </div>
-            <br>
-            <div class="col-md-6">
-                <label>Imagen</label>
-                <br />
-                <input type="file" name="fileImagen">
-                <br />
-                <br />
-            </div>
-            <div>
-                <input type="submit" class="btn btn-success" value="Aceptar" />
-                <button onclick="document.location.href='/flyer'" type="button" class="btn btn-dark">Volver</button>
-            </div>
-        </form>
+<form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label>Nombre</label>
+            <input value="{{ myFlyer.name }}" type="text" class="form-control" name="name" required>
+            <div class="valid-feedback">Ok</div>
+            <div class="invalid-feedback">Debe completar el campo</div>
+        </div>
     </div>
-</div>
-
-
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label>Descripción</label>
+            <textarea class="form-control" name="description" id="descriptioC" rows="3"
+                placeholder="Ingrese una descripcion de lo que solicita" required>{{ myFlyer.description }}</textarea>
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label>Imagen</label>
+            <br />
+            <input type="file" name="fileImagen">
+            <br />
+            <br />
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-success" value="Aceptar" />
+        <button onclick="document.location.href='/flyer'" type="button" class="btn btn-dark">Volver</button>
+    </div>
+</form>
 {% endblock %}

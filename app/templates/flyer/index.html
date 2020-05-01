@@ -24,9 +24,9 @@
 <table class="table table-responsive justify-content-center">
     <thead class="thead-dark">
         <tr>
-            <th style="width: fit-content;">Nombre</th>
-            <th style="width: fit-content;">Descripcion</th>
-            <th style="width: fit-content;">Flyer</th>
+            <th style="min-width: 200px">Nombre</th>
+            <th style="min-width: 300px">Descripcion</th>
+            <th style="min-width: 400px">Flyer</th>
         </tr>
     </thead>
     <tbody>
@@ -34,16 +34,18 @@
         <tr>
             <td>{{ flyer.name }}</td>
             <td style="min-width:200px; width:25%; max-width:250px;text-align: justify;">
-                <p style="overflow-wrap: break-word;">{{ flyer.description }}</p>
+                <p style="height: 150px; overflow: hidden; overflow-wrap: break-word;">{{ flyer.description }}</p>
             </td>
-            <td style="min-width:200px; width:50%; max-width:350px; text-align: center; vertical-align: middle;">
-                <img src="data:image/png;base64,{{ flyer.imagen }}" style="width:fit-content; max-width: 80%;" />
+            <td style="text-align: center;">
+                <img src="data:image/png;base64,{{ flyer.imagen }}" style="width: auto; max-width: 350px;"/>
             </td>
-            <td>
+            <td style="width: 350px;">
                 <button onclick="document.location.href='/flyer/edit/{{ flyer.id }}'" class="btn btn-info">
                     Editar
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>
+            </td>
+            <td style="width: 350px;">
                 <button onclick="document.location.href='/flyer/delete/{{ flyer.id }}'" class="btn btn-danger">
                     Eliminar
                     <span class="glyphicon glyphicon-trash"></span>
@@ -53,4 +55,5 @@
         {% endfor %}
     </tbody>
 </table>
+
 {% endblock %}

@@ -1,20 +1,23 @@
 from flask import render_template, redirect, request, url_for, send_from_directory, flash, session
 from app import app, db
-from app.schemas.models import Flyer, Request, Admin
+from app.schemas.models import Flyer, Request, Admin, Quotation
 from datetime import date, datetime, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from base64 import b64encode
+from reportlab.pdfgen import canvas
+from reportlab.lib.enums import TA_JUSTIFY, TA_CENTER
+from reportlab.platypus import Paragraph, Table, TableStyle, Image
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.units import cm
 import os, smtplib, requests, pdfkit
 
-#ruta estatica de imagenes
-UPLOAD_FOLDER = os.path.abspath(os.getcwd())+"/app/static/img/"
-
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.permanent_session_lifetime = timedelta(minutes=3)
+#Tiempo de Session
+app.permanent_session_lifetime = timedelta(hours=3)
 
 #formatos permitidos de imagen
-ALLOWED_EXTENDSIONS = set (["png","jpge","jpg","gif"])
+ALLOWED_EXTENDSIONS = set (["png","PNG","jpge","JPEG","jpg","JPG","gif","GIF", "svg", "SVG"])
 
 #verificar tipos de imagenes
 def allowed_file(filename):
@@ -121,12 +124,11 @@ def flyer_edit(id):
             nombre = request.form['name']
             descripcion = request.form['description']
             f = request.files['fileImagen']
-            filename = f.filename
-            print (filename)
+            print (f)
             #Si hay una imagen se actualiza
-            if filename:
+            if f:
                 #Verifica que tengo un nombre y extension valida la imagen
-                if f and allowed_file(filename):
+                if f and allowed_file(f.filename):
                     img = f.read()
                     oFlyer.imagen =  img
                     db.session.commit()
@@ -196,8 +198,6 @@ def request_answer(id):
         date = datetime.now().utcnow().strftime("%d de %m del %Y")
         if request.method == 'POST':
             para = request.form["inputTo"]
-            name = request.form["nameC"]
-            city = request.form["city"]
             asunto = request.form["asunto"]
             value = request.form["value"]
             dateO = datetime.now().strftime("%d-%m-%Y")
@@ -212,34 +212,84 @@ def request_answer(id):
                         itemsR.append(request.form['item'+str(i)])
                 except:
                     pass
-            html = render_template('/quotation/quotation.html', date = date, para = para, name = name, city = city, asunto = asunto, value = value, itemsA = itemsA, itemsR = itemsR)
-            option = {
-                'page-size': 'Letter',
-                'encoding': 'UTF-8',
-                'margin-top': '0.25in',
-                'margin-right': '0.75in',
-                'margin-bottom': '0.75in',
-                'margin-left': '0.75in',
-            }
-            #pdfkit.from_string(html, 'Cotizacion '+str(name)+'.pdf', options=option)
-            oRequest.dateO = dateO
-            db.session.commit()
-            oRequest.hourO = hourO
-            db.session.commit()
             oRequest.state = 'Procesado'
             db.session.commit()
+            oQuotation = Quotation(para = para, asunto = asunto, value = value, dateO =dateO, hourO = hourO, request_id = id)
+            db.session.add(oQuotation)
+            db.session.commit()
+            convertirPDF(id)
             return redirect('/quotation')
         else:
             return render_template('/request/answer.html', myRequest = oRequest, date = date)
     else:
         return redirect('/login')
 
+def convertirPDF(id):
+    width, height = letter
+    data = db.session.query(Request.name, Request.address, Quotation.dateO, Request.origin, Quotation.para, Quotation.asunto, Quotation.value).filter(Request.id == Quotation.request_id).filter(Request.id == id).first()
+    styles = getSampleStyleSheet()
+    styleBH = styles["Normal"]
+    styleBH.alignment = TA_CENTER
+    styleB = styles["BodyText"]
+    styleB.alignment = TA_JUSTIFY
+    styleBH.leading = 18
+    logo = "app/static/img/Logo.png"
+    im = Image(logo, width=200, height=200,hAlign='CENTER')
+    txt = Paragraph('''<font size="24">La Casa Del Turismo</font><br />
+                <font size="20">VIAJES Y TURISMO</font><br />
+                <font size="18">Calle 48 # 49 – 73 Tel. 219 09 36</font><br />
+                <font size="18">Cel. 311 752 0216 – 312 490 2409</font><br />
+                <font size="14">RNT 35238</font><br />
+                <font size="16">SEDE LA CASA DEL AFICHE.</font><br />''', styleBH)
+    datos = [[im, txt]]
+    table = Table(datos, colWidths=[width/3,width/2])
+    table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('VALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ]))
+    c = canvas.Canvas("../Cotizacion "+str(data.name)+".pdf", pagesize=letter)
+    table.wrapOn(c, width, height)
+    table.drawOn(c, width/15, height-7*cm)
+    txt = c.beginText(width/15,height/1.4)
+    txt.textLines("""
+    %s\n\n%s\n%s %s\n%s E. S. M.
+    \n\nAsunto: Cotizacion\n%s\n"""
+    %(data.dateO, data.para, data.name, data.address, data.origin, data.asunto))
+    txt2 = c.beginText(width/15,height/2)
+    txt2.textLines("""\r\tEL PLAN TIENE UN PRECIO POR PERSONA %s""" %(data.value))
+    c.drawText(txt)
+    c.drawText(txt2)
+    c.save()
+
 #Ruta responder Cotizacion
 @app.route('/quotation')
 def quotation_index():
     if filtroS():
-        oRequest = Request.query.filter_by(state = 'Procesado').all()
+        oRequest = db.session.query(Request, Quotation).join(Quotation).filter(Request.state != 'Solicitado').all()
         return render_template('/quotation/index.html', listRequest = oRequest)
+    else:
+        return redirect('/login')
+
+@app.route('/quotation/answer//<string:id>,<string:newState>')
+def quotation_answer(id, newState):
+    if filtroS():
+        q = db.session.query(Request, Quotation).filter(Request.id == Quotation.request_id).filter(Request.id == id,).first()
+        if q[0].state == 'Procesado':
+            if newState == 'Aceptado':
+                q[0].state = newState
+            db.session.commit()
+            print (q[0].state)
+            q[1].valueT = q[1].value * 5
+            db.session.commit()
+        return redirect('/quotation')
+    else:
+        return redirect('/login')
+
+@app.route('/quotation/detail/<string:id>')
+def quotation_detail(id):
+    if filtroS():
+        q = db.session.query(Request.name, Request.address, Quotation.dateO, Request.origin, Quotation.para, Quotation.asunto, Quotation.value).filter(Request.id == Quotation.request_id).filter(Request.id == id).first()
+        return render_template('/quotation/quotation.html', data = q)
     else:
         return redirect('/login')
 

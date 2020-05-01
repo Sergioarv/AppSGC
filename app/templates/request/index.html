@@ -17,13 +17,13 @@
 <table class="table table-responsive justify-content-center">
     <thead class="thead-dark">
         <tr>
-            <th style="width: fit-content;" >Cliente</th>
-            <th style="width: fit-content;" >Correo</th>
-            <th style="width: fit-content;" >Telefono</th>
-            <th style="width: fit-content;" >Destino</th>
-            <th style="width: fit-content;" >Origen</th>
-            <th style="width: fit-content;" >Fecha Solicitud</th>
-            <th style="width: fit-content;" >Descripcion</th>
+            <th style="min-width: 150px;">Cliente</th>
+            <th style="min-width: 150px;">Correo</th>
+            <th style="min-width: 100px;">Telefono</th>
+            <th style="min-width: 100px;">Destino</th>
+            <th style="min-width: 100px;">Origen</th>
+            <th style="min-width: 100px;">Fecha Solicitud</th>
+            <th style="min-width: 150px;">Descripcion</th>
         </tr>
     </thead>
     <tbody>
@@ -36,7 +36,8 @@
             <td style="width: fit-content;">{{ request.origin }}</td>
             <td style="width: fit-content;">{{ request.dateI }}</td>
             <td style="width: 100px; max-width: 150px; text-align: justify;">
-                <p style="overflow-wrap: break-word;">{{ request.description }}</p>
+                <p style="height: min-content;max-height: 150px; overflow: hidden; overflow-wrap: break-word;">
+                    {{ request.description }}</p>
             </td>
             <td style="width:fit-content; text-align: justify;">
                 <button onclick="document.location.href='/request/answer/{{ request.id }}'" class="btn btn-md btn-info">
@@ -48,4 +49,5 @@
         {% endfor %}
     </tbody>
 </table>
+
 {% endblock %}

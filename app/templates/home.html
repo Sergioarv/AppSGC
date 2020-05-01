@@ -1,5 +1,4 @@
 {% extends "layout.html" %}
-
 {% block content %}
 <br />
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -16,18 +15,16 @@
 <table style="border: hidden;">
     <tr>
         <td style="width: 45%;">
-            <img src="https://scontent.fclo9-1.fna.fbcdn.net/v/t1.0-9/12821570_560137094151039_8870789361796236215_n.png?_nc_cat=109&_nc_sid=09cbfe&_nc_ohc=-3IddIyVIhUAX_dW-7N&_nc_ht=scontent.fclo9-1.fna&oh=867b41bb142c4a29bc1d625cdc1b2fd4&oe=5EC2C035"
-                style="width: fit-content; max-width: 90%;" />
+            <img src="https://i.imgur.com/xifoKDB.png"
+                style="max-width: 90%;" />
         </td>
-        <td style="width: 70%;">
-            <p style="text-align:center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-                <Font size="24">La Casa Del Turismo</Font><br />
-                <Font size="6">VIAJES Y TURISMO</Font><br />
-                <Font size="4">Calle 48 # 49 – 73 Tel. 219 09 36</Font><br />
-                <Font size="4">Cel. 311 752 0216 – 312 490 2409</Font><br />
-                <Font size="4">RNT 35238</Font><br />
-                <Font size="4">SEDE LA CASA DEL AFICHE.</Font><br />
-            </p>
+        <td>
+            <p style="text-align: center; font-size: 4vw; line-height: 6vh;">La Casa Del Turismo</p>
+            <p style="text-align: center; font-size: 3.5vw; line-height: 4vh;">VIAJES Y TURISMO</p>
+            <p style="text-align: center; font-size: 2.2vw; line-height: 3vh;">Calle 48 # 49 – 73 Tel. 219 09 36</p>
+            <p style="text-align: center; font-size: 2.2vw; line-height: 2vh;">Cel. 311 752 0216 – 312 490 2409</p>
+            <p style="text-align: center; font-size: 2vw; line-height: 3vh;">RNT 35238</p>
+            <p style="text-align: center; font-size: 2.2vw; line-height: 2vh;">SEDE LA CASA DEL AFICHE.</p>
         </td>
     </tr>
 </table>
@@ -37,10 +34,10 @@
         {% for flyer in listFlyer %}
         <div class="col mb-4">
             <div style="text-align: center;border-radius: 6px; border-style: solid; border-width: 1px; padding: .5em;">
-                <img src="data:image/png;base64,{{ flyer.imagen }}" class="card-img-top" style="max-width: max-content;">
+                <img src="data:image/png;base64,{{ flyer.imagen }}" style="height: 300px;" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">{{ flyer.name }}</h5>
-                    <p style="overflow: hidden">{{ flyer.description }}</p>
+                    <p style="height: 100px; overflow: hidden;overflow-wrap: break-word;">{{ flyer.description }}</p>
                     <button onclick="document.location.href='/flyer/detail/{{ flyer.id }}' " type="button"
                         class="btn btn-primary">
                         Descripción
@@ -52,4 +49,5 @@
         {% endfor %}
     </div>
 </div>
+
 {% endblock %}

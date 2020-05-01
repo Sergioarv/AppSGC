@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
-
 {% block content -%}
+
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
 {% for category, msg in messages %}
@@ -24,7 +24,8 @@
         </div>
         <div class="col-lg-12 mb-3">
             <label>Descripción</label>
-            <textarea type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Ingrese una descripcion del flyer" required></textarea>
+            <textarea type="text" class="form-control" name="descripcion" id="descripcion"
+                placeholder="Ingrese una descripcion del flyer" required></textarea>
             <div class="valid-feedback">Ok</div>
             <div class="invalid-feedback">Debe completar el campo</div>
         </div>
