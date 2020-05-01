@@ -217,8 +217,12 @@ def request_answer(id):
             oQuotation = Quotation(para = para, asunto = asunto, value = value, dateO =dateO, hourO = hourO, request_id = id)
             db.session.add(oQuotation)
             db.session.commit()
-            convertirPDF(id)
-            return redirect('/quotation')
+            try:
+                convertirPDF(id)
+                return redirect('/quotation')
+            except:
+                flash('Hubo un error al crear el PDF', 'danger')
+                return redirect('/quotation')
         else:
             return render_template('/request/answer.html', myRequest = oRequest, date = date)
     else:
@@ -247,7 +251,7 @@ def convertirPDF(id):
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
         ('VALIGN', (0, 0), (-1, -1), 'CENTER'),
         ]))
-    c = canvas.Canvas("../Cotizacion "+str(data.name)+".pdf", pagesize=letter)
+    c = canvas.Canvas("Cotizacion "+str(data.name)+".pdf", pagesize=letter)
     table.wrapOn(c, width, height)
     table.drawOn(c, width/15, height-7*cm)
     txt = c.beginText(width/15,height/1.4)
