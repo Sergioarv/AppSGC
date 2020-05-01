@@ -275,8 +275,7 @@ def quotation_answer(id, newState):
     if filtroS():
         q = db.session.query(Request, Quotation).filter(Request.id == Quotation.request_id).filter(Request.id == id,).first()
         if q[0].state == 'Procesado':
-            if newState == 'Aceptado':
-                q[0].state = newState
+            q[0].state = newState
             db.session.commit()
             print (q[0].state)
             q[1].valueT = q[1].value * 5
