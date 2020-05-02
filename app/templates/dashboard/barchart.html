@@ -1,0 +1,35 @@
+<div style="width:80%; height:90%; padding-left: 5vw; padding-top: 4vw;">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <div id="chart_div" style="width: 120%; height: 400px;"></div>
+    <script type="text/javascript">
+        google.charts.load('current', { packages: ['corechart', 'bar'] });
+        google.charts.setOnLoadCallback(drawBasic);
+
+        function drawBasic() {
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Estado');
+            data.addColumn('number', 'Cantidad');
+            data.addRows([
+                {% for d in range(mydata|length) %}
+                ['{{ valor[d] }}',{{mydata[d]}}],
+                {% endfor %}
+            ]);
+
+            var options = {
+                title: '{{ tittle }}',
+                hAxis: {
+                    title: 'Estado',
+                },
+                vAxis: {
+                    title: 'Cantidad'
+                }
+            };
+
+            var chart = new google.visualization.ColumnChart(
+                document.getElementById('chart_div'));
+
+            chart.draw(data, options);
+        }
+    </script>
+</div>

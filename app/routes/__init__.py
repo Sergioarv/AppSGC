@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, send_from_directory, flash, session
+from flask import render_template, redirect, request, url_for, flash, session
 from app import app, db
 from app.schemas.models import Flyer, Request, Admin, Quotation, Constraint
 from datetime import date, datetime, timedelta
@@ -308,14 +308,29 @@ def quotation_detail(id):
 
 @app.route('/dashboard')
 def dashboard_index():
-    title ='Cantidad de Solicitudes por Tipo'
+    return render_template('/dashboard/dashboard.html')
+
+@app.route('/prueba')
+def prueba():
+    tittle ='Cantidad de Solicitudes por Tipo'
+    data = []
+    valor = ['Solicitado','Rechazado','Aceptado','Procesado']
+    data.append(Request.query.filter_by(state = 'Solicitado').count())
+    data.append(Request.query.filter_by(state = 'Rechazado').count())
+    data.append(Request.query.filter_by(state = 'Aceptado').count())
+    data.append(Request.query.filter_by(state = 'Procesado').count())
+    return render_template('/dashboard/piechart.html', mydata = data, valor = valor, tittle = tittle)
+
+@app.route('/prueba2')
+def prueba2():
+    tittle ='Cantidad de Solicitudes por Tipo'
     data = []
     valor = ['Solicitado','Aceptado','Rechazado','Procesado']
     data.append(Request.query.filter_by(state = 'Solicitado').count())
     data.append(Request.query.filter_by(state = 'Aceptado').count())
     data.append(Request.query.filter_by(state = 'Rechazado').count())
     data.append(Request.query.filter_by(state = 'Procesado').count())
-    return render_template('/dashboard/dashboard.html', mydata = data, valor = valor, title = title)
+    return render_template('/dashboard/barchart.html', mydata = data, valor = valor, tittle = tittle)
 
 #Rutas Encuestas
 #Encuesta index

@@ -1,0 +1,28 @@
+<div style="width:80%; height:90%; padding-left: 5vw; padding-top: 4vw;">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <div id="piechart_3d" style="width: 120%; height: 400px;"></div>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Dato');
+            data.addColumn('number', 'Estado');
+            data.addRows([
+                {% for d in range(mydata | length) %}
+        ['{{ valor[d] }}', {{ mydata[d] }}],
+            {% endfor %}
+        ]);
+
+        // Set chart options
+        var options = {
+            'title': '{{ tittle }}',
+            is3D: true,
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+    }
+    </script>
+</div>
