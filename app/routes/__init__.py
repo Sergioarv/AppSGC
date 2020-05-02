@@ -1,6 +1,6 @@
 from flask import render_template, redirect, request, url_for, send_from_directory, flash, session
 from app import app, db
-from app.schemas.models import Flyer, Request, Admin, Quotation
+from app.schemas.models import Flyer, Request, Admin, Quotation, Constraint
 from datetime import date, datetime, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -11,10 +11,12 @@ from reportlab.platypus import Paragraph, Table, TableStyle, Image
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import cm
-import os, smtplib, requests, pdfkit
+from flask_googlecharts import GoogleCharts, PieChart
+import os, smtplib, requests
 
 #Tiempo de Session
 app.permanent_session_lifetime = timedelta(hours=3)
+charts = GoogleCharts(app)
 
 #formatos permitidos de imagen
 ALLOWED_EXTENDSIONS = set (["png","PNG","jpge","JPEG","jpg","JPG","gif","GIF", "svg", "SVG"])
@@ -88,6 +90,7 @@ def flyer_create():
             f = request.files['archivo']
             if f and allowed_file(f.filename):
                 img = f.read()
+                print (len(img))
                 oFlyer = Flyer(name = nombre, description = descripcion, imagen = img)
                 db.session.add(oFlyer)
                 db.session.commit()
@@ -200,29 +203,34 @@ def request_answer(id):
             para = request.form["inputTo"]
             asunto = request.form["asunto"]
             value = request.form["value"]
+            num = request.form["num"]
+            valueT = int(num) * int(value)
             dateO = datetime.now().strftime("%d-%m-%Y")
             hourO = datetime.now().strftime("%H:%M:%S")
-            itemsA = []
-            itemsR = []
-            for i in range(1, 15):
-                try:
-                    if i < 12:
-                        itemsA.append(request.form['item'+str(i)])
-                    else:
-                        itemsR.append(request.form['item'+str(i)])
-                except:
-                    pass
             oRequest.state = 'Procesado'
             db.session.commit()
-            oQuotation = Quotation(para = para, asunto = asunto, value = value, dateO =dateO, hourO = hourO, request_id = id)
+            oQuotation = Quotation(para = para, asunto = asunto, value = value, dateO =dateO, hourO = hourO, valueT = valueT, request_id = id)
             db.session.add(oQuotation)
             db.session.commit()
-            try:
-                convertirPDF(id)
-                return redirect('/quotation')
-            except:
-                flash('Hubo un error al crear el PDF', 'danger')
-                return redirect('/quotation')
+            itemsA = []
+            itemsR = []
+            for i in range(1, 16):
+                try:
+                    item = request.form['item'+str(i)]
+                    if i < 12:
+                        itemsA.append(item)
+                        oConstraint = Constraint(constraint = item, tipe = 0, quotation_id = oQuotation.id)
+                        db.session.add(oConstraint)
+                        db.session.commit()
+                    else:
+                        itemsR.append(item)
+                        oConstraint = Constraint(constraint = item, tipe = 1, quotation_id = oQuotation.id)
+                        db.session.add(oConstraint)
+                        db.session.commit()
+                except:
+                    pass
+            #convertirPDF(id)
+            return redirect('/quotation')
         else:
             return render_template('/request/answer.html', myRequest = oRequest, date = date)
     else:
@@ -292,9 +300,22 @@ def quotation_answer(id, newState):
 def quotation_detail(id):
     if filtroS():
         q = db.session.query(Request.name, Request.address, Quotation.dateO, Request.origin, Quotation.para, Quotation.asunto, Quotation.value).filter(Request.id == Quotation.request_id).filter(Request.id == id).first()
-        return render_template('/quotation/quotation.html', data = q)
+        itemsA = db.session.query(Constraint.constraint).filter(id == Quotation.request_id).filter(Quotation.id == Constraint.quotation_id, Constraint.tipe == 0).all()
+        itemsR = db.session.query(Constraint.constraint).filter(id == Quotation.request_id).filter(Quotation.id == Constraint.quotation_id, Constraint.tipe == 1).all()
+        return render_template('/quotation/quotation.html', data = q, itemsA = itemsA, itemsR = itemsR)
     else:
         return redirect('/login')
+
+@app.route('/dashboard')
+def dashboard_index():
+    title ='Cantidad de Solicitudes por Tipo'
+    data = []
+    valor = ['Solicitado','Aceptado','Rechazado','Procesado']
+    data.append(Request.query.filter_by(state = 'Solicitado').count())
+    data.append(Request.query.filter_by(state = 'Aceptado').count())
+    data.append(Request.query.filter_by(state = 'Rechazado').count())
+    data.append(Request.query.filter_by(state = 'Procesado').count())
+    return render_template('/dashboard/dashboard.html', mydata = data, valor = valor, title = title)
 
 #Rutas Encuestas
 #Encuesta index

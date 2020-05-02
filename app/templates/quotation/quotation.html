@@ -35,29 +35,33 @@
             <br>{{ data.asunto }}</p>
         {% if itemsA %}
         <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">El plan incluye:</p>
+        {% for itemA in itemsA %}
         <ul class="list-group">
-            {% for itemA in itemsA %}
             <li class="list-group-item"
-                style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">{{ itemA }}</li>
-            {% endfor %}
+                style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+                {{ itemA.constraint }}</li>
         </ul>
+        {% endfor %}
         {% endif %}
         {% if itemsR %}
         <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">El plan no incluye:</p>
+        {% for itemR in itemsR %}
         <ul class="list-group">
-            {% for itemR in itemsA %}
             <li class="list-group-item"
-                style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">{{ itemR }}</li>
-            {% endfor %}
+                style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+                {{ itemR.constraint }}</li>
         </ul>
+        {% endfor %}
         {% endif %}
+        <br>
         <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;">EL
             PAQUETE TIENE UN PRECIO DE ${{ data.value }} POR PERSONA</p><br>
     </div>
 </body>
 <footer>
     <br>
-    <p style="padding: 2em; font-size: x-small; text-align: justify;">La Casa del Turismo Liceísta, se compromete con: LEY 1336 DE 2009 Lucha
+    <p style="padding: 2em; font-size: x-small; text-align: justify;">La Casa del Turismo Liceísta, se compromete con:
+        LEY 1336 DE 2009 Lucha
         contra la explotación, la pornografía, el turismo sexual y demás formas de abuso sexual con menores de edad. -
         Ley 397 de 1997 Protección de los Bienes de interés Cultural- Decreto 1377 de 2013 que comprende el manejo de la
         confidencialidad de los datos que sean suministrados a la agencia - Ley 1752 de 2015 por medio de la cual se
