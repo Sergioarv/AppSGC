@@ -241,7 +241,7 @@ def request_answer(id):
 def quotation_index():
     if filtroS():
         #oRequest = db.session.query(Request, Quotation).join(Quotation).filter(Request.state != 'Solicitado').all()
-        oRequest = db.session.query(Request, Quotation).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').group_by(Quotation.request_id)
+        oRequest = db.session.query(Request, Quotation).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').group_by(Quotation.request_id).all()
         return render_template('/quotation/index.html', listRequest = oRequest)
     else:
         return redirect('/login')
