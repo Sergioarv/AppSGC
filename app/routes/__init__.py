@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash, session
+from flask import render_template, redirect, request, url_for, flash, session, make_response
 from app import app, db
 from app.schemas.models import Flyer, Request, Admin, Quotation, Constraint
 from datetime import date, datetime, timedelta
@@ -12,7 +12,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import cm
 from flask_googlecharts import GoogleCharts, PieChart
-import os, smtplib, requests
+import os, smtplib, requests, pdfkit
 
 #Tiempo de Session
 app.permanent_session_lifetime = timedelta(hours=3)
@@ -229,55 +229,19 @@ def request_answer(id):
                         db.session.commit()
                 except:
                     pass
-            #convertirPDF(id)
-            return redirect('/quotation')
+            return convertirPDF(id)
+            #return redirect('/quotation')
         else:
             return render_template('/request/answer.html', myRequest = oRequest, date = date)
     else:
         return redirect('/login')
 
-def convertirPDF(id):
-    width, height = letter
-    data = db.session.query(Request.name, Request.address, Quotation.dateO, Request.origin, Quotation.para, Quotation.asunto, Quotation.value).filter(Request.id == Quotation.request_id).filter(Request.id == id).first()
-    styles = getSampleStyleSheet()
-    styleBH = styles["Normal"]
-    styleBH.alignment = TA_CENTER
-    styleB = styles["BodyText"]
-    styleB.alignment = TA_JUSTIFY
-    styleBH.leading = 18
-    logo = "app/static/img/Logo.png"
-    im = Image(logo, width=200, height=200,hAlign='CENTER')
-    txt = Paragraph('''<font size="24">La Casa Del Turismo</font><br />
-                <font size="20">VIAJES Y TURISMO</font><br />
-                <font size="18">Calle 48 # 49 – 73 Tel. 219 09 36</font><br />
-                <font size="18">Cel. 311 752 0216 – 312 490 2409</font><br />
-                <font size="14">RNT 35238</font><br />
-                <font size="16">SEDE LA CASA DEL AFICHE.</font><br />''', styleBH)
-    datos = [[im, txt]]
-    table = Table(datos, colWidths=[width/3,width/2])
-    table.setStyle(TableStyle([
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('VALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ]))
-    c = canvas.Canvas("Cotizacion "+str(data.name)+".pdf", pagesize=letter)
-    table.wrapOn(c, width, height)
-    table.drawOn(c, width/15, height-7*cm)
-    txt = c.beginText(width/15,height/1.4)
-    txt.textLines("""
-    %s\n\n%s\n%s %s\n%s E. S. M.
-    \n\nAsunto: Cotizacion\n%s\n"""
-    %(data.dateO, data.para, data.name, data.address, data.origin, data.asunto))
-    txt2 = c.beginText(width/15,height/2)
-    txt2.textLines("""\r\tEL PLAN TIENE UN PRECIO POR PERSONA %s""" %(data.value))
-    c.drawText(txt)
-    c.drawText(txt2)
-    c.save()
-
 #Ruta responder Cotizacion
 @app.route('/quotation')
 def quotation_index():
     if filtroS():
-        oRequest = db.session.query(Request, Quotation).join(Quotation).filter(Request.state != 'Solicitado').all()
+        #oRequest = db.session.query(Request, Quotation).join(Quotation).filter(Request.state != 'Solicitado').all()
+        oRequest = db.session.query(Request, Quotation).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').group_by(Quotation.request_id)
         return render_template('/quotation/index.html', listRequest = oRequest)
     else:
         return redirect('/login')
@@ -406,3 +370,13 @@ def enviarMensaje(data, opc):
     server.login(msg['From'], password)
     server.sendmail(msg['From'], msg['To'], msg.as_string())
     server.quit()
+
+def convertirPDF(id):
+    data = db.session.query(Request.name, Request.address, Quotation.dateO, Request.origin, Quotation.para, Quotation.asunto, Quotation.value).filter(Request.id == Quotation.request_id).filter(Request.id == id).first()
+    filename = "Cotizacion %s %s.pdf" %(data.name, data.address)
+    rendered = render_template('/quotation/quotation.html', data = data)
+    pdf = pdfkit.from_string(rendered, False)
+    response = make_response(pdf)
+    response.headers['Content_type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'attachment; filename="%s"' %filename
+    return response

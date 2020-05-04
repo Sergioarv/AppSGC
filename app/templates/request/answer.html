@@ -45,6 +45,8 @@
                         <option>Señora:</option>
                         <option>Señores:</option>
                     </select>
+                    <span class="valid-feedback">Ok</span>
+                    <span class="invalid-feedback">Debe completar el campo</span>
                 </div>
             </div>
             <div class="form-row">
@@ -71,6 +73,8 @@
             <div class="form-row">
                 <div class="form-group col-md-12">
                     <input class="form-control" name="asunto" value="Plan turístico, a {{ myRequest.destino }}"></input>
+                    <span class="valid-feedback">Ok</span>
+                    <span class="invalid-feedback">Debe completar el campo</span>
                 </div>
             </div>
             <div class="form-row">
@@ -174,16 +178,20 @@
                 <div class="form-group col-md-4">
                     <label class="form-control" style="text-align: center;">EL PLAN TIENE UN PRECIO POR PERSONA</label>
                 </div>
-                <div class="form-group col-md-2">
-                    <input class="form-control" type="number" name="value"
-                        placeholder="Ingrese el valor del Plan" required></input>
+                <div class="form-group col-md-3">
+                    <input class="form-control" type="number" name="value" placeholder="Ingrese el valor del Plan"
+                        min="0" required></input>
+                    <span class="valid-feedback">Ok</span>
+                    <span class="invalid-feedback">Debe completar el campo</span>
                 </div>
                 <div class="form-group col-md-3">
                     <label class="form-control" style="text-align: center;">Cantidad de personas</label>
                 </div>
-                <div class="form-group col-md-3">
-                    <input class="form-control" type="number" name="num"
-                        placeholder="Ingrese el numero de persona" required></input>
+                <div class="form-group col-md-2">
+                    <input class="form-control" type="number" name="num" placeholder="Ingrese el numero de persona"
+                        min="1" required></input>
+                    <span class="valid-feedback">Ok</span>
+                    <span class="invalid-feedback">Debe completar el campo</span>
                 </div>
             </div>
             <div class="form-row">
@@ -198,6 +206,10 @@
         <button type="submit" id="acept" class="btn btn-success">
             Aceptar
             <span class="glyphicon glyphicon-check"></span>
+        </button>
+        <button onclick="document.location.href='/quotation'" type="button" class="btn btn-info">
+            Contizaciones
+            <span class="glyphicon glyphicon-remove"></span>
         </button>
         <button onclick="document.location.href='/request'" type="button" class="btn btn-danger">
             Cancelar
