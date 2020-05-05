@@ -30,7 +30,7 @@ def prueba2(d):
     data.append(Request.query.filter_by(state = 'Procesado').count())
     return render_template('/dashboard/barchart.html', mydata = data, valor = valor, tittle = tittle, c = c, dashboard = d)
 
-@app.route('/Tiempo/<string:d>')
+@app.route('/tiempo/<string:d>')
 def prueba2(d):
     tittle ='Tiempo en Responder Solicitudes'
     data = []
