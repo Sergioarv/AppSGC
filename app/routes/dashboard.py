@@ -1,6 +1,6 @@
 from app import app, db
 from flask import render_template
-from app.schemas.models import Request
+from app.schemas.models import Request, Quotation
 
 # Dashboard y otros graficos
 @app.route('/dashboard')
@@ -35,8 +35,8 @@ def tiempo(d):
     tittle ='Tiempo en Responder Solicitudes'
     data = []
     valor = ['Solicitado','Rechazado','Procesado','Aceptado']
-    data.append(Request.query.filter_by(state = 'Solicitado').count())
-    data.append(Request.query.filter_by(state = 'Rechazado').count())
-    data.append(Request.query.filter_by(state = 'Procesado').count())
-    data.append(Request.query.filter_by(state = 'Aceptado').count())
+    cur = db.engine.execute('select sum(q.hourO) as total from Quotation q').fetchall()
+    for i in cur:
+        data.append(i.total)
+        print(i.total)
     return render_template('/dashboard/piechart.html', mydata = data, valor = valor, tittle = tittle, dashboard = d)
