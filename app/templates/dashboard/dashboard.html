@@ -1,7 +1,14 @@
 {% extends 'layout.html' %}
 {% block content %}
 <br>
-<iframe style="width:45%; height:450px; border: 0em;" src="/prueba"></iframe>
-<iframe style="width:45%; height:450px; border: 0em;" src="/prueba2"></iframe>
+<div class="row">
+    <div class="col-md-6">
+        <iframe style="width:100%; height:500px; border: 0em;" allowfullscreen src="/prueba"></iframe>
+    </div>
+    <div class="col-md-6">
+        <iframe style="width:100%; height:500px; border: 0em;" scrolling='no' allowfullscreen src="/prueba2/d"></iframe>
+    </div>
+</div>
+
 
 {% endblock %}
