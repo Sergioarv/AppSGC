@@ -2,9 +2,9 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config.from_object('config.ProductionConfig')
-#app.config.from_object('config.DevelopmentConfig')
+#app.config.from_object('config.ProductionConfig')
+app.config.from_object('config.DevelopmentConfig')
 
 db = SQLAlchemy(app)
 
-from app.routes import request, dashboard, flyer, quotation 
+from app.routes import myrequest, dashboard, flyer, quotation 

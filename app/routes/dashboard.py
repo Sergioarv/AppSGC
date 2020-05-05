@@ -7,8 +7,8 @@ from app.schemas.models import Request
 def dashboard_index():
     return render_template('/dashboard/dashboard.html')
 
-@app.route('/prueba')
-def prueba():
+@app.route('/solicitudes/<string:d>')
+def prueba(d):
     tittle ='Cantidad de Solicitudes por Tipo'
     data = []
     valor = ['Solicitado','Rechazado','Procesado','Aceptado']
@@ -16,9 +16,9 @@ def prueba():
     data.append(Request.query.filter_by(state = 'Rechazado').count())
     data.append(Request.query.filter_by(state = 'Procesado').count())
     data.append(Request.query.filter_by(state = 'Aceptado').count())
-    return render_template('/dashboard/piechart.html', mydata = data, valor = valor, tittle = tittle)
+    return render_template('/dashboard/piechart.html', mydata = data, valor = valor, tittle = tittle, dashboard = d)
 
-@app.route('/prueba2/<string:d>')
+@app.route('/solicitudesBar/<string:d>')
 def prueba2(d):
     tittle ='Cantidad de Solicitudes por Tipo'
     data = []

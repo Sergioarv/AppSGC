@@ -1,9 +1,9 @@
-{% if dashboard == 'yes' %}
+{% if dashboard == 'dashboard' %}
 {% extends 'layout.html' %}
 {% endif %}
 {% block content %}
 
-<div style="width:80%; height:100%; padding-left: 5vw; padding-top: 4vw;">
+<div style="justify-content: center; align-items: center; display: flex;">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <div id="chart_div"></div>
     <script type="text/javascript">
