@@ -1,5 +1,5 @@
 from app import db
-#from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship
 
 class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -35,8 +35,8 @@ class Quotation(db.Model):
     asunto = db.Column(db.String(100), nullable=False)
     value = db.Column(db.Integer, nullable=False)
     valueT = db.Column(db.Integer)
-    hourO = db.Column(db.String(50))
     dateO = db.Column(db.String(50))
+    hourO = db.Column(db.String(50))
     request_id = db.Column(db.Integer, db.ForeignKey('Request.id'))
     request = db.relationship('Request')
     constrainr = db.relationship('Constraint', uselist = False)

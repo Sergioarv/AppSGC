@@ -1,6 +1,7 @@
 from app import app
 from app.routes import *
 from flask import request
+from datetime import datetime
 
 #Rutas de Solicitud
 #Ruta Index solicitudes
@@ -23,11 +24,10 @@ def request_create(id):
         destino = request.form['destinoC']
         origin = request.form['originC']
         description = request.form['descriptionC']
-        fecha = datetime.now()
-        dateI = ''+fecha.strftime("%d-%m-%Y")
-        hourI = ''+fecha.strftime("%H:%M:%S")
+        dateI = datetime.now().strftime("%d/%m/%Y")
+        hourI = datetime.now().strftime("%H:%M:%S")
         state = 'Solicitado'
-        oRequest = Request(name = name, address = address, email = email, phone = phone, destino = destino, origin = origin, description = description, dateI = dateI, state = state, hourI = hourI)
+        oRequest = Request(name = name, address = address, email = email, phone = phone, destino = destino, origin = origin, description = description, dateI = dateI, hourI = hourI, state = state)
         db.session.add(oRequest)
         db.session.commit()
         enviarMensaje(oRequest, 1)
@@ -42,18 +42,18 @@ def request_create(id):
 def request_answer(id):
     if filtroS():
         oRequest = Request.query.filter_by(id = id).first()
-        date = datetime.now().utcnow().strftime("%d de %m del %Y")
+        date = datetime.now().strftime("%d de %B del %Y")
         if request.method == 'POST':
             para = request.form["inputTo"]
             asunto = request.form["asunto"]
             value = request.form["value"]
             num = request.form["num"]
             valueT = int(num) * int(value)
-            dateO = datetime.now().strftime("%d-%m-%Y")
+            dateO = datetime.now().strftime("%d/%m/%Y")
             hourO = datetime.now().strftime("%H:%M:%S")
             oRequest.state = 'Procesado'
             db.session.commit()
-            oQuotation = Quotation(para = para, asunto = asunto, value = value, dateO =dateO, hourO = hourO, valueT = valueT, request_id = id)
+            oQuotation = Quotation(para = para, asunto = asunto, value = value, dateO = dateO,hourO = hourO, valueT = valueT, request_id = id)
             db.session.add(oQuotation)
             db.session.commit()
             itemsA = []

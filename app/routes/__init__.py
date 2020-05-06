@@ -1,7 +1,7 @@
 from app import app, db
 from flask import Flask, request, render_template, session, flash, redirect
 from app.schemas.models import *
-from datetime import date, datetime, timedelta
+from datetime import timedelta
 from base64 import b64encode
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText

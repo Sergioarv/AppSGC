@@ -1,6 +1,9 @@
 from app import app, db
 from flask import render_template
+from sqlalchemy.sql import func
+from sqlalchemy import exc
 from app.schemas.models import Request, Quotation
+import datetime
 
 # Dashboard y otros graficos
 @app.route('/dashboard')
@@ -32,11 +35,45 @@ def solicitudesBar(d):
 
 @app.route('/tiempo/<string:d>')
 def tiempo(d):
-    tittle ='Tiempo en Responder Solicitudes'
-    data = []
-    valor = ['Solicitado','Rechazado','Procesado','Aceptado']
-    cur = db.engine.execute('select sum(q.hourO) as total from Quotation q').fetchall()
-    for i in cur:
-        data.append(i.total)
-        print(i.total)
-    return render_template('/dashboard/piechart.html', mydata = data, valor = valor, tittle = tittle, dashboard = d)
+    try:
+        tittle ='Ventas totales por dia'
+        c = ['#0040FF','#088A4B','#FF0000','#FF8000']
+        data = []
+        valor = []
+        cur2 = db.session.query(Quotation.dateO).group_by(Quotation.dateO).all()
+        cur = db.session.query(func.sum(Quotation.valueT).label('mayor')).group_by(Quotation.dateO).all()
+        for i in cur:
+            data.append(i.mayor)
+        for i in cur2:
+            valor.append(i.dateO)
+    except exc.SQLAlchemyError:
+        pass
+    return render_template('/dashboard/barchart.html', mydata = data, valor = valor, tittle = tittle, c = c, dashboard = d)
+
+@app.route('/lineTiempo/<string:d>')
+def line_tiempo(d):
+    try:
+        tittle ='Ventas (Total, Promedio, Mayor, Menor)'
+        data = []
+        data2 = []
+        data3 = []
+        data4 = []
+        valor = []
+        ejex = db.session.query(Quotation.dateO).group_by(Quotation.dateO).all()
+        total = db.session.query(func.sum(Quotation.valueT).label("valorT")).group_by(Quotation.dateO).all()
+        prom = db.session.query(func.avg(Quotation.valueT).label("valorP")).group_by(Quotation.dateO).all()
+        maxi = db.session.query(func.max(Quotation.valueT).label("valorM")).group_by(Quotation.dateO).all()
+        mini = db.session.query(func.min(Quotation.valueT).label("valorMi")).group_by(Quotation.dateO).all()
+        for i in ejex:
+            valor.append(i.dateO)
+        for i in total:
+            data.append(i.valorT)
+        for i in prom:
+            data2.append(i.valorP)
+        for i in maxi:
+            data3.append(i.valorM)
+        for i in mini:
+            data4.append(i.valorMi)
+    except exc.SQLAlchemyError:
+        pass
+    return render_template('/dashboard/linechart.html', total = data, prom = data2, maxi = data3, mini = data4, valor = valor, tittle = tittle, dashboard = d)
