@@ -2,6 +2,7 @@ from app import app
 from app.routes import *
 from flask import request
 from datetime import datetime
+from sqlalchemy import exc
 
 #Rutas de Solicitud
 #Ruta Index solicitudes
@@ -43,7 +44,7 @@ def request_answer(id):
     if filtroS():
         oRequest = Request.query.filter_by(id = id).first()
         date = datetime.now().strftime("%d de %B del %Y")
-        if request.method == 'POST':
+        if request.method == 'POST':            
             para = request.form["inputTo"]
             asunto = request.form["asunto"]
             value = request.form["value"]
@@ -51,11 +52,6 @@ def request_answer(id):
             valueT = int(num) * int(value)
             dateO = datetime.now().strftime("%d/%m/%Y")
             hourO = datetime.now().strftime("%H:%M:%S")
-            oRequest.state = 'Procesado'
-            db.session.commit()
-            oQuotation = Quotation(para = para, asunto = asunto, value = value, dateO = dateO,hourO = hourO, valueT = valueT, request_id = id)
-            db.session.add(oQuotation)
-            db.session.commit()
             itemsA = []
             itemsR = []
             for i in range(1, 16):
@@ -73,7 +69,14 @@ def request_answer(id):
                         db.session.commit()
                 except:
                     pass
-            #return convertirPDF(id)
+            try:
+                oRequest.state = 'Procesado'
+                db.session.commit()
+                oQuotation = Quotation(para = para, asunto = asunto, value = value, dateO = dateO,hourO = hourO, valueT = valueT, request_id = id)
+                db.session.add(oQuotation)
+                db.session.commit()
+            except exc.SQLAlchemyError:
+                flash('Ya se ha respondido a esta Solicitud','danger')
             return redirect('/quotation')
         else:
             return render_template('/request/answer.html', myRequest = oRequest, date = date)
