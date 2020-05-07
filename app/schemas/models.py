@@ -37,7 +37,7 @@ class Quotation(db.Model):
     valueT = db.Column(db.Integer)
     dateO = db.Column(db.String(50))
     hourO = db.Column(db.String(50))
-    request_id = db.Column(db.Integer)#,db.ForeignKey('Request.id')
+    request_id = db.Column(db.Integer, uniq)#,db.ForeignKey('Request.id')
     #request = db.relationship('Request')
     #constrainr = db.relationship('Constraint', uselist = False)
 
@@ -45,7 +45,7 @@ class Constraint(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     constraint = db.Column(db.String(100), nullable=False)
     tipe = db.Column(db.Integer, nullable=False)
-    quotation_id = db.Column(db.Integer)#, db.ForeignKey('Quotation.id'))
+    quotation_id = db.Column(db.Integer, unique=True)#, db.ForeignKey('Quotation.id'))
     #quotation = db.relationship('Quotation')
 
 """ class Survey(db.Model):
