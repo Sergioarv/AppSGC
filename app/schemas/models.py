@@ -26,10 +26,10 @@ class Request(db.Model):
     state = db.Column(db.String(100), nullable=False)
     dateI = db.Column(db.String(50))
     hourI = db.Column(db.String(50))
-    quotation = db.relationship('Quotation', uselist = False)
+    #quotation = db.relationship('Quotation', uselist = False)
 
 class Quotation(db.Model):
-    __tablename__ = 'Quotation'
+    #__tablename__ = 'Quotation'
     id = db.Column(db.Integer, primary_key=True)
     para = db.Column(db.String(100), nullable=False)
     asunto = db.Column(db.String(100), nullable=False)
@@ -37,18 +37,18 @@ class Quotation(db.Model):
     valueT = db.Column(db.Integer)
     dateO = db.Column(db.String(50))
     hourO = db.Column(db.String(50))
-    request_id = db.Column(db.Integer, db.ForeignKey('Request.id'))
-    request = db.relationship('Request')
-    constrainr = db.relationship('Constraint', uselist = False)
+    request_id = db.Column(db.Integer)#,db.ForeignKey('Request.id')
+    #request = db.relationship('Request')
+    #constrainr = db.relationship('Constraint', uselist = False)
 
 class Constraint(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     constraint = db.Column(db.String(100), nullable=False)
     tipe = db.Column(db.Integer, nullable=False)
-    quotation_id = db.Column(db.Integer, db.ForeignKey('Quotation.id'))
-    quotation = db.relationship('Quotation')
+    quotation_id = db.Column(db.Integer)#, db.ForeignKey('Quotation.id'))
+    #quotation = db.relationship('Quotation')
 
-class Survey(db.Model):
+""" class Survey(db.Model):
     __tablename__ = 'Survey'
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.String(50))
@@ -58,4 +58,4 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quest = db.Column(db.String(100))
     survey_id = db.Column(db.Integer, db.ForeignKey('Survey.id'))
-    survey = db.relationship('Survey')
+    survey = db.relationship('Survey') """

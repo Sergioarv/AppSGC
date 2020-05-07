@@ -6,7 +6,7 @@ from app.routes import *
 @app.route('/quotation')
 def quotation_index():
     if filtroS():
-        oRequest = db.session.query(Request, Quotation).join(Quotation).filter(Request.state != 'Solicitado').all()
+        oRequest = db.session.query(Request, Quotation).filter(Request.id == Quotation.request_id).filter(Request.state != 'Solicitado').all()
         return render_template('/quotation/index.html', listRequest = oRequest)
     else:
         return redirect('/login')
