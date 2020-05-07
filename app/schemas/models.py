@@ -37,7 +37,7 @@ class Quotation(db.Model):
     valueT = db.Column(db.Integer)
     dateO = db.Column(db.String(50))
     hourO = db.Column(db.String(50))
-    request_id = db.Column(db.Integer, uniq)#,db.ForeignKey('Request.id')
+    request_id = db.Column(db.Integer, unique=True)#,db.ForeignKey('Request.id')
     #request = db.relationship('Request')
     #constrainr = db.relationship('Constraint', uselist = False)
 
