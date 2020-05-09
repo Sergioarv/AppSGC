@@ -7,4 +7,4 @@ app.config.from_object('config.ProductionConfig')
 
 db = SQLAlchemy(app)
 
-from app.routes import myrequest, dashboard, flyer, quotation 
+from app.routes import myrequest, dashboard, flyer, quotation, survey

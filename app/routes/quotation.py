@@ -15,7 +15,7 @@ def quotation_index():
 @app.route('/quotation/detail/<string:id>')
 def quotation_detail(id):
     if filtroS():
-        q = db.session.query(Request.name, Request.address, Quotation.dateO, Request.origin, Quotation.para, Quotation.asunto, Quotation.value).filter(Request.id == Quotation.request_id).filter(Request.id == id).first()
+        q = db.session.query(Request.name, Request.address, Quotation.dateO, Request.origin, Quotation.para, Quotation.asunto, Quotation.value, Quotation.numP, Quotation.valueT).filter(Request.id == Quotation.request_id).filter(Request.id == id).first()
         itemsA = db.session.query(Constraint.constraint).filter(id == Quotation.request_id).filter(Quotation.id == Constraint.quotation_id, Constraint.tipe == 0).all()
         itemsR = db.session.query(Constraint.constraint).filter(id == Quotation.request_id).filter(Quotation.id == Constraint.quotation_id, Constraint.tipe == 1).all()
         return render_template('/quotation/quotation.html', data = q, itemsA = itemsA, itemsR = itemsR)

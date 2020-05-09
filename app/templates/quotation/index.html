@@ -16,46 +16,63 @@
 <table class="table table-responsive justify-content-center">
     <thead class="thead-dark">
         <tr>
-            <th style="min-width: 100px;">Cliente</th>
-            <th style="min-width: 100px;">Correo</th>
-            <th style="min-width: 100px;">Telefono</th>
-            <th style="min-width: 100px;">Destino</th>
-            <th style="min-width: 100px;">Origen</th>
-            <th style="min-width: 100px;">Fecha Cotizacion</th>
-            <th style="min-width: 100px;">Estado</th>
+            <th style="min-width: 100px; width: fit-content;">Cliente</th>
+            <th style="min-width: 100px; width: fit-content;">Correo</th>
+            <th style="min-width: 100px; width: fit-content;">Telefono</th>
+            <th style="min-width: 100px; width: fit-content;">Destino</th>
+            <th style="min-width: 100px; width: fit-content;">Origen</th>
+            <th style="min-width: 100px; width: fit-content;">Fecha Cotizacion</th>
+            <th style="min-width: 100px; width: fit-content;">Estado</th>
         </tr>
     </thead>
     <tbody>
         {% for request in listRequest %}
         <tr>
             <td style="overflow-wrap: break-word; width:250px;">{{ request[0].name }} {{ request[0].address }}</td>
-            <td style="width:100px;">{{ request[0].email }}</td>
-            <td style="width:80px;">{{ request[0].phone }}</td>
-            <td style="width:100px;">{{ request[0].destino }}</td>
-            <td style="width:100px;">{{ request[0].origin }}</td>
-            <td style="width:150px;">{{ request[1].dateO }}</td>
-            <td style="width:100px; max-width: 150px; text-align: justify;">
+            <td style="min-width: fit-content; width:80px;">{{ request[0].email }}</td>
+            <td style="min-width: fit-content; width:80px;">{{ request[0].phone }}</td>
+            <td style="min-width: fit-content; width:80px;">{{ request[0].destino }}</td>
+            <td style="min-width: fit-content; width:100px;">{{ request[0].origin }}</td>
+            <td style="min-width: fit-content; width:150px;">{{ request[1].dateO }}</td>
+            <td style="min-width: fit-content; width:100px; max-width: 150px; text-align: justify;">
                 <p style="overflow-wrap: break-word;">{{ request[0].state }}</p>
             </td>
-            <td style="width:100px; max-width: 150px;">
+            <td style="min-width: 120px; width:fit-content; max-width: 150px; text-align: center;">
                 <button onclick="document.location.href='/quotation/detail/{{ request[0].id }}'"
                     class="btn btn-sm btn-info">
                     Vizualizar
-                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span class="far fa-eye"></span>
                 </button>
             </td>
             {% if request[0].state == 'Procesado' %}
-            <td style="width:100px; max-width: 150px;">
-                <button onclick="document.location.href='/quotation/answer/{{ request[0].id }},Aceptado';" class="btn btn-sm btn-success">
+            <td style="min-width: 120px; width: fit-content; max-width: 150px; text-align: center;">
+                <button onclick="document.location.href='/quotation/answer/{{ request[0].id }},Aceptado';"
+                    class="btn btn-sm btn-success">
                     Aceptar
-                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span class="far fa-check-circle"></span>
                 </button>
             </td>
-            <td style="width:100px; max-width: 150px;">
+            <td style="min-width: 120px; width: fit-content; max-width: 150px; text-align: center;">
                 <button onclick="document.location.href='/quotation/answer/{{ request[0].id }},Rechazado'"
                     class="btn btn-sm btn-danger">
                     Rechazar
-                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span class="far fa-times-circle"></span>
+                </button>
+            </td>
+            {% elif request[0].state == 'Aceptado' %}
+            <td style="min-width: 120px; width: fit-content; max-width: 150px; text-align: center;">
+                <button onclick="document.location.href='/survey/{{ request[1].id }}'"
+                    class="btn btn-sm btn-secondary">
+                    Encuestar
+                    <span class="far fa-paper-plane"></span>
+                </button>
+            </td>
+            {% elif request[0].state == 'Completado' %}
+            <td style="min-width: 120px; width: fit-content; max-width: 150px; text-align: center;">
+                <button onclick="document.location.href='/survey/detail/{{ request[1].id }}'"
+                    class="btn btn-sm btn-secondary">
+                    Encuesta
+                    <span class="far fa-clipboard"></span>
                 </button>
             </td>
             {% endif %}

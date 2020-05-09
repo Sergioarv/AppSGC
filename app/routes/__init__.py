@@ -97,7 +97,7 @@ def recovery():
                 flash('El correo no existe, verifique','danger')
                 return render_template('/recovery.html')
             else:
-                enviarMensaje(oAdmin, 2)
+                enviarMensaje(oAdmin, 3)
                 flash('Se le ha enviado la contraseña al correo','success')
                 return render_template('/home.html')
         else:
@@ -116,16 +116,26 @@ def enviarMensaje(data, opc):
     msg['From'] = 'sarv9208@gmail.com'
     msg['To'] = data.email
     if opc == 1:
-        message = """Señor %s %s su solicitud se encuentra en espera, le responderemos en breve.
-    Por favor no contestar este mensaje""" %(data.name, data.address)
+        message = """Señor %s %s su solicitud ha sido recibida, responderemos a ella a la mayor brevedad.
+    Por favor no contestar este mensaje.
+    Generado automaticamente""" %(data.name, data.address)
         msg['Subject'] = "Solicitud"
         msg.attach(MIMEText(message, 'plain'))
-    elif opc == 2:
+    if opc == 2:
+        msg['To'] = 'sarv9208@gmail.com'
+        message = """El señor %s %s ha solicitado una cotizacion, por favor dar pronta respuesta al usuario""" %(data.name, data.address)
+        msg['Subject'] = "Nueva Solicitud"
+        msg.attach(MIMEText(message, 'plain'))
+    elif opc == 3:
         message = """%s su contraseña es %s""" %(data.name, data.password)
         msg['Subject'] = "Recuperar cuenta"
         msg.attach(MIMEText(message, 'plain'))
-    else:
-        print ('Ultimo Caso')
+    elif opc == 4:
+        oQ = db.session.query(Quotation.id).filter(Quotation.request_id == data.id).first()
+        message = """En La Casa Del Turismo queremos conocer como fue tu experiencia, ayududanos respondiendo estas preguntas.
+        <a href='https://appsgc.herokuapp.com/survey/quality/%s'>Encuesta de Satisfaccion</a>""" %(oQ)
+        msg['Subject'] = "Cuentanos como te fue"
+        msg.attach(MIMEText(message, 'html'))
     server = smtplib.SMTP('smtp.gmail.com: 587')
     server.starttls()
     server.login(msg['From'], password)

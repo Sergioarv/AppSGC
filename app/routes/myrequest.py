@@ -32,6 +32,7 @@ def request_create(id):
         db.session.add(oRequest)
         db.session.commit()
         enviarMensaje(oRequest, 1)
+        enviarMensaje(oRequest, 2)
         flash ('Su solicitud está siendo procesada', 'success')
         return redirect('/')
     else:
@@ -44,41 +45,44 @@ def request_answer(id):
     if filtroS():
         oRequest = Request.query.filter_by(id = id).first()
         date = datetime.now().strftime("%d de %B del %Y")
-        if request.method == 'POST':            
-            para = request.form["inputTo"]
-            asunto = request.form["asunto"]
-            value = request.form["value"]
-            num = request.form["num"]
-            valueT = int(num) * int(value)
-            dateO = datetime.now().strftime("%d/%m/%Y")
-            hourO = datetime.now().strftime("%H:%M:%S")
-            itemsA = []
-            itemsR = []
-            for i in range(1, 16):
+        if oRequest != None:
+            if request.method == 'POST':            
+                para = request.form["inputTo"]
+                asunto = request.form["asunto"]
+                value = request.form["value"]
+                num = request.form["num"]
+                valueT = int(num) * int(value)
+                dateO = datetime.now().strftime("%d/%m/%Y")
+                hourO = datetime.now().strftime("%H:%M:%S")
                 try:
-                    item = request.form['item'+str(i)]
-                    if i < 12:
-                        itemsA.append(item)
-                        oConstraint = Constraint(constraint = item, tipe = 0, quotation_id = oQuotation.id)
-                        db.session.add(oConstraint)
-                        db.session.commit()
-                    else:
-                        itemsR.append(item)
-                        oConstraint = Constraint(constraint = item, tipe = 1, quotation_id = oQuotation.id)
-                        db.session.add(oConstraint)
-                        db.session.commit()
-                except:
-                    pass
-            try:
-                oRequest.state = 'Procesado'
-                db.session.commit()
-                oQuotation = Quotation(para = para, asunto = asunto, value = value, dateO = dateO,hourO = hourO, valueT = valueT, request_id = id)
-                db.session.add(oQuotation)
-                db.session.commit()
-            except exc.SQLAlchemyError:
-                flash('Ya se ha respondido a esta Solicitud','danger')
-            return redirect('/quotation')
-        else:
-            return render_template('/request/answer.html', myRequest = oRequest, date = date)
+                    oRequest.state = 'Procesado'
+                    db.session.commit()
+                    oQuotation = Quotation(para = para, asunto = asunto, value = value, dateO = dateO,hourO = hourO, valueT = valueT, numP = num, request_id = id)
+                    db.session.add(oQuotation)
+                    db.session.commit()
+                except exc.SQLAlchemyError:
+                    flash('Ya se ha respondido a esta Solicitud','danger')
+                itemsA = []
+                itemsR = []
+                for i in range(1, 16):
+                    try:
+                        item = request.form['item'+str(i)]
+                        if i < 12:
+                            itemsA.append(item)
+                            oConstraint = Constraint(constraint = item, tipe = 0, quotation_id = oQuotation.id)
+                            db.session.add(oConstraint)
+                            db.session.commit()
+                        else:
+                            itemsR.append(item)
+                            oConstraint = Constraint(constraint = item, tipe = 1, quotation_id = oQuotation.id)
+                            db.session.add(oConstraint)
+                            db.session.commit()
+                    except:
+                        pass
+                return redirect('/quotation')
+            else:
+                return render_template('/request/answer.html', myRequest = oRequest, date = date)
+        flash('La Solicitud no existe o Ya fue Respondida','danger')
+        return redirect('/request')
     else:
         return redirect('/login')

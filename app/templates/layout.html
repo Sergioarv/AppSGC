@@ -7,16 +7,15 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="icon"
-        href="https://imgur.com/xifoKDB"
-        type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="icon" href="https://i.imgur.com/xifoKDB.png" type="image/x-icon">
     <title>Casa del Turismo</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" style="min-width: 
+    320px; width: 100%">
         <a class="navbar-brand" href="/">Casa del Turismo</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle navigation">
@@ -25,7 +24,7 @@
         <div class="collapse navbar-collapse" id="navbarNav" style="text-align: justify;">
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/request/create/-1">Solicitar Cotización</a>
+                    <a class="nav-link" href="/request/create/-1">Solicitar Cotización <span class="fas fa-pencil-alt"></span></a>
                 </li>
                 {% if session['admin'] %}
                 <li class="nav-item">
@@ -38,7 +37,7 @@
                     <a class="nav-link" href="/flyer">Flyer</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard">Graficas</a>
+                    <a class="nav-link" href="/dashboard">Graficas <span class="fas fa-chart-pie"></span></a>
                 </li>
                 {% endif %}
                 <li class="nav-item">
@@ -65,7 +64,7 @@
         </div>
     </nav>
 
-    <div class="container" style="padding-right: 1vw; padding-left: 1vw;">
+    <div class="container" style="padding-right: 3vw; padding-left: 3vw;">
         {% block content %}
         {% endblock %}
     </div>
@@ -83,7 +82,7 @@
 </body>
 <footer>
     <br>
-    <p style="padding: 2em; font-size: x-small;">La Casa del Turismo Liceísta, se compromete con: LEY 1336 DE 2009 Lucha
+    <p style="padding: 2em; font-size: x-small; text-align: justify;">La Casa del Turismo Liceísta, se compromete con: LEY 1336 DE 2009 Lucha
         contra la explotación, la pornografía, el turismo sexual y demás formas de abuso sexual con menores de edad. -
         Ley 397 de 1997 Protección de los Bienes de interés Cultural- Decreto 1377 de 2013 que comprende el manejo de la
         confidencialidad de los datos que sean suministrados a la agencia - Ley 1752 de 2015 por medio de la cual se
@@ -91,4 +90,5 @@
         la igualdad de raza o género. Ley 599 de 2000 y Decreto 1608 de 1978. Contra el tráfico de especies como flora y
         fauna silvestre.</p>
 </footer>
+
 </html>

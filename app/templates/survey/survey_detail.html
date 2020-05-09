@@ -1,0 +1,293 @@
+<!-- Extiende el layout la barra de navegacion y 
+las scripts necesarios -->
+{% extends 'layout.html' %}
+{% block content %}
+<!-- Muestras los flash, mensajes o notificaciones -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, msg in messages %}
+<br />
+<!-- Alertas, revibe el mensaje y la categoria-->
+<div class="alert alert-{{category}} alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ msg }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<br />
+<h2>Encuesta de Satisfaccion</h2>
+<br>
+
+<!-- Formulario de Encuesta-->
+<form method="POST">
+    <!-- Primer Fila de Encuesta-->
+    <div class="form-row">
+        <div class="form-group col-sm-12">
+            <!-- Tabla que contiene el membreteado -->
+            <table class="table table-bordered" style="width: 98%;">
+                <td style="text-align: center; text-align: center;">
+                    <img src="https://scontent.fclo9-1.fna.fbcdn.net/v/t1.0-9/12821570_560137094151039_8870789361796236215_n.png?_nc_cat=109&_nc_sid=09cbfe&_nc_ohc=-3IddIyVIhUAX_dW-7N&_nc_ht=scontent.fclo9-1.fna&oh=867b41bb142c4a29bc1d625cdc1b2fd4&oe=5EC2C035"
+                        type="image/svg+xml"
+                        style="min-width: 100px; width: 80%; max-width: 150px; text-align: center;" />
+                </td>
+                <td style="text-align: center; vertical-align: middle;">
+                    <p style="font-size: large;">Encuesta de Satisfaccion</p>
+                </td>
+                <td style="text-align: center; vertical-align: middle;">
+                    <p style="font-size: medium;">{{ date }}</p>
+                </td>
+            </table>
+        </div>
+    </div>
+    <!-- Segunda fila-->
+    <div class="form-row">
+        <!-- Enunciado de Encuesta-->
+        <div class="form-group col-sm-12">
+            <p style="font-size: 30; text-align: center; vertical-align: middle;">
+                Para nosotros es muy importante conocer su opinión acerca de nuestros servicios. Agradecemos tome un
+                poco de su tiempo y diligencie esta forma. La valoración de su respuesta nos indicará como mejorar
+                nuestro servicio.</p>
+        </div>
+    </div>
+    {% for d in data %}
+    {% if d.quest == '1' %}
+    <!-- Tercera fila
+    Inicio Preguntas-->
+    <div class="form-row">
+        <!-- Primer Pregunta-->
+
+        <div class="form-group col-sm-12">
+            <label class="form-control-label" style="text-align: justify;">1.&nbsp;¿Cómo fue la atención desde el primer
+                contacto por parte de LA CASA DEL TURISMO? </label>
+        </div>
+        <!-- Radio button
+        Primer Pregunta-->
+        <div class="form-group col-sm-4">
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="opcion1P1" name="pregunta1" checked>
+                <label class="custom-control-label" for="opcion1P1">{{ d.answer }}</label>
+            </div>
+        </div>
+        <!-- Final de Primer Pregunta -->
+    </div>
+    {% endif %}
+    {% if d.quest == '2' %}
+    <!-- Cuarta fila-->
+    <div class="form-row">
+        <!-- Segunda Pregunta-->
+        <div class="form-group col-sm-12">
+            <label class="form-control-label" style="text-align: justify;">2.&nbsp;¿Cómo considera el tiempo en que le
+                dieron respuesta a su solicitud?</label>
+        </div>
+        <!-- Primer Opcion Segunda Pregunta-->
+        <div class="form-group col-sm-4">
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="opcion1P2" name="pregunta2" checked>
+                <label class="custom-control-label" for="opcion1P2">{{ d.answer }}</label>
+            </div>
+        </div>
+        <!-- Final Segunda Pregunta-->
+    </div>
+    {% endif %}
+    <!-- Quinta Fila-->
+    <div class="form-row">
+        {% if d.quest == '3' %}
+        <!-- Tercera Pregunta
+        Dividida en Servicios-->
+        <div class="form-group col-sm-12">
+            <label class="form-control-label" style="text-align: justify;">3.&nbsp;Califique los servicios recibidos en:
+            </label>
+        </div>
+
+        <!-- Primer Servicio Tercera Pregunta-->
+        <div class="form-group col-sm-6">
+            <label class="form-control-label" style="text-align: justify;">Alojamiento
+            </label>
+        </div>
+        <!-- Primer Opcion Primer Servicio Tercera Pregunta-->
+        <div class="form-group col-sm-6">
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="opcion1P3" name="pregunta3" checked>
+                <label class="custom-control-label" for="opcion1P3">{{ d.answer }}</label>
+            </div>
+        </div>
+        <!-- Final Primer Servico -->
+        {% endif %}
+        {% if d.quest == '4' %}
+        <!-- Segundo Servicio Tercera Pregunta-->
+        <div class="form-group col-sm-6">
+            <label class="form-control-label" style="text-align: justify;">Alimentación:</label>
+        </div>
+        <!-- Primer Opcion Segundo Servicio Tercera Pregunta-->
+        <div class="form-group col-sm-6">
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="opcion1P4" name="pregunta4" checked>
+                <label class="custom-control-label" for="opcion1P4">{{ d.answer }}</label>
+            </div>
+        </div>
+        <!-- Final Segundo Servicio -->
+        {% endif %}
+        {% if d.quest == '5' %}
+        <!-- Tercer Servicio Tercera Pregunta-->
+        <div class="form-group col-sm-6">
+            <label class="form-control-label" style="text-align: justify;">Transporte:</label>
+        </div>
+        <!-- Primer Opcion Tercer Servicio Tercera Pregunta-->
+        <div class="form-group col-sm-6">
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="opcion1P5" checked>
+                <label class="custom-control-label" for="opcion1P5">{{ d.answer }}</label>
+            </div>
+        </div>
+        <!-- Final Tercer Servicio -->
+        {% endif %}
+        {% if d.quest == '6' %}
+        <!-- Cuarto Servicio Tercer Pregunta-->
+        <div class="form-group col-sm-6">
+            <label class="form-control-label" style="text-align: justify;">Guía acompañante:</label>
+        </div>
+        <!-- Primer Opcion Cuarto Servicio Tercera Pregunta-->
+        <div class="form-group col-sm-6">
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="opcion1P6" checked>
+                <label class="custom-control-label" for="opcion1P6">{{ d.answer }}</label>
+            </div>
+        </div>
+        <!-- Final Cuarto Servicio -->
+        {% endif %}
+        {% if d.quest == '7' %}
+        <!-- Quinto Servicio -->
+        <div class="form-group col-sm-6">
+            <label class="form-control-label" style="text-align: justify;">Panaca:</label>
+        </div>
+        <!-- Primer Opcion Quinto Servicio Tercera Pregunta-->
+        <div class="form-group col-sm-6">
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="opcion1P7" name="pregunta7" checked>
+                <label class="custom-control-label" for="opcion1P7">{{ d.answer }}</label>
+            </div>
+        </div>
+        <!-- Final Quinto Servicio -->
+        {% endif %}
+        {% if d.quest == '8' %}
+        <!-- Sexto Servicio -->
+        <div class="form-group col-sm-6">
+            <label class="form-control-label" style="text-align: justify;">Parque del Café:</label>
+        </div>
+        <!-- Primer Opcion Sexto Servicio Tercera Pregunta-->
+        <div class="form-group col-sm-6">
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="opcion1P8" name="pregunta8" checked>
+                <label class="custom-control-label" for="opcion1P8">{{ d.answer }}</label>
+            </div>
+        </div>
+        <!-- Final Sexto Servicio -->
+        {% endif %}
+    </div>
+    
+    <div class="form-row">
+        {% if d.quest == '9' %}
+        <!-- Septimo Servicio -->
+        <div class="form-group col-sm-12">
+            <div class="custom-control custom-checkbox ">
+                <input type="checkbox" class="custom-control-input" id="opcion3P9" name="opcion3P9" checked disabled>
+                <label class="custom-control-label" for="opcion3P9">Otros ¿Cual?:</label>
+            </div>
+        </div>
+        <!-- Introducir Servicio -->
+        <div class="form-group col-sm-12">
+            <input type="text" class="form-control" name="pregunta9" id="opcion1P9" for="opcion1P9"
+                placeholder="Ingrese otro Servicio" value="{{ d.answer }}" disabled>
+        </div>
+        {% endif %}
+        {% if d.quest == '10' %}
+        <!-- Seleccion ComboBox-->
+        <div class="form-group col-sm-12">
+            <input name='pregunta10' id='opcion2P9' class="form-control" value="{{ d.answer }}" disabled>
+        </div>
+        <!-- Final Septimo Servicio -->
+        <!-- Tercera Pregunta-->
+        {% endif %}
+    </div>
+    
+    <!-- Sexta fila -->
+    <div class="form-row">
+        {% if d.quest == '11' %}
+        <!-- Octava Pregunta-->
+        <div class="form-group col-sm-6">
+            <label class="form-control-label" style="text-align: justify;">4.&nbsp;¿Los servicios brindados
+                ¿correspondieron a lo ofrecido?</label>
+        </div>
+        <!--Primer Opcion Octava Pregunta-->
+        <div class="form-group col-sm-6">
+            <div class="custom-control custom-checkbox">
+                <input type="radio" class="custom-control-input" id="opcion1P11" name="pregunta11" checked>
+                <label class="custom-control-label" for="opcion1P11">{{ d.answer }}</label>
+            </div>
+        </div>
+        {% endif %}
+        {% if d.quest == '12' %}
+        <!-- Explicacion Osctava Pregunta -->
+        <div class="form-group col-sm-12">
+            <label form="opcion3P12">Si su respuesta fue negativa por favor explique brevemente la razón:</label>
+            <input type="text" class="form-control" name="pregunta12" id="opcion3P12" for="opcion3P12"
+                value="{{ d.answer }}" disabled>
+        </div>
+        <!-- Final de Octava Pregunta -->
+        {% endif %}
+    </div>
+
+    <!-- Septima Fila-->
+    <div class="form-row">
+        {% if d.quest == '13' %}
+        <!-- Novena Pregunta-->
+        <div class="form-group col-sm-6">
+            <label class="form-control-label" style="text-align: justify;">5.&nbsp;¿Considera que el personal que lo
+                atendió es competente?</label>
+        </div>
+        <!--Primer Opcion Novena Pregunta-->
+        <div class="form-group col-sm-6">
+            <div class="custom-control custom-checkbox">
+                <input type="radio" class="custom-control-input" id="opcion1P13" name="pregunta13" checked>
+                <label class="custom-control-label" for="opcion1P13">{{ d.answer }}</label>
+            </div>
+        </div>
+        {% endif %}
+        {% if d.quest == '14' %}
+        <!-- Explicacion Novena Pregunta -->
+        <div class="form-group col-sm-12">
+            <label form="opcion3P14">Si su respuesta fue negativa por favor explique brevemente la razón:</label>
+        </div>
+        <div class="form-group col-sm-12">
+            <input type="text" class="form-control" name="pregunta14" id="opcion3P14" for="opcion3P14"
+                placeholder="Explique brevemente la razón" value="{{ d.answer }}" disabled>
+        </div>
+        <!-- Final de Novena Pregunta -->
+        {% endif %}
+    </div>
+    {% if d.quest == '15' %}
+    <!-- Octava Fila-->
+    <div class="form-row">
+        <!-- Decima Pregunta-->
+        <!-- Explicacion Decima Pregunta -->
+        <div class="form-group col-sm-12">
+            <label class="form-control-label" style="text-align: justify;">6.&nbsp;¿Cuales aspectos se podrían
+                mejorar?</label>
+        </div>
+        <div class="form-group col-sm-12">
+            <input type="text" class="form-control" name="pregunta15" id="opcion3P15" for="opcion3P15"
+                placeholder="Explique brevemente la razón" value="{{ d.answer }}" disabled>
+        </div>
+        <!-- Final de Decima Pregunta -->
+    </div>
+    {% endif %}
+    {% endfor %}
+    <div class="form-row">
+        <div class="form-group col-sm-12">
+            <button type="submit" class="btn btn-success">Volver</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

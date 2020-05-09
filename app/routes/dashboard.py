@@ -1,7 +1,7 @@
 from app import app, db
 from flask import render_template
 from sqlalchemy.sql import func
-from sqlalchemy import exc
+from sqlalchemy import exc, or_
 from app.schemas.models import Request, Quotation
 import datetime
 
@@ -14,23 +14,25 @@ def dashboard_index():
 def solicitudes(d):
     tittle ='Cantidad de Solicitudes por Tipo'
     data = []
-    valor = ['Solicitado','Rechazado','Procesado','Aceptado']
+    valor = ['Solicitado','Rechazado','Procesado','Aceptado','Completado']
     data.append(Request.query.filter_by(state = 'Solicitado').count())
     data.append(Request.query.filter_by(state = 'Rechazado').count())
     data.append(Request.query.filter_by(state = 'Procesado').count())
     data.append(Request.query.filter_by(state = 'Aceptado').count())
+    data.append(Request.query.filter_by(state = 'Completado').count())
     return render_template('/dashboard/piechart.html', mydata = data, valor = valor, tittle = tittle, dashboard = d)
 
 @app.route('/solicitudesBar/<string:d>')
 def solicitudesBar(d):
     tittle ='Cantidad de Solicitudes por Tipo'
     data = []
-    c = ['#0040FF','#088A4B','#FF0000','#FF8000']
-    valor = ['Solicitado','Aceptado','Rechazado','Procesado']
+    c = ['#0040FF','#088A4B','#FF0000','#FF8000','#a000a0']
+    valor = ['Solicitado','Aceptado','Rechazado','Procesado','Completado']
     data.append(Request.query.filter_by(state = 'Solicitado').count())
     data.append(Request.query.filter_by(state = 'Aceptado').count())
     data.append(Request.query.filter_by(state = 'Rechazado').count())
     data.append(Request.query.filter_by(state = 'Procesado').count())
+    data.append(Request.query.filter_by(state = 'Completado').count())
     return render_template('/dashboard/barchart.html', mydata = data, valor = valor, tittle = tittle, c = c, dashboard = d)
 
 @app.route('/tiempo/<string:d>')
@@ -41,7 +43,7 @@ def tiempo(d):
         data = []
         valor = []
         cur2 = db.session.query(Quotation.dateO).group_by(Quotation.dateO).all()
-        cur = db.session.query(func.sum(Quotation.valueT).label('mayor')).group_by(Quotation.dateO).all()
+        cur = db.session.query(func.sum(Quotation.valueT).label('mayor')).filter(Quotation.request_id == Request.id, or_(Request.state == 'Aceptado', Request.state == 'Completado')).group_by(Quotation.dateO).all()
         for i in cur:
             data.append(i.mayor)
         for i in cur2:
@@ -59,11 +61,11 @@ def line_tiempo(d):
         data3 = []
         data4 = []
         valor = []
-        ejex = db.session.query(Quotation.dateO).group_by(Quotation.dateO).all()
-        total = db.session.query(func.sum(Quotation.valueT).label("valorT")).group_by(Quotation.dateO).all()
-        prom = db.session.query(func.avg(Quotation.valueT).label("valorP")).group_by(Quotation.dateO).all()
-        maxi = db.session.query(func.max(Quotation.valueT).label("valorM")).group_by(Quotation.dateO).all()
-        mini = db.session.query(func.min(Quotation.valueT).label("valorMi")).group_by(Quotation.dateO).all()
+        ejex = db.session.query(Quotation.dateO).filter(Quotation.request_id == Request.id, or_(Request.state == 'Aceptado', Request.state == 'Completado')).group_by(Quotation.dateO).all()
+        total = db.session.query(func.sum(Quotation.valueT).label("valorT")).filter(Quotation.request_id == Request.id, or_(Request.state == 'Aceptado', Request.state == 'Completado')).group_by(Quotation.dateO).all()
+        prom = db.session.query(func.avg(Quotation.valueT).label("valorP")).filter(Quotation.request_id == Request.id, or_(Request.state == 'Aceptado', Request.state == 'Completado')).group_by(Quotation.dateO).all()
+        maxi = db.session.query(func.max(Quotation.valueT).label("valorM")).filter(Quotation.request_id == Request.id, or_(Request.state == 'Aceptado', Request.state == 'Completado')).group_by(Quotation.dateO).all()
+        mini = db.session.query(func.min(Quotation.valueT).label("valorMi")).filter(Quotation.request_id == Request.id, or_(Request.state == 'Aceptado', Request.state == 'Completado')).group_by(Quotation.dateO).all()
         for i in ejex:
             valor.append(i.dateO)
         for i in total:

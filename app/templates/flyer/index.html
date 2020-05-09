@@ -25,16 +25,16 @@
     <thead class="thead-dark">
         <tr>
             <th style="min-width: 200px">Nombre</th>
-            <th style="min-width: 300px">Descripcion</th>
-            <th style="min-width: 400px">Flyer</th>
+            <th style="min-width: 200px">Descripcion</th>
+            <th style="min-width: 300px">Flyer</th>
         </tr>
     </thead>
     <tbody>
         {% for flyer in listFlyer %}
         <tr>
             <td>{{ flyer.name }}</td>
-            <td style="min-width:200px; width:25%; max-width:250px;text-align: justify;">
-                <p style="height: 150px; overflow: hidden; overflow-wrap: break-word;">{{ flyer.description }}</p>
+            <td style="min-width:150px; width:100%; max-width:250px;text-align: justify;">
+                <p style="height: 120px; overflow: hidden; overflow-wrap: break-word;">{{ flyer.description }}</p>
             </td>
             <td style="text-align: center;">
                 <img src="data:image/png;base64,{{ flyer.imagen }}" style="width: auto; max-width: 350px;"/>
