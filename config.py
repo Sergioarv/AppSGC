@@ -9,7 +9,13 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = 'mysecretkey'
     MAIL_USERNAME = 'sarv9208@gmail.com'
-    MAIL_PASSWORD = 'nxmgrqskcwbticku'
+    MAIL_PASSW = 'nxmgrqskcwbticku'
+
+class TestConfig(Config):
+    DEBUG = False
+    TESTING = True
+    WTF_CSRF_ENABLED = False
+    SQLALCHEMY_DATABASE_URI =  'sqlite:///:memory:'
 
 class ProductionConfig(Config):
     DEBUG = False

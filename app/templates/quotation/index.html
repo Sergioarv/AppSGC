@@ -13,16 +13,18 @@
 {% endwith %}
 <br />
 <h2>Cotizaciones</h2>
+
 <table class="table table-responsive justify-content-center">
+    <caption>Lista de Cotizaciones 2020</caption>
     <thead class="thead-dark">
         <tr>
-            <th style="min-width: 100px; width: fit-content;">Cliente</th>
-            <th style="min-width: 100px; width: fit-content;">Correo</th>
-            <th style="min-width: 100px; width: fit-content;">Telefono</th>
-            <th style="min-width: 100px; width: fit-content;">Destino</th>
-            <th style="min-width: 100px; width: fit-content;">Origen</th>
-            <th style="min-width: 100px; width: fit-content;">Fecha Cotizacion</th>
-            <th style="min-width: 100px; width: fit-content;">Estado</th>
+            <th scope="col" style="min-width: 100px; width: fit-content;">Cliente</th>
+            <th scope="col" style="min-width: 100px; width: fit-content;">Correo</th>
+            <th scope="col" style="min-width: 100px; width: fit-content;">Telefono</th>
+            <th scope="col" style="min-width: 100px; width: fit-content;">Destino</th>
+            <th scope="col" style="min-width: 100px; width: fit-content;">Origen</th>
+            <th scope="col" style="min-width: 100px; width: fit-content;">Fecha Cotizacion</th>
+            <th scope="col" style="min-width: 100px; width: fit-content;">Estado</th>
         </tr>
     </thead>
     <tbody>
@@ -35,7 +37,13 @@
             <td style="min-width: fit-content; width:100px;">{{ request[0].origin }}</td>
             <td style="min-width: fit-content; width:150px;">{{ request[1].dateO }}</td>
             <td style="min-width: fit-content; width:100px; max-width: 150px; text-align: justify;">
-                <p style="overflow-wrap: break-word;">{{ request[0].state }}</p>
+                {% if request[0].state == 'Rechazado' %}
+                <em class="far fa-times-circle fa-3x fa-lg" style="color:#FF0000;"></em>
+                {% elif request[0].state == 'Procesado' %}
+                <em class="fas fa-spinner fa-3x fa-lg" style="color:#FF8000;"></em>
+                {% else %}
+                <em class="fas fa-check fa-3x fa-lg" style="color:#088A4B;"></em>
+                {% endif %}
             </td>
             <td style="min-width: 120px; width:fit-content; max-width: 150px; text-align: center;">
                 <button onclick="document.location.href='/quotation/detail/{{ request[0].id }}'"
@@ -61,8 +69,7 @@
             </td>
             {% elif request[0].state == 'Aceptado' %}
             <td style="min-width: 120px; width: fit-content; max-width: 150px; text-align: center;">
-                <button onclick="document.location.href='/survey/{{ request[1].id }}'"
-                    class="btn btn-sm btn-secondary">
+                <button onclick="document.location.href='/survey/{{ request[1].id }}'" class="btn btn-sm btn-secondary">
                     Encuestar
                     <span class="far fa-paper-plane"></span>
                 </button>

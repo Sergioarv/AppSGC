@@ -2,7 +2,7 @@ from app import app, db
 from flask import render_template
 from sqlalchemy.sql import func
 from sqlalchemy import exc, or_
-from app.schemas.models import Request, Quotation
+from app.schemas.models import *
 import datetime
 
 # Dashboard y otros graficos
@@ -20,10 +20,10 @@ def solicitudes(d):
     data.append(Request.query.filter_by(state = 'Procesado').count())
     data.append(Request.query.filter_by(state = 'Aceptado').count())
     data.append(Request.query.filter_by(state = 'Completado').count())
-    return render_template('/dashboard/piechart.html', mydata = data, valor = valor, tittle = tittle, dashboard = d)
+    return render_template('/dashboard/piechart.html', mydata = data, valor = valor, tittle = tittle, dashboard = d, tipe = 'Tipo', cant = 'Cantidad')
 
 @app.route('/solicitudesBar/<string:d>')
-def solicitudesBar(d):
+def solicitudes_bar(d):
     tittle ='Cantidad de Solicitudes por Tipo'
     data = []
     c = ['#0040FF','#088A4B','#FF0000','#FF8000','#a000a0']
@@ -33,7 +33,7 @@ def solicitudesBar(d):
     data.append(Request.query.filter_by(state = 'Rechazado').count())
     data.append(Request.query.filter_by(state = 'Procesado').count())
     data.append(Request.query.filter_by(state = 'Completado').count())
-    return render_template('/dashboard/barchart.html', mydata = data, valor = valor, tittle = tittle, c = c, dashboard = d)
+    return render_template('/dashboard/barchart.html', mydata = data, valor = valor, tittle = tittle, c = c, dashboard = d, tipe = 'Tipo Solicitud', cant = 'Cantidad')
 
 @app.route('/tiempo/<string:d>')
 def tiempo(d):
@@ -50,7 +50,7 @@ def tiempo(d):
             valor.append(i.dateO)
     except exc.SQLAlchemyError:
         pass
-    return render_template('/dashboard/barchart.html', mydata = data, valor = valor, tittle = tittle, c = c, dashboard = d)
+    return render_template('/dashboard/barchart.html', mydata = data, valor = valor, tittle = tittle, c = c, dashboard = d, tipe = 'Solicitud', cant = 'Cantidad')
 
 @app.route('/lineTiempo/<string:d>')
 def line_tiempo(d):
@@ -78,4 +78,13 @@ def line_tiempo(d):
             data4.append(i.valorMi)
     except exc.SQLAlchemyError:
         pass
-    return render_template('/dashboard/linechart.html', total = data, prom = data2, maxi = data3, mini = data4, valor = valor, tittle = tittle, dashboard = d)
+    return render_template('/dashboard/linechart.html', total = data, prom = data2, maxi = data3, mini = data4, valor = valor, tittle = tittle, dashboard = d, tipe = 'Fecha de venta', cant = 'Valor')
+
+@app.route('/surveychart/dashboard')
+def area_survey():
+    quest = db.session.query(Question.answer).filter(Question.survey_id == Survey.id, Survey.quotation_id == Quotation.id, Quotation.request_id == Request.id, Request.state == 'Completado').group_by(Question.answer).all()
+    num_s = db.session.query(Survey.id).filter(Survey.quotation_id == Quotation.id, Quotation.request_id == Request.id, Request.state == 'Completado').all()
+    data = []
+    suma = []
+    num_a = db.session.query(Question.answer, func.count(Question.answer).label('num'), Survey.id).filter(Question.survey_id == Survey.id).filter(Survey.quotation_id == Quotation.id).filter(Quotation.request_id == Request.id).filter(Request.state == 'Completado').group_by(Question.answer).group_by(Survey.id).all()
+    return render_template('/dashboard/areachart.html', mydata = data)

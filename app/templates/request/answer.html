@@ -14,169 +14,182 @@
 {% endwith %}
 <br>
 <h2>Generar Cotización</h2>
-<form id="request" name="request" method="POST" class="needs-validation" novalidate>
-    <div class="container">
-        <div class="container">
-            <div class="form-row">
-                <div class=" form-group col-sm-4">
-                    <img src="/static/img/Logo.png" style="width:98%" />
-                </div>
-                <div class="form-group col-sm-6" style="width:50%">
-                    <p style="text-align:center;">
-                        <Font size="24">La Casa Del Turismo</Font><br />
-                        <Font size="6">VIAJES Y TURISMO</Font><br />
-                        <Font size="4">Calle 48 # 49 – 73 Tel. 219 09 36</Font><br />
-                        <Font size="4">Cel. 311 752 0216 – 312 490 2409</Font><br />
-                        <Font size="4">RNT 35238</Font><br />
-                        <Font size="4">SEDE LA CASA DEL AFICHE.</Font><br />
-                    </p>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <input class="form-control" name="date" value="{{ date }}" disabled>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <select name="inputTo" id="inputTo" class="form-control" required>
-                        <option selected disabled value="">Seleccione...</option>
-                        <option>Señor:</option>
-                        <option>Señora:</option>
-                        <option>Señores:</option>
-                    </select>
-                    <span class="valid-feedback">Ok</span>
-                    <span class="invalid-feedback">Debe completar el campo</span>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class=" form-group col-md-4">
-                    <input type="text" class="form-control" name="nameC" id="nameC"
-                        value="{{ myRequest.name }} {{ myRequest.address }}" readonly>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <input name="city" class="form-control" value="{{ myRequest.origin }}" readonly>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label class="form-control">E. S. M.</label>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-12">
-                    <label class="form-control">Asunto: Cotización</label>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-12">
-                    <input class="form-control" name="asunto" value="Plan turístico, a {{ myRequest.destino }}"></input>
-                    <span class="valid-feedback">Ok</span>
-                    <span class="invalid-feedback">Debe completar el campo</span>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-12">
-                    <label class="form-control">El plan incluye:</label>
 
-                    <div class="custom-control custom-checkbox col-md-12">
-                        <input type="checkbox" class="custom-control-input" id="item1" name="item1"
-                            value="Transporte terrestre">
-                        <label class="custom-control-label" for="item1">Transporte terrestre</label>
-                    </div>
-                    <div class="custom-control custom-checkbox col-md-12">
-                        <input type="checkbox" class="custom-control-input" id="item2" name="item2"
-                            value="Traslados Aeropuerto – Hotel">
-                        <label class="custom-control-label" for="item2">Traslados Aeropuerto – Hotel</label>
-                    </div>
-                    <div class="custom-control custom-checkbox col-md-12">
-                        <input type="checkbox" class="custom-control-input" id="item3" name="item3"
-                            value="Alojamiento">
-                        <label class="custom-control-label" for="item3">Alojamiento</label>
-                    </div>
-                    <div class="custom-control custom-checkbox col-md-12">
-                        <input type="checkbox" class="custom-control-input" id="item4" name="item4"
-                            value="Alimentacións">
-                        <label class="custom-control-label" for="item4">Alimentación</label>
-                    </div>
-                    <div class="custom-control custom-checkbox col-md-12">
-                        <input type="checkbox" class="custom-control-input" id="item5" name="item5"
-                            value="Tours en destino">
-                        <label class="custom-control-label" for="item5">Tours en destino</label>
-                    </div>
-                    <div class="custom-control custom-checkbox col-md-12">
-                        <input type="checkbox" class="custom-control-input" id="item6" name="item6"
-                            value="Actividades adicionales">
-                        <label class="custom-control-label" for="item6">Actividades adicionales</label>
-                    </div>
-                    <div class="custom-control custom-checkbox col-md-12">
-                        <input type="checkbox" class="custom-control-input" id="item7" name="item7"
-                            value="Impuestos hoteleros y aeroportuarios">
-                        <label class="custom-control-label" for="item7">Impuestos hoteleros y aeroportuarios</label>
-                    </div>
-                    <div class="custom-control custom-checkbox col-md-12">
-                        <input type="checkbox" class="custom-control-input" id="item8" name="item8"
-                            value="Seguro de viaje">
-                        <label class="custom-control-label" for="item8">Seguro de viaje</label>
-                    </div>
-                </div>
+<div style="width: 100%; padding-left: 0vw; padding-right: 0vw;">
+    <table style="border: hidden;">
+        <caption></caption>
+        <tr><th scope="col"></th>
+            <td style="width: 40%;">
+                <img src="https://scontent.fclo9-1.fna.fbcdn.net/v/t1.0-9/12821570_560137094151039_8870789361796236215_n.png?_nc_cat=109&_nc_sid=09cbfe&_nc_ohc=-3IddIyVIhUAX_dW-7N&_nc_ht=scontent.fclo9-1.fna&oh=867b41bb142c4a29bc1d625cdc1b2fd4&oe=5EC2C035"
+                    alt="LogoEmpresa" style="max-width: 90%;" />
+            </td>
+            <td style="text-align: center; width: 60%;">
+                <p
+                    style="text-align: center; font-size: 4.4vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.6;">
+                    La Casa Del Turismo</p>
+                <p
+                    style="text-align: center; font-size: 3.2vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                    VIAJES Y TURISMO</p>
+                <p
+                    style="text-align: center; font-size: 2.4vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                    Calle 48 # 49 – 73 Tel. 219 09 36
+                </p>
+                <p
+                    style="text-align: center; font-size: 2.4vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                    Cel. 311 752 0216 – 312 490 2409
+                </p>
+                <p
+                    style="text-align: center; font-size: 1.8vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                    RNT 35238</p>
+                <p
+                    style="text-align: center; font-size: 2.2vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                    SEDE LA CASA DEL AFICHE.</p>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<form id="request" name="request" method="POST" class="needs-validation" novalidate>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <input class="form-control" name="date" value="{{ date }}" disabled>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <select name="inputTo" id="inputTo" class="form-control" required>
+                <option selected disabled value="">Seleccione...</option>
+                <option>Señor:</option>
+                <option>Señora:</option>
+                <option>Señores:</option>
+            </select>
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class=" form-group col-md-4">
+            <input type="text" class="form-control" name="nameC" id="nameC"
+                value="{{ myRequest.name }} {{ myRequest.address }}" readonly>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <input name="city" class="form-control" value="{{ myRequest.origin }}" readonly>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label class="form-control">E. S. M.</label>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label class="form-control">Asunto: Cotización</label>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <input class="form-control" name="asunto" value="Plan turístico, a {{ myRequest.destino }}"></input>
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label class="form-control">El plan incluye:</label>
+
+            <div class="custom-control custom-checkbox col-md-12">
+                <input type="checkbox" class="custom-control-input" id="item1" name="item1"
+                    value="Transporte terrestre">
+                <label class="custom-control-label" for="item1">Transporte terrestre</label>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-12">
-                    <label class="form-control">El plan no incluye:</label>
-                    <div class="custom-control custom-checkbox col-md-12">
-                        <input type="checkbox" class="custom-control-input" id="item9" name="item9"
-                            value="Servicios receptivos y alimentación no relacionada.">
-                        <label class="custom-control-label" for="item9">Servicios receptivos y alimentación no
-                            relacionada.</label>
-                    </div>
-                    <div class="custom-control custom-checkbox col-md-12">
-                        <input type="checkbox" class="custom-control-input" id="item10" name="item10"
-                            value="Los cargos, suplementos e impuestos pueden variar sin previo aviso.">
-                        <label class="custom-control-label" for="item10">Los cargos, suplementos e impuestos pueden
-                            variar sin previo aviso.</label>
-                    </div>
-                    <div class="custom-control custom-checkbox col-md-12">
-                        <input type="checkbox" class="custom-control-input" id="item11" name="item11"
-                            value="Tarjeta de turismo e impuestos coralinos (aplica para San Andres).">
-                        <label class="custom-control-label" for="item11">Tarjeta de turismo e impuestos coralinos (aplica para San Andres).</label>
-                    </div>
-                    <div class="custom-control custom-checkbox col-md-12">
-                        <input type="checkbox" class="custom-control-input" id="item12" name="item12"
-                            value="Tarifas sujetas a cambio sin previo aviso y a disponibilidad y reserva.">
-                        <label class="custom-control-label" for="item12">Tarifas sujetas a cambio sin previo aviso y a
-                            disponibilidad y reserva.</label>
-                    </div>
-                </div>
+            <div class="custom-control custom-checkbox col-md-12">
+                <input type="checkbox" class="custom-control-input" id="item2" name="item2"
+                    value="Traslados Aeropuerto – Hotel">
+                <label class="custom-control-label" for="item2">Traslados Aeropuerto – Hotel</label>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-4.8">
-                    <label class="form-control" style="text-align: center;">EL PLAN TIENE UN PRECIO POR PERSONA</label>
-                </div>
-                <div class="form-group col-md-2.8">
-                    <input class="form-control" type="number" name="value" placeholder="Valor del Plan"
-                        min="1" required></input>
-                    <span class="valid-feedback">Ok</span>
-                    <span class="invalid-feedback">Debe completar el campo</span>
-                </div>
-                <div class="form-group col-md-2.8">
-                    <label class="form-control" style="text-align: center;">Numero de personas</label>
-                </div>
-                <div class="form-group col-md-2.8">
-                    <input class="form-control" type="number" name="num" placeholder="Numero de Personas"
-                        min="1" required></input>
-                    <span class="valid-feedback">Ok</span>
-                    <span class="invalid-feedback">Debe completar el campo</span>
-                </div>
+            <div class="custom-control custom-checkbox col-md-12">
+                <input type="checkbox" class="custom-control-input" id="item3" name="item3" value="Alojamiento">
+                <label class="custom-control-label" for="item3">Alojamiento</label>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-12" style="padding-bottom: 1em;">
-                    <textarea class="form-control" rows="5" style="text-align: justify;"
-                        disabled> La Casa del Turismo Liceísta, se compromete con: LEY 1336 DE 2009 Lucha contra la explotación, la pornografía, el turismo sexual y demás formas de abuso sexual con menores de edad. - Ley 397 de 1997 Protección de los Bienes de interés Cultural- Decreto 1377 de 2013 que comprende el manejo de la confidencialidad de los datos que sean suministrados a la agencia - Ley 1752 de 2015 por medio de la cual se modifica la Ley 1482 de 2011, para sancionar penalmente la discriminación contra las personas con discapacidad, la igualdad de raza o género. Ley 599 de 2000 y Decreto 1608 de 1978. Contra el tráfico de especies como flora y fauna silvestre.</textarea>
-                </div>
+            <div class="custom-control custom-checkbox col-md-12">
+                <input type="checkbox" class="custom-control-input" id="item4" name="item4" value="Alimentacións">
+                <label class="custom-control-label" for="item4">Alimentación</label>
             </div>
+            <div class="custom-control custom-checkbox col-md-12">
+                <input type="checkbox" class="custom-control-input" id="item5" name="item5" value="Tours en destino">
+                <label class="custom-control-label" for="item5">Tours en destino</label>
+            </div>
+            <div class="custom-control custom-checkbox col-md-12">
+                <input type="checkbox" class="custom-control-input" id="item6" name="item6"
+                    value="Actividades adicionales">
+                <label class="custom-control-label" for="item6">Actividades adicionales</label>
+            </div>
+            <div class="custom-control custom-checkbox col-md-12">
+                <input type="checkbox" class="custom-control-input" id="item7" name="item7"
+                    value="Impuestos hoteleros y aeroportuarios">
+                <label class="custom-control-label" for="item7">Impuestos hoteleros y aeroportuarios</label>
+            </div>
+            <div class="custom-control custom-checkbox col-md-12">
+                <input type="checkbox" class="custom-control-input" id="item8" name="item8" value="Seguro de viaje">
+                <label class="custom-control-label" for="item8">Seguro de viaje</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label class="form-control">El plan no incluye:</label>
+            <div class="custom-control custom-checkbox col-md-12">
+                <input type="checkbox" class="custom-control-input" id="item9" name="item9"
+                    value="Servicios receptivos y alimentación no relacionada.">
+                <label class="custom-control-label" for="item9">Servicios receptivos y alimentación no
+                    relacionada.</label>
+            </div>
+            <div class="custom-control custom-checkbox col-md-12">
+                <input type="checkbox" class="custom-control-input" id="item10" name="item10"
+                    value="Los cargos, suplementos e impuestos pueden variar sin previo aviso.">
+                <label class="custom-control-label" for="item10">Los cargos, suplementos e impuestos pueden
+                    variar sin previo aviso.</label>
+            </div>
+            <div class="custom-control custom-checkbox col-md-12">
+                <input type="checkbox" class="custom-control-input" id="item11" name="item11"
+                    value="Tarjeta de turismo e impuestos coralinos (aplica para San Andres).">
+                <label class="custom-control-label" for="item11">Tarjeta de turismo e impuestos coralinos
+                    (aplica para San Andres).</label>
+            </div>
+            <div class="custom-control custom-checkbox col-md-12">
+                <input type="checkbox" class="custom-control-input" id="item12" name="item12"
+                    value="Tarifas sujetas a cambio sin previo aviso y a disponibilidad y reserva.">
+                <label class="custom-control-label" for="item12">Tarifas sujetas a cambio sin previo aviso y a
+                    disponibilidad y reserva.</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4.8">
+            <label class="form-control" style="text-align: center;">EL PLAN TIENE UN PRECIO POR PERSONA</label>
+        </div>
+        <div class="form-group col-md-2.8">
+            <input class="form-control" type="number" name="value" placeholder="Valor del Plan" min="1"
+                required></input>
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
+        </div>
+        <div class="form-group col-md-2.8">
+            <label class="form-control" style="text-align: center;">Numero de personas</label>
+        </div>
+        <div class="form-group col-md-2.8">
+            <input class="form-control" type="number" name="num" placeholder="Numero de Personas" min="1"
+                required></input>
+            <span class="valid-feedback">Ok</span>
+            <span class="invalid-feedback">Debe completar el campo</span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12" style="padding-bottom: 1em;">
+            <textarea class="form-control" rows="5" style="text-align: justify;"
+                disabled> La Casa del Turismo Liceísta, se compromete con: LEY 1336 DE 2009 Lucha contra la explotación, la pornografía, el turismo sexual y demás formas de abuso sexual con menores de edad. - Ley 397 de 1997 Protección de los Bienes de interés Cultural- Decreto 1377 de 2013 que comprende el manejo de la confidencialidad de los datos que sean suministrados a la agencia - Ley 1752 de 2015 por medio de la cual se modifica la Ley 1482 de 2011, para sancionar penalmente la discriminación contra las personas con discapacidad, la igualdad de raza o género. Ley 599 de 2000 y Decreto 1608 de 1978. Contra el tráfico de especies como flora y fauna silvestre.</textarea>
         </div>
     </div>
     <div class="form-group">

@@ -1,130 +1,72 @@
-<html>
+{% extends 'layout.html' %}
+{% block content %}
+<br>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link rel="icon" href="https://i.imgur.com/xifoKDB.png" type="image/x-icon">
-    <title>Casa del Turismo</title>
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Casa del Turismo</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav" style="text-align: justify;">
-            <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/request/create/-1">Solicitar Cotización <span
-                            class="fas fa-pencil-alt"></span></a>
-                </li>
-                {% if session['admin'] %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/request">Solicitudes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/quotation">Cotizaciones</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/flyer">Flyer</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/dashboard">Graficas <span class="fas fa-chart-pie"></span></a>
-                </li>
-                {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/contact">Contactenos</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Quienes Somos</a>
-                    <div class="dropdown-menu navbar-dark bg-dark">
-                        <a class="nav-link" href="/company">Nuestra Empresa</a>
-                        <a class="nav-link" href="/mission_vision">Mision-Vision</a>
-                        <a class="nav-link" href="/values">Nuestros Valores</a>
-                    </div>
-                </li>
-                {% if session['admin'] %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/login_out">Cerrar</a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Iniciar Sesion</a>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
+    <table style="border: hidden;">
+        <caption></caption>
+        <tr>
+            <th scope="col"></th>
+            <td style="width: 40%;">
+                <img src="https://scontent.fclo9-1.fna.fbcdn.net/v/t1.0-9/12821570_560137094151039_8870789361796236215_n.png?_nc_cat=109&_nc_sid=09cbfe&_nc_ohc=-3IddIyVIhUAX_dW-7N&_nc_ht=scontent.fclo9-1.fna&oh=867b41bb142c4a29bc1d625cdc1b2fd4&oe=5EC2C035"
+                    alt="LogoEmpresa" style="max-width: 90%;" />
+            </td>
+            <td style="text-align: center; width: 60%;">
+                <p
+                    style="text-align: center; font-size: 4.4vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.6;">
+                    La Casa Del Turismo</p>
+                <p
+                    style="text-align: center; font-size: 3.6vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                    VIAJES Y TURISMO</p>
+                <p
+                    style="text-align: center; font-size: 2.6vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                    Calle 48 # 49 – 73 Tel. 219 09 36
+                </p>
+                <p
+                    style="text-align: center; font-size: 2.4vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                    Cel. 311 752 0216 – 312 490 2409
+                </p>
+                <p
+                    style="text-align: center; font-size: 2.2vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                    RNT 35238</p>
+                <p
+                    style="text-align: center; font-size: 2.6vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                    SEDE LA CASA DEL AFICHE.</p>
+            </td>
+        </tr>
+    </table>
+    <p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">{{ data.dateO }}
+    </p>
     <br>
-    <div style="padding-right: 5vw; padding-left: 5vw;">
-        <table style="border: hidden;">
-            <tr>
-                <td style="width: 45%;">
-                    <img src="https://scontent.fclo9-1.fna.fbcdn.net/v/t1.0-9/12821570_560137094151039_8870789361796236215_n.png?_nc_cat=109&_nc_sid=09cbfe&_nc_ohc=-3IddIyVIhUAX_dW-7N&_nc_ht=scontent.fclo9-1.fna&oh=867b41bb142c4a29bc1d625cdc1b2fd4&oe=5EC2C035"
-                        style="max-width: 90%;" />
-                </td>
-                <td style="text-align: center;">
-                    <p style="text-align: center; font-size: 5vw; line-height: 0.6;">La Casa Del Turismo</p>
-                    <p style="text-align: center; font-size: 3.5vw; line-height: 0.5;">VIAJES Y TURISMO</p>
-                    <p style="text-align: center; font-size: 2.6vw; line-height: 0.5;">Calle 48 # 49 – 73 Tel. 219 09 36
-                    </p>
-                    <p style="text-align: center; font-size: 2.6vw; line-height: 0.5;">Cel. 311 752 0216 – 312 490 2409
-                    </p>
-                    <p style="text-align: center; font-size: 2vw; line-height: 0.5;">RNT 35238</p>
-                    <p style="text-align: center; font-size: 2.4vw; line-height: 0.5;">SEDE LA CASA DEL AFICHE.</p>
-                </td>
-            </tr>
-        </table>
-        <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">{{ data.dateO }}</p>
-        <br>
-        <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
-            {{ data.para }}<br>{{ data.name }}
-            {{ data.address }}<br>E.&nbsp;&nbsp;S.&nbsp;&nbsp;M.<br>{{ data.destino }}</p>
-        <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Asunto: Cotización
-            <br>{{ data.asunto }}</p>
-        {% if itemsA %}
-        <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">El plan incluye:</p>
-        {% for itemA in itemsA %}
-        <ul class="list">
-            <li class="list-item" style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
-                {{ itemA.constraint }}</li>
-        </ul>
-        {% endfor %}
-        {% endif %}
-        {% if itemsR %}
-        <label style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">El plan no
-            incluye:</label>
-        {% for itemR in itemsR %}
-        <ul class="list">
-            <li class="list-item" style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
-                {{ itemR.constraint }}</li>
-        </ul>
-        {% endfor %}
-        {% endif %}
-        <br>
-        <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;">EL
-            PAQUETE TIENE UN PRECIO DE ${{ data.value }} POR PERSONA</p>
-        <p style="font-size: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;">
-            CON UN TOTAL DE ${{ data.valueT }} PARA {{ data.numP }} PERSONA</p><br>
-    </div>
-</body>
-<footer>
+    <p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+        {{ data.para }}<br>{{ data.name }}
+        {{ data.address }}<br>E.&nbsp;&nbsp;S.&nbsp;&nbsp;M.<br>{{ data.destino }}</p>
+    <p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Asunto: Cotización
+        <br>{{ data.asunto }}</p>
+    {% if itemsA %}
+    <p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">El plan incluye:
+    </p>
+    {% for itemA in itemsA %}
+    <ul class="list">
+        <li class="list-item" style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+            {{ itemA.constraint }}</li>
+    </ul>
+    {% endfor %}
+    {% endif %}
+    {% if itemsR %}
+    <label style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">El plan no
+        incluye:</label>
+    {% for itemR in itemsR %}
+    <ul class="list">
+        <li class="list-item" style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+            {{ itemR.constraint }}</li>
+    </ul>
+    {% endfor %}
+    {% endif %}
     <br>
-    <p style="padding: 2em; font-size: x-small; text-align: justify;">La Casa del Turismo Liceísta, se compromete con:
-        LEY 1336 DE 2009 Lucha
-        contra la explotación, la pornografía, el turismo sexual y demás formas de abuso sexual con menores de edad. -
-        Ley 397 de 1997 Protección de los Bienes de interés Cultural- Decreto 1377 de 2013 que comprende el manejo de la
-        confidencialidad de los datos que sean suministrados a la agencia - Ley 1752 de 2015 por medio de la cual se
-        modifica la Ley 1482 de 2011, para sancionar penalmente la discriminación contra las personas con discapacidad,
-        la igualdad de raza o género. Ley 599 de 2000 y Decreto 1608 de 1978. Contra el tráfico de especies como flora y
-        fauna silvestre.</p>
-</footer>
+    <p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;">
+        EL
+        PAQUETE TIENE UN PRECIO DE ${{ data.value }} POR PERSONA</p>
+    <p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;">
+        CON UN TOTAL DE ${{ data.valueT }} PARA {{ data.numP }} PERSONA</p><br>
 
-</html>
+{% endblock %}

@@ -3,35 +3,40 @@
 {% endif %}
 {% block content %}
 
-<div style="justify-content: left ; align-items: left; display: flex;">
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <div id="curve_chart" style="width: 150%;"></div>
-    <script type="text/javascript">
-        google.charts.load('current', { packages: ['corechart'] });
-        google.charts.setOnLoadCallback(drawChart);
-        function drawChart() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string','Fecha');
-            data.addColumn('number','Total');
-            data.addColumn('number','Promedio');
-            data.addColumn('number','Maximo');
-            data.addColumn('number','Minimo');
-            data.addRows([
+<div id="curve_chart" style="width: 100%; justify-content: center; text-align: center; display: flex;"></div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', '{{tipe}}');
+        data.addColumn('number', 'Total Ventas');
+        data.addColumn('number', 'Promedio Ventas');
+        data.addColumn('number', 'Mayor Venta');
+        data.addColumn('number', 'Menor Venta');
+        data.addRows([
             {% for d in range(total | length) %}
-            ['{{ valor[d] }}',{{ total[d] }},{{ prom[d] }}, {{ maxi[d] }}, {{ mini[d] }}],
-            {% endfor %}
+    ['{{ valor[d] }}', {{ total[d] }}, {{ prom[d] }}, {{ maxi[d] }}, {{ mini[d] }}],
+        {% endfor %}
         ]);
 
-        // Set chart options
-        var options = {
-            title: '{{ tittle }}',
-            height: 450,
-        };
+    // Set chart options
+    var options = {
+        title: '{{ tittle }}',
+        height: 480,
+        hAxis: {
+            title: '{{tipe}}',
+        },
+        vAxis: {
+            title: '{{cant}}'
+        }
+    };
 
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-        chart.draw(data, options);
+    // Instantiate and draw our chart, passing in some options.
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+    chart.draw(data, options);
     }
-    </script>
-</div>
+</script>
+
 {% endblock %}

@@ -13,10 +13,11 @@
 {% endwith %}
 <br />
 <table style="border: hidden;">
+    <caption></caption><th scope="col"></th>
     <tr>
         <td style="width: 45%;">
             <img src="https://scontent.fclo9-1.fna.fbcdn.net/v/t1.0-9/12821570_560137094151039_8870789361796236215_n.png?_nc_cat=109&_nc_sid=09cbfe&_nc_ohc=-3IddIyVIhUAX_dW-7N&_nc_ht=scontent.fclo9-1.fna&oh=867b41bb142c4a29bc1d625cdc1b2fd4&oe=5EC2C035" type="image/svg+xml"
-                style="max-width: 90%;"/>
+                alt="LogoEmpresa" style="max-width: 90%;"/>
         </td>
         <td>
             <p style="text-align: center; font-size: 4vw; line-height: 6vh;">La Casa Del Turismo</p>
@@ -34,7 +35,7 @@
         {% for flyer in listFlyer %}
         <div class="col mb-4">
             <div style="text-align: center;border-radius: 6px; border-style: solid; border-width: 1px; padding: .5em;">
-                <img src="data:image/png;base64,{{ flyer.imagen }}" style="height: 300px;" class="card-img-top">
+                <img src="data:image/png;base64,{{ flyer.imagen }}" alt="Flyer" style="height: 300px;" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">{{ flyer.name }}</h5>
                     <p style="height: 100px; overflow: hidden;overflow-wrap: break-word;">{{ flyer.description }}</p>

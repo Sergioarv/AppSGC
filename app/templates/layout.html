@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" style="min-height: 90%; position: relative;">
 
 <head>
     <meta charset="UTF-8">
@@ -13,10 +13,9 @@
     <title>Casa del Turismo</title>
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" style="min-width: 
-    320px; width: 100%">
-        <a class="navbar-brand" href="/">Casa del Turismo</a>
+<body style=" margin: 0; margin-bottom: 40px;">
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+        <a class="navbar-brand" href="/" style="color: white;">Casa del Turismo</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -24,31 +23,40 @@
         <div class="collapse navbar-collapse" id="navbarNav" style="text-align: justify;">
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/request/create/-1">Solicitar Cotización <span class="fas fa-pencil-alt"></span></a>
+                    <a class="nav-link" href="/request/create/-1">Solicitar Cotización
+                        <span class="fas fa-pencil-alt" style="color: white;"></span></a>
                 </li>
                 {% if session['admin'] %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/request">Solicitudes</a>
+                    <a class="nav-link" href="/request">Solicitudes
+                        <span class="far fa-clipboard" style="color: white;"></span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/quotation">Cotizaciones</a>
+                    <a class="nav-link" href="/quotation">Cotizaciones
+                        <span class="far fa-map" style="color: white;"></span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/flyer">Flyer</a>
+                    <a class="nav-link" href="/flyer">Flyer
+                        <span class="far fa-file-alt" style="color: white;"></span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard">Graficas <span class="fas fa-chart-pie"></span></a>
+                    <a class="nav-link" href="/dashboard">Graficas
+                        <span class="fas fa-chart-pie" style="color: white;"></span></a>
                 </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/contact">Contactenos</a>
+                    <a class="nav-link" href="/contact">Contactenos
+                        <span class="fas fa-phone" style="color: white;"></span></a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Quienes Somos</a>
                     <div class="dropdown-menu navbar-dark bg-dark">
-                        <a class="nav-link" href="/company">Nuestra Empresa</a>
-                        <a class="nav-link" href="/mission_vision">Mision-Vision</a>
-                        <a class="nav-link" href="/values">Nuestros Valores</a>
+                        <a class="nav-link" href="/company" style="width: 180px;">Nuestra Empresa
+                            <span class="far fa-building" style="color: white;"></span></a>
+                        <a class="nav-link" href="/mission_vision">Mision-Vision
+                            <span class="fas fa-bullseye" style="color: white;"></span></a>
+                        <a class="nav-link" href="/values">Nuestros Valores
+                            <span class="far fa-heart" style="color: white;"></span></a>
                     </div>
                 </li>
                 {% if session['admin'] %}
@@ -64,7 +72,7 @@
         </div>
     </nav>
 
-    <div class="container" style="padding-right: 3vw; padding-left: 3vw;">
+    <div class="container" style="width: 100%; padding-right: 3vw; padding-left: 3vw; min-height: calc(100% - 4rem);">
         {% block content %}
         {% endblock %}
     </div>
@@ -80,9 +88,12 @@
         crossorigin="anonymous"></script>
     <script src="/static/js/validar.js"></script>
 </body>
-<footer>
+<footer style="position: absolute; bottom: 0; width: 100%; height: 40px;">
     <br>
-    <p style="padding: 2em; font-size: x-small; text-align: justify;">La Casa del Turismo Liceísta, se compromete con: LEY 1336 DE 2009 Lucha
+    <p style=" bottom: 1px; padding-left: 2em; padding-right: 2em; font-size: smaller; text-align: justify;">La Casa
+        del
+        Turismo Liceísta, se compromete con:
+        LEY 1336 DE 2009 Lucha
         contra la explotación, la pornografía, el turismo sexual y demás formas de abuso sexual con menores de edad. -
         Ley 397 de 1997 Protección de los Bienes de interés Cultural- Decreto 1377 de 2013 que comprende el manejo de la
         confidencialidad de los datos que sean suministrados a la agencia - Ley 1752 de 2015 por medio de la cual se

@@ -1,35 +1,35 @@
 from app import app
 from app.routes import *
 from flask import request
+from PIL import Image
 
 #Rutas de Flyer
 #Ruta de index Flyer
 @app.route('/flyer')
 def flyer_index():
-    if filtroS():
+    if authentication():
         flyers = Flyer.query.all()
         for f in flyers:
             f.imagen = b64encode(f.imagen).decode("utf-8")
         return render_template('/flyer/index.html', listFlyer = flyers)
     else:
-        return redirect('/login')
+        return redirect(url_for('login_in'))
 
 #Ruta para crear un flyer
 @app.route('/flyer/create', methods=["GET", "POST"])
 def flyer_create():
-    if filtroS():
+    if authentication():
         if request.method == 'POST':
             nombre = request.form['nombre']
             descripcion = request.form['descripcion']
             f = request.files['archivo']
+            img = f.read()
             if f and allowed_file(f.filename):
-                img = f.read()
-                print (len(img))
-                oFlyer = Flyer(name = nombre, description = descripcion, imagen = img)
-                db.session.add(oFlyer)
+                obj_flyer = Flyer(name = nombre, description = descripcion, imagen = img)
+                db.session.add(obj_flyer)
                 db.session.commit()
                 flash("Se a agregado un Flyer", "success")
-                return redirect('/flyer')
+                return redirect(url_for('flyer_index'))
             else:
                 flash("No selecciono una imagen o no es una imagen",'danger')
                 return redirect('/flyer/create')
@@ -37,27 +37,27 @@ def flyer_create():
         else:
             return render_template('/flyer/create.html')
     else:
-        return redirect('/login')
+        return redirect(url_for('login_in'))
 
 #Ruta para eliminar un Flyer
 @app.route('/flyer/delete/<string:id>')
 def flyer_delete(id):
-    if filtroS():
-        oFlyer = Flyer.query.filter_by(id = id).first()
-        db.session.delete(oFlyer)
+    if authentication():
+        obj_flyer = Flyer.query.filter_by(id = id).first()
+        db.session.delete(obj_flyer)
         db.session.commit()
         flash('Se elimino exitosamente','success')
-        return redirect('/flyer')
+        return redirect(url_for('flyer_index'))
     else:
         return redirect('/login')
 
 #Ruta para editar un Flyer
 @app.route('/flyer/edit/<string:id>', methods=["GET", "POST"])
 def flyer_edit(id):
-    if filtroS():
+    if authentication():
         #se accede a base de base de datos
         if request.method == 'POST':
-            oFlyer = Flyer.query.filter_by(id = id).first()
+            obj_flyer = Flyer.query.filter_by(id = id).first()
             nombre = request.form['name']
             descripcion = request.form['description']
             f = request.files['fileImagen']
@@ -67,27 +67,27 @@ def flyer_edit(id):
                 #Verifica que tengo un nombre y extension valida la imagen
                 if f and allowed_file(f.filename):
                     img = f.read()
-                    oFlyer.imagen =  img
+                    obj_flyer.imagen =  img
                     db.session.commit()
                 else:
                     flash('No selecciono una imagen o no es una imagen', 'danger')
-                    return render_template('/flyer/edit.html', myFlyer = oFlyer)
+                    return render_template('/flyer/edit.html', myFlyer = obj_flyer)
             #Se actualiza nombre y descripcion
-            oFlyer.name = nombre
+            obj_flyer.name = nombre
             db.session.commit()
-            oFlyer.description = descripcion
+            obj_flyer.description = descripcion
             db.session.commit()
             flash('Modifico con exito', 'success')
-            return redirect('/flyer')
+            return redirect(url_for('flyer_index'))
         else:
-            oFlyer = Flyer.query.filter_by(id = id).first()
-            return render_template('/flyer/edit.html', myFlyer = oFlyer)
+            obj_flyer = Flyer.query.filter_by(id = id).first()
+            return render_template('/flyer/edit.html', myFlyer = obj_flyer)
     else:
         return redirect('/login')
 
 #detalles del flyer
 @app.route('/flyer/detail/<string:id>')
 def flyer_detail(id):
-    oFlyer = Flyer.query.filter_by(id = id).first()
-    oFlyer.imagen = b64encode(oFlyer.imagen).decode("utf-8")
-    return render_template('/flyer/detail.html', myFlyer = oFlyer)
+    obj_flyer = Flyer.query.filter_by(id = id).first()
+    obj_flyer.imagen = b64encode(obj_flyer.imagen).decode("utf-8")
+    return render_template('/flyer/detail.html', myFlyer = obj_flyer)

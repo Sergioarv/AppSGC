@@ -26,17 +26,18 @@ las scripts necesarios -->
         <div class="form-group col-sm-12">
             <!-- Tabla que contiene el membreteado -->
             <table class="table table-bordered" style="width: 98%;">
-                <td style="text-align: center; text-align: center;">
+                <caption></caption>
+                <th scope="col" style="text-align: center; text-align: center;">
                     <img src="https://scontent.fclo9-1.fna.fbcdn.net/v/t1.0-9/12821570_560137094151039_8870789361796236215_n.png?_nc_cat=109&_nc_sid=09cbfe&_nc_ohc=-3IddIyVIhUAX_dW-7N&_nc_ht=scontent.fclo9-1.fna&oh=867b41bb142c4a29bc1d625cdc1b2fd4&oe=5EC2C035"
-                        type="image/svg+xml"
+                        type="image/svg+xml" alt="LogoEmpresa"
                         style="min-width: 100px; width: 80%; max-width: 150px; text-align: center;" />
-                </td>
-                <td style="text-align: center; vertical-align: middle;">
+                </th>
+                <th scope="col" style="text-align: center; vertical-align: middle;">
                     <p style="font-size: large;">Encuesta de Satisfaccion</p>
-                </td>
-                <td style="text-align: center; vertical-align: middle;">
+                </th>
+                <th scope="col" style="text-align: center; vertical-align: middle;">
                     <p style="font-size: medium;">{{ date }}</p>
-                </td>
+                </th>
             </table>
         </div>
     </div>
@@ -285,7 +286,7 @@ las scripts necesarios -->
     {% endfor %}
     <div class="form-row">
         <div class="form-group col-sm-12">
-            <button type="submit" class="btn btn-success">Volver</button>
+            <button onclick="document.location.href='/quotation'" class="btn btn-success">Volver</button>
         </div>
     </div>
 </form>

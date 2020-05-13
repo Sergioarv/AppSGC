@@ -22,11 +22,12 @@
 <br />
 <br />
 <table class="table table-responsive justify-content-center">
+    <caption>Lista de Flyer 2020</caption>
     <thead class="thead-dark">
         <tr>
-            <th style="min-width: 200px">Nombre</th>
-            <th style="min-width: 200px">Descripcion</th>
-            <th style="min-width: 300px">Flyer</th>
+            <th scope="col" style="min-width: 200px">Nombre</th>
+            <th scope="col" style="min-width: 200px">Descripcion</th>
+            <th scope="col" style="min-width: 300px">Flyer</th>
         </tr>
     </thead>
     <tbody>
@@ -37,7 +38,7 @@
                 <p style="height: 120px; overflow: hidden; overflow-wrap: break-word;">{{ flyer.description }}</p>
             </td>
             <td style="text-align: center;">
-                <img src="data:image/png;base64,{{ flyer.imagen }}" style="width: auto; max-width: 350px;"/>
+                <img src="data:image/png;base64,{{ flyer.imagen }}" alt="Flyer" style="width: auto; max-width: 350px;"/>
             </td>
             <td style="width: 350px;">
                 <button onclick="document.location.href='/flyer/edit/{{ flyer.id }}'" class="btn btn-info">
