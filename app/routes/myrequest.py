@@ -25,10 +25,11 @@ def request_create(id):
         destino = request.form['destinoC']
         origin = request.form['originC']
         description = request.form['descriptionC']
+        order = datetime.now()
         date_input = datetime.now().strftime("%d/%m/%Y")
         hour_input = datetime.now().strftime("%H:%M:%S")
         state = 'Solicitado'
-        obj_request = Request(name = name, address = address, email = email, phone = phone, destino = destino, origin = origin, description = description, dateI = date_input, hourI = hour_input, state = state)
+        obj_request = Request(name = name, address = address, email = email, phone = phone, destino = destino, origin = origin, description = description, dateI = date_input, hourI = hour_input, order = order, state = state)
         db.session.add(obj_request)
         db.session.commit()
         enviar_mensaje(obj_request, 1)
@@ -51,10 +52,11 @@ def request_answer(id):
                 value = request.form["value"]
                 num = request.form["num"]
                 value_total = int(num) * int(value)
+                delivery = datetime.now()
                 date_output = datetime.now().strftime("%d/%m/%Y")
                 hour_output = datetime.now().strftime("%H:%M:%S")
                 try:
-                    obj_quotation = Quotation(para = para, asunto = asunto, value = value, dateO = date_output,hourO = hour_output, valueT = value_total, numP = num, request_id = id)
+                    obj_quotation = Quotation(para = para, asunto = asunto, value = value, dateO = date_output,hourO = hour_output, delivery = delivery, valueT = value_total, numP = num, request_id = id)
                     db.session.add(obj_quotation)
                     db.session.commit()
                     for i in range(1, 13):

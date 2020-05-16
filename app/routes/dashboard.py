@@ -1,17 +1,18 @@
 from app import app, db
 from flask import render_template
 from sqlalchemy.sql import func
-from sqlalchemy import exc, or_
+from sqlalchemy import exc, or_, and_
 from app.schemas.models import *
-import datetime
+from datetime import datetime
 
 # Dashboard y otros graficos
 @app.route('/dashboard')
 def dashboard_index():
-    return render_template('/dashboard/dashboard.html')
+    anio = datetime.now().strftime("%Y")
+    return render_template('/dashboard/dashboard.html', anio = anio)
 
-@app.route('/solicitudes/<string:d>')
-def solicitudes(d):
+@app.route('/requestPie/<string:d>')
+def request_pie(d):
     tittle ='Cantidad de Solicitudes por Tipo'
     data = []
     valor = ['Solicitado','Rechazado','Procesado','Aceptado','Completado']
@@ -22,8 +23,8 @@ def solicitudes(d):
     data.append(Request.query.filter_by(state = 'Completado').count())
     return render_template('/dashboard/piechart.html', mydata = data, valor = valor, tittle = tittle, dashboard = d, tipe = 'Tipo', cant = 'Cantidad')
 
-@app.route('/solicitudesBar/<string:d>')
-def solicitudes_bar(d):
+@app.route('/requestBar/<string:d>')
+def request_bar(d):
     tittle ='Cantidad de Solicitudes por Tipo'
     data = []
     c = ['#0040FF','#088A4B','#FF0000','#FF8000','#a000a0']
@@ -33,10 +34,10 @@ def solicitudes_bar(d):
     data.append(Request.query.filter_by(state = 'Rechazado').count())
     data.append(Request.query.filter_by(state = 'Procesado').count())
     data.append(Request.query.filter_by(state = 'Completado').count())
-    return render_template('/dashboard/barchart.html', mydata = data, valor = valor, tittle = tittle, c = c, dashboard = d, tipe = 'Tipo Solicitud', cant = 'Cantidad')
+    return render_template('/dashboard/barchart.html', mydata = data, valor = valor, valorA = valor, tittle = tittle, c = c, dashboard = d, tipe = 'Tipo Solicitud', cant = 'Cantidad')
 
-@app.route('/tiempo/<string:d>')
-def tiempo(d):
+@app.route('/salesTime/<string:d>')
+def sale_time(d):
     try:
         tittle ='Ventas totales por dia'
         c = ['#0040FF','#088A4B','#FF0000','#FF8000']
@@ -50,10 +51,10 @@ def tiempo(d):
             valor.append(i.dateO)
     except exc.SQLAlchemyError:
         pass
-    return render_template('/dashboard/barchart.html', mydata = data, valor = valor, tittle = tittle, c = c, dashboard = d, tipe = 'Solicitud', cant = 'Cantidad')
+    return render_template('/dashboard/barchart.html', mydata = data, valor = valor, valorA = valor, tittle = tittle, c = c, dashboard = d, tipe = 'Solicitud', cant = 'Cantidad')
 
-@app.route('/lineTiempo/<string:d>')
-def line_tiempo(d):
+@app.route('/salesTimeline/<string:d>')
+def sale_timeline(d):
     try:
         tittle ='Ventas (Total, Promedio, Mayor, Menor)'
         data = []
@@ -80,11 +81,58 @@ def line_tiempo(d):
         pass
     return render_template('/dashboard/linechart.html', total = data, prom = data2, maxi = data3, mini = data4, valor = valor, tittle = tittle, dashboard = d, tipe = 'Fecha de venta', cant = 'Valor')
 
-@app.route('/surveychart/dashboard')
-def area_survey():
-    quest = db.session.query(Question.answer).filter(Question.survey_id == Survey.id, Survey.quotation_id == Quotation.id, Quotation.request_id == Request.id, Request.state == 'Completado').group_by(Question.answer).all()
-    num_s = db.session.query(Survey.id).filter(Survey.quotation_id == Quotation.id, Quotation.request_id == Request.id, Request.state == 'Completado').all()
+@app.route('/surveyPie/<string:d>')
+def survey_pie(d):
+    tittle = 'Valoracion de Encuestas'
+    res = db.session.query(Question.answer, func.count(Question.answer).label('num')).filter(Question.survey_id == Survey.id).filter(Survey.quotation_id == Quotation.id).filter(Quotation.request_id == Request.id).filter(Request.state == 'Completado').group_by(Question.answer).all()
     data = []
-    suma = []
-    num_a = db.session.query(Question.answer, func.count(Question.answer).label('num'), Survey.id).filter(Question.survey_id == Survey.id).filter(Survey.quotation_id == Quotation.id).filter(Quotation.request_id == Request.id).filter(Request.state == 'Completado').group_by(Question.answer).group_by(Survey.id).all()
-    return render_template('/dashboard/areachart.html', mydata = data)
+    valor = []
+    suma = 0
+    for r in res:
+        if(r.answer == 'Excelente' or r.answer == 'Bueno' or r.answer == 'Malo' or r.answer == 'N/A' or r.answer == 'Si' or r.answer == 'No'):
+            data.append(r.num)
+            valor.append(r.answer)
+        else:
+            suma = suma + r.num
+    data.append(suma)
+    valor.append('Otros')
+    return render_template('/dashboard/piechart.html', mydata = data, valor = valor, tittle = tittle, dashboard = d, tipe = 'Tipo de Valoracion', cant = 'Cantidad de valoracion')
+
+@app.route('/saleTri/<string:d>/<string:an>')
+def sale_tri(d, an):
+    data = []
+    aux = []
+    c = ['#0040FF','#088A4B','#FF0000','#FF8000','#0040FF','#088A4B','#FF0000','#FF8000','#0040FF','#088A4B','#FF0000','#FF8000','#0040FF','#088A4B','#FF0000','#FF8000']
+    valor = ['Enero','Febrero','Marzo','1er Trimestre', 'Abril', 'Mayo', 'Junio', '2do Trimestre', 'Julio','Agosto','Septiembre','3er Trimestre','Octubre','Noviembre', 'Diciembre', '4to Trimestre']
+    valorA = ['Ene','Feb','Mar','1er Trim', 'Abr', 'May', 'Jun', '2do Trim', 'Jul','Ago','Sept','3er Trim','Oct','Nov', 'Dic', '4to Trim']
+    tittle = 'Ventas por trimestres'
+    anio = datetime.now().strftime("%Y")
+    list_a = [int(anio), int(anio)-1, int(anio)-2, int(anio)-3, int(anio)-4]
+    if an != anio:
+        anio = an
+    aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-01-01'), Quotation.delivery <= anio+str('-01-31'))).first())
+    aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-02-01'), Quotation.delivery <= anio+str('-02-29'))).first())
+    aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-03-01'), Quotation.delivery <= anio+str('-03-31'))).first())
+    aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-04-01'), Quotation.delivery <= anio+str('-04-30'))).first())
+    aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-05-01'), Quotation.delivery <= anio+str('-05-31'))).first())
+    aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-06-01'), Quotation.delivery <= anio+str('-06-30'))).first())
+    aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-07-01'), Quotation.delivery <= anio+str('-07-31'))).first())
+    aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-08-01'), Quotation.delivery <= anio+str('-08-31'))).first())
+    aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-09-01'), Quotation.delivery <= anio+str('-09-30'))).first())
+    aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-10-01'), Quotation.delivery <= anio+str('-10-31'))).first())
+    aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-11-01'), Quotation.delivery <= anio+str('-11-30'))).first())
+    aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-12-01'), Quotation.delivery <= anio+str('-12-31'))).first())
+    suma = 0
+    cont = 0
+    for a in aux:
+        if a[0] is None:
+            data.append(0)
+        else:
+            data.append(a[0])
+            suma = suma + a[0]
+        cont += 1
+        if cont == 3:
+            data.append(suma)
+            suma = 0
+            cont = 0
+    return render_template('/dashboard/columnchart.html', mydata = data, valor = valor, valorA = valorA, tittle = tittle, c = c, dashboard = d, tipe = 'Mes o Trimestre del año %s'%anio, cant = 'Total Ventas', list_a = list_a)

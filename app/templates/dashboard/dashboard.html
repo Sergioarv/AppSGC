@@ -2,23 +2,46 @@
 {% block content %}
 <br>
 <div class="row" style="justify-content: center; text-align: center; display: flex;">
-    <div class="col-md-5">
-        <iframe src="/solicitudes/d" style="width: 100%; height: 500px; border: hidden;" title="TortaDeSolicitudes"
-            allowfullscreen></iframe>
+    <div class="col-lg-6">
+        <iframe src="/requestPie/d" style="width: 100%; height: 500px; border: 0pt; overflow-x: scroll;"
+            title="TortaDeSolicitudes"></iframe>
+        <button type="button" onclick="document.location.href='/requestPie/dashboard'" class="btn btn-link">Ver grafico
+            completo</button>
     </div>
-    <div class="col-md-5">
-        <iframe src="/solicitudesBar/d" style="width: 100%; height: 500px; border: hidden;" title="BarrasDeSolicitudes"
-            allowfullscreen></iframe>
+    <div class="col-lg-6">
+        <iframe src="/requestBar/d" style="width: 100%; height: 500px; border: 0pt; overflow-x: scroll;"
+            title="BarrasDeSolicitudes"></iframe>
+        <button type="button" onclick="document.location.href='/requestBar/dashboard'" class="btn btn-link">Ver grafico
+            completo</button>
     </div>
 </div>
 <div class="row" style="justify-content: center; text-align: center; display: flex;">
-    <div class="col-sm-5">
-        <iframe src="/lineTiempo/d" style="width: 100%;height: 500px; border: hidden;" title="LineaDeTiempoVentas"
-            allowfullscreen></iframe>
+    <div class="col-lg-6">
+        <iframe src="/salesTimeline/d" style="width: 100%;height: 500px; border: 0pt; overflow-x: scroll;"
+            title="LineaDeTiempoVentas"></iframe>
+        <button type="button" onclick="document.location.href='/salesTimeline/dashboard'" class="btn btn-link">Ver grafico
+            completo</button>
     </div>
-    <div class="col-sm-5">
-        <iframe src="/tiempo/d" style="width: 100%; height: 500px; border: hidden;" title="BarrasDeVentas"
-            allowfullscreen></iframe>
+    <div class="col-lg-6">
+        <iframe src="/salesTime/d" style="width: 100%; height: 500px; border: 0pt; overflow-x: scroll;"
+            title="BarrasDeVentas"></iframe>
+        <button type="button" onclick="document.location.href='/salesTime/dashboard'" class="btn btn-link">Ver grafico
+            completo</button>
+    </div>
+</div>
+
+<div class="row" style="justify-content: center; text-align: center; display: flex;">
+    <div class="col-lg-6">
+        <iframe src="/surveyPie/d" style="width: 100%;height: 500px; border: 0pt; overflow-x: scroll;"
+            title="LineaDeTiempoVentas"></iframe>
+        <button type="button" onclick="document.location.href='/surveyPie/dashboard'" class="btn btn-link">Ver grafico
+            completo</button>
+    </div>
+    <div class="col-lg-6">
+        <iframe src="/saleTri/d/{{anio}}" style="width: 100%; height: 500px; border: 0pt; overflow-x: scroll;"
+            title="BarrasDeVentas"></iframe>
+        <button type="button" onclick="document.location.href='/saleTri/dashboard/{{anio}}'" class="btn btn-link">Ver grafico
+            completo</button>
     </div>
 </div>
 

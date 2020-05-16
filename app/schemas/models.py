@@ -28,6 +28,7 @@ class Request(db.Model):
     state = db.Column(db.String(100), nullable=False)
     dateI = db.Column(db.String(50))
     hourI = db.Column(db.String(50))
+    order = db.Column(db.DateTime)
 
 class Quotation(db.Model):
     __tablename__ = 'Quotation'
@@ -39,6 +40,7 @@ class Quotation(db.Model):
     valueT = db.Column(db.Integer)
     dateO = db.Column(db.String(50))
     hourO = db.Column(db.String(50))
+    delivery = db.Column(db.DateTime)
     request_id = db.Column(db.Integer, unique=True)
 
 class Constraint(db.Model):
