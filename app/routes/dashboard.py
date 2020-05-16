@@ -111,7 +111,7 @@ def sale_tri(d, an):
     if an != anio:
         anio = an
     aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-01-01'), Quotation.delivery <= anio+str('-01-31'))).first())
-    aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-02-01'), Quotation.delivery <= anio+str('-02-29'))).first())
+    aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-02-01'), Quotation.delivery <= anio+str('-02-28'))).first())
     aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-03-01'), Quotation.delivery <= anio+str('-03-31'))).first())
     aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-04-01'), Quotation.delivery <= anio+str('-04-30'))).first())
     aux.append(db.session.query(func.sum(Quotation.valueT)).filter(Quotation.request_id == Request.id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-05-01'), Quotation.delivery <= anio+str('-05-31'))).first())
@@ -125,6 +125,7 @@ def sale_tri(d, an):
     suma = 0
     cont = 0
     for a in aux:
+        print ("Este ano ", anio, a)
         if a[0] is None:
             data.append(0)
         else:
