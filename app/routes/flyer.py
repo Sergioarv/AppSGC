@@ -44,14 +44,19 @@ def flyer_create():
         return redirect(url_for('login_in'))
 
 #Ruta para eliminar un Flyer
-@app.route('/flyer/delete/<string:id>')
+@app.route('/flyer/delete/<string:id>', methods=["GET", "POST"])
 def flyer_delete(id):
     if authentication():
-        obj_flyer = Flyer.query.filter_by(id = id).first()
-        db.session.delete(obj_flyer)
-        db.session.commit()
-        flash('Se elimino exitosamente','success')
-        return redirect(url_for('flyer_index'))
+        if request.method == 'POST':
+            obj_flyer = Flyer.query.filter_by(id = id).first()
+            db.session.delete(obj_flyer)
+            db.session.commit()
+            flash('Se elimino exitosamente','success')
+            return redirect(url_for('flyer_index'))
+        else:
+            obj_flyer = Flyer.query.filter_by(id = id).first()
+            obj_flyer.imagen = b64encode(obj_flyer.imagen).decode("utf-8")
+            return render_template('/flyer/delete.html', myFlyer = obj_flyer)
     else:
         return redirect('/login')
 

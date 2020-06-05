@@ -9,14 +9,8 @@ from sqlalchemy import exc, or_
 @app.route('/request', methods=["GET","POST"])
 def request_index():
     if authentication():
-        if request.method == 'POST':
-            search = request.form['search']
-            obj_request = db.session.query(Request).filter(or_(Request.name.like(search+"%"),Request.address.like(search+"%"),Request.phone.like(search+"%"),Request.destino.like(search+"%"),Quotation.delivery.like(search+"%"))).filter(Request.state == 'Solicitado').all()
-            return render_template('/request/index.html', listRequest = obj_request)
-        else:
-            #obj_request = Request.query.filter_by(state = 'Solicitado').all()
-            obj_request = db.session.query(Request).filter(Request.state == 'Solicitado').all()
-            return render_template('/request/index.html', listRequest = obj_request)
+        obj_request = db.session.query(Request).filter(Request.state == 'Solicitado').all()
+        return render_template('/request/index.html', listRequest = obj_request)
     else:
         return redirect('/login')
 
