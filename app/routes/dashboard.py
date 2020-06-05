@@ -1,4 +1,5 @@
 from app import app, db
+from app.routes import *
 from flask import render_template
 from sqlalchemy.sql import func
 from sqlalchemy import exc, or_, and_, desc
