@@ -26,7 +26,7 @@ def request_pie(d, an):
             anio = an
         res = db.session.query(Quotation.delivery, Request.order).filter(Quotation.request_id == Request.id, Request.state != 'Solicitado').filter(and_(Quotation.delivery >= anio+str('-01-01')), Quotation.delivery <= anio+str('-12-31')).all()
         data = array([0,0,0,0,0,0,0,0,0])
-        valor = ['- 30min','30min-1h','1h-6hs','6hs-12hs','12hs-1Dia','1Dia-15Dias','15Dias-1Mes','1Mes-6Meses','6Meses+']
+        valor = ['30min ó -','30min-1h','1h-6hs','6hs-12hs','12hs-1Dia','1Dia-15Dias','15Dias-1Mes','1Mes-6Meses','6Meses ó +']
         for r in res:
             time_t = r[0] - r[1]
             if time_t.seconds < 1800:

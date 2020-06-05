@@ -137,7 +137,7 @@ def enviar_mensaje(data, opc):
         obj_q = db.session.query(Quotation.id).filter(Quotation.request_id == data.id).first()
         message = """En La Casa Del Turismo queremos conocer como fue tu experiencia, ayududanos respondiendo estas preguntas.
         <a href='https://appsgc.herokuapp.com/survey/quality/%s'>Encuesta de Satisfaccion</a>""" %(obj_q)
-        msg['Subject'] = "Cuentanos como te fue"
+        msg['Subject'] = "Cuentanos tu experiencia"
         msg.attach(MIMEText(message, 'html'))
     server = smtplib.SMTP('smtp.gmail.com: 587')
     server.starttls()
