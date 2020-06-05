@@ -1,16 +1,22 @@
 from app import app
 from app.routes import *
-from flask import request
+from flask import Flask, request
 from datetime import datetime
-from sqlalchemy import exc
+from sqlalchemy import exc, or_
 
 #Rutas de Solicitud
 #Ruta Index solicitudes
-@app.route('/request')
+@app.route('/request', methods=["GET","POST"])
 def request_index():
     if authentication():
-        requests = Request.query.filter_by(state = 'Solicitado').all()
-        return render_template('/request/index.html', listRequest = requests)
+        if request.method == 'POST':
+            search = request.form['search']
+            obj_request = db.session.query(Request).filter(or_(Request.name.like(search+"%"),Request.address.like(search+"%"),Request.phone.like(search+"%"),Request.destino.like(search+"%"),Quotation.delivery.like(search+"%"))).filter(Request.state == 'Solicitado').all()
+            return render_template('/request/index.html', listRequest = obj_request)
+        else:
+            #obj_request = Request.query.filter_by(state = 'Solicitado').all()
+            obj_request = db.session.query(Request).filter(Request.state == 'Solicitado').all()
+            return render_template('/request/index.html', listRequest = obj_request)
     else:
         return redirect('/login')
 
@@ -44,7 +50,7 @@ def request_create(id):
 def request_answer(id):
     if authentication():
         obj_request = Request.query.filter_by(id = id).first()
-        date = datetime.now().strftime("%d de %B del %Y")
+        date = datetime.now().strftime("%d de %m del %Y")
         if obj_request != None:
             if request.method == 'POST':            
                 para = request.form["inputTo"]
@@ -76,10 +82,10 @@ def request_answer(id):
                     db.session.commit()
                     return redirect('/quotation')
                 except exc.SQLAlchemyError:
-                    flash('Ya se ha respondido a esta Solicitud','danger')
+                    pass
             else:
                 return render_template('/request/answer.html', myRequest = obj_request, date = date)
-        flash('La Solicitud no existe o Ya fue Respondida','danger')
+        flash('La Solicitud no existe o Ya fue Respondida','info')
         return redirect('/request')
     else:
         return redirect('/login')

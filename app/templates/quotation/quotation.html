@@ -2,71 +2,71 @@
 {% block content %}
 <br>
 
-    <table style="border: hidden;">
-        <caption></caption>
-        <tr>
-            <th scope="col"></th>
-            <td style="width: 40%;">
-                <img src="https://scontent.fclo9-1.fna.fbcdn.net/v/t1.0-9/12821570_560137094151039_8870789361796236215_n.png?_nc_cat=109&_nc_sid=09cbfe&_nc_ohc=-3IddIyVIhUAX_dW-7N&_nc_ht=scontent.fclo9-1.fna&oh=867b41bb142c4a29bc1d625cdc1b2fd4&oe=5EC2C035"
-                    alt="LogoEmpresa" style="max-width: 90%;" />
-            </td>
-            <td style="text-align: center; width: 60%;">
-                <p
-                    style="text-align: center; font-size: 4.4vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.6;">
-                    La Casa Del Turismo</p>
-                <p
-                    style="text-align: center; font-size: 3.6vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
-                    VIAJES Y TURISMO</p>
-                <p
-                    style="text-align: center; font-size: 2.6vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
-                    Calle 48 # 49 – 73 Tel. 219 09 36
-                </p>
-                <p
-                    style="text-align: center; font-size: 2.4vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
-                    Cel. 311 752 0216 – 312 490 2409
-                </p>
-                <p
-                    style="text-align: center; font-size: 2.2vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
-                    RNT 35238</p>
-                <p
-                    style="text-align: center; font-size: 2.6vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
-                    SEDE LA CASA DEL AFICHE.</p>
-            </td>
-        </tr>
-    </table>
-    <p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">{{ data.dateO }}
-    </p>
-    <br>
-    <p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
-        {{ data.para }}<br>{{ data.name }}
-        {{ data.address }}<br>E.&nbsp;&nbsp;S.&nbsp;&nbsp;M.<br>{{ data.destino }}</p>
-    <p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Asunto: Cotización
-        <br>{{ data.asunto }}</p>
-    {% if itemsA %}
-    <p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">El plan incluye:
-    </p>
-    {% for itemA in itemsA %}
-    <ul class="list">
-        <li class="list-item" style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
-            {{ itemA.constraint }}</li>
-    </ul>
-    {% endfor %}
-    {% endif %}
-    {% if itemsR %}
-    <label style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">El plan no
-        incluye:</label>
-    {% for itemR in itemsR %}
-    <ul class="list">
-        <li class="list-item" style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
-            {{ itemR.constraint }}</li>
-    </ul>
-    {% endfor %}
-    {% endif %}
-    <br>
-    <p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;">
-        EL
-        PAQUETE TIENE UN PRECIO DE ${{ data.value }} POR PERSONA</p>
-    <p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;">
-        CON UN TOTAL DE ${{ data.valueT }} PARA {{ data.numP }} PERSONA</p><br>
+<table style="border: hidden;">
+    <caption></caption>
+    <tr>
+        <th scope="col"></th>
+        <td style="width: 40%;">
+            <img src="https://lh3.googleusercontent.com/lUQTft6Si-PX1Hzxpc4Pt-Mr8Udd9VRqn2dlD1fC7DqfK2wQrnf0363Tk7umYI_7Mwpk8U11nxe1rPOvkiEp2L-Bh-RDrG26ea0rF8-94pPw6e11cZGZb9QbhQbjUbMGeiLFJpiYWDAqUYji0w962Reiokjq7vDZcvVVQkXfbv4RNEOzMFfKu96blrxbFpK0GLEdwa6MlguXPdQEoSRlk-p1TwbeAS7yKPFeXOHL8nKFcSdeE_cZZDRG8HU3YOz9Z22zjohb8hAA-fk2HQDmsS7kw3bouR7_1l228y2dBae0CkVgijazXPBlZZgNT_XFK970Y6p7w-_aTXNPV3JqUCSKbZCxDBTG74yyDB1nela8Vsw9giVt02_Kjz0G93Qx2Y_0GHxKrvY3xETNJUdZ_yM81Od0prLh_38qfIvKGIBzDhlM73eCGCog7jLAmJ7ghPW7FUivj5vN8q--KbyijXuPe8guSqCzH2y8vItz_w3gdDKcEGhlftoq4hXGQeRs5sT9fd8Od9sGvJ2JAN9Lf-oLaD9_tdDn2mcioeYyNgOE-97fQ7g_g5-6KgDmV3Ld3LPSW0Ipyvh-b7980enor6LumAESfEECf6T7dJlWrkmTYJrw7byMRMbyDSwcQenYeGEg6XAgbgilItqVIwlrsEXOcKhpRIEwp6L8ZFd5PMVNYUg1EQlcwWYobfn1_Q=s487-no?authuser=0"
+                type="image/svg+xml" alt="LogoEmpresa" style="max-width: 90%;" />
+        </td>
+        <td style="text-align: center; width: 60%;">
+            <p
+                style="text-align: center; font-size: 4.4vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.6;">
+                La Casa Del Turismo</p>
+            <p
+                style="text-align: center; font-size: 3.6vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                VIAJES Y TURISMO</p>
+            <p
+                style="text-align: center; font-size: 2.6vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                Calle 48 # 49 – 73 Tel. 219 09 36
+            </p>
+            <p
+                style="text-align: center; font-size: 2.4vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                Cel. 311 752 0216 – 312 490 2409
+            </p>
+            <p
+                style="text-align: center; font-size: 2.2vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                RNT 35238</p>
+            <p
+                style="text-align: center; font-size: 2.6vw; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 0.5;">
+                SEDE LA CASA DEL AFICHE.</p>
+        </td>
+    </tr>
+</table>
+<p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">{{ data.dateO }}
+</p>
+<br>
+<p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+    {{ data.para }}<br>{{ data.name }}
+    {{ data.address }}<br>E.&nbsp;&nbsp;S.&nbsp;&nbsp;M.<br>{{ data.destino }}</p>
+<p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Asunto: Cotización
+    <br>{{ data.asunto }}</p>
+{% if itemsA %}
+<p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">El plan incluye:
+</p>
+{% for itemA in itemsA %}
+<ul class="list">
+    <li class="list-item" style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+        {{ itemA.constraint }}</li>
+</ul>
+{% endfor %}
+{% endif %}
+{% if itemsR %}
+<label style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">El plan no
+    incluye:</label>
+{% for itemR in itemsR %}
+<ul class="list">
+    <li class="list-item" style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+        {{ itemR.constraint }}</li>
+</ul>
+{% endfor %}
+{% endif %}
+<br>
+<p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;">
+    EL
+    PAQUETE TIENE UN PRECIO DE ${{ data.value }} POR PERSONA</p>
+<p style="font-size: 2.8vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center;">
+    CON UN TOTAL DE ${{ data.valueT }} PARA {{ data.numP }} PERSONA</p><br>
 
 {% endblock %}

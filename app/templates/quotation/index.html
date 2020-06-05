@@ -13,7 +13,17 @@
 {% endwith %}
 <br />
 <h2>Cotizaciones</h2>
-
+<br>
+<form method="POST">
+    <div class="form-row">
+        <div class="form-group col-md-8">
+            <input name="search" class="form-control" placeholder="Nombre, Apellido, Telefono, Destino o año">
+        </div>
+        <div class="form-group col-md-2">
+            <button type="submit" style="width: 150px;" class="btn btn-md btn-info">Filtro</button>
+        </div>
+    </div>
+</form>
 <table class="table table-responsive justify-content-center">
     <caption>Lista de Cotizaciones 2020</caption>
     <thead class="thead-dark">
@@ -25,6 +35,11 @@
             <th scope="col" style="min-width: 100px; width: fit-content;">Origen</th>
             <th scope="col" style="min-width: 100px; width: fit-content;">Fecha Cotizacion</th>
             <th scope="col" style="min-width: 100px; width: fit-content;">Estado</th>
+            {% if listRequest %}
+            <th scope="col" style="min-width: 50px;"></th>
+            <th scope="col" style="min-width: 50px;"></th>
+            <th scope="col" style="min-width: 50px;"></th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -32,9 +47,18 @@
         <tr>
             <td style="overflow-wrap: break-word; width:250px;">{{ request[0].name }} {{ request[0].address }}</td>
             <td style="min-width: fit-content; width:80px;">{{ request[0].email }}</td>
-            <td style="min-width: fit-content; width:80px;">{{ request[0].phone }}</td>
-            <td style="min-width: fit-content; width:80px;">{{ request[0].destino }}</td>
-            <td style="min-width: fit-content; width:100px;">{{ request[0].origin }}</td>
+            <td style="min-width: fit-content; width:80px; max-width: 100px; text-align: justify;">
+                <p style="height: min-content;max-height: 50px; overflow: hidden; overflow-wrap: break-word;">
+                    {{ request[0].phone }}</p>
+            </td>
+            <td style="min-width: fit-content; width:80px;">
+                <p style="height: min-content;max-height: 50px; overflow: hidden; overflow-wrap: break-word;">
+                    {{ request[0].destino }}</p>
+            </td>
+            <td style="min-width: fit-content; width:100px;">
+                <p style="height: min-content;max-height: 50px; overflow: hidden; overflow-wrap: break-word;">
+                    {{ request[0].origin }}</p>
+            </td>
             <td style="min-width: fit-content; width:150px;">{{ request[1].dateO }}</td>
             <td style="min-width: fit-content; width:100px; max-width: 150px; text-align: justify;">
                 {% if request[0].state == 'Rechazado' %}
@@ -87,5 +111,4 @@
         {% endfor %}
     </tbody>
 </table>
-
 {% endblock %}

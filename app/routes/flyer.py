@@ -24,15 +24,19 @@ def flyer_create():
             descripcion = request.form['descripcion']
             f = request.files['archivo']
             img = f.read()
-            if f and allowed_file(f.filename):
-                obj_flyer = Flyer(name = nombre, description = descripcion, imagen = img)
-                db.session.add(obj_flyer)
-                db.session.commit()
-                flash("Se a agregado un Flyer", "success")
-                return redirect(url_for('flyer_index'))
-            else:
-                flash("No selecciono una imagen o no es una imagen",'danger')
+            if len(img) < 100000 or len(img) > 2000000:
+                flash("Se le recomienda usar imagenes entre 100Kb y 2Mb de peso",'info')
                 return redirect('/flyer/create')
+            else:
+                if f and allowed_file(f.filename):
+                    obj_flyer = Flyer(name = nombre, description = descripcion, imagen = img)
+                    db.session.add(obj_flyer)
+                    db.session.commit()
+                    flash("Se a agregado un Flyer", "success")
+                    return redirect(url_for('flyer_index'))
+                else:
+                    flash("No selecciono una imagen o no es una imagen",'danger')
+                    return redirect('/flyer/create')
         #retorno a templates Create Flyer
         else:
             return render_template('/flyer/create.html')
@@ -61,17 +65,19 @@ def flyer_edit(id):
             nombre = request.form['name']
             descripcion = request.form['description']
             f = request.files['fileImagen']
-            print (f)
-            #Si hay una imagen se actualiza
+            img = f.read()
             if f:
-                #Verifica que tengo un nombre y extension valida la imagen
-                if f and allowed_file(f.filename):
-                    img = f.read()
-                    obj_flyer.imagen =  img
-                    db.session.commit()
+                if len(img) < 100000 or len(img) > 2000000:
+                    flash("Se le recomienda usar imagenes entre 100Kb y 2Mb de peso",'info')
+                    return redirect('/flyer/edit/'+id)
                 else:
-                    flash('No selecciono una imagen o no es una imagen', 'danger')
-                    return render_template('/flyer/edit.html', myFlyer = obj_flyer)
+                    #Verifica que tengo un nombre y extension valida la imagen
+                    if f and allowed_file(f.filename):
+                        obj_flyer.imagen =  img
+                        db.session.commit()
+                    else:
+                        flash('No selecciono una imagen o no es una imagen', 'danger')
+                        return render_template('/flyer/edit.html', myFlyer = obj_flyer)
             #Se actualiza nombre y descripcion
             obj_flyer.name = nombre
             db.session.commit()

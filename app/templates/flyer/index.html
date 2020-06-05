@@ -15,9 +15,9 @@
 <br />
 <h2>Lista de Flyers</h2>
 
-<button onclick="document.location.href='/flyer/create'" formmethod="GET" class="btn btn-primary">
+<button onclick="document.location.href='/flyer/create'" formmethod="GET" class="btn btn-sm btn-primary">
     Agregar Flyer
-    <span class="glyphicon glyphicon-plus"></span>
+    <span class="fas fa-plus"></span>
 </button>
 <br />
 <br />
@@ -28,28 +28,30 @@
             <th scope="col" style="min-width: 200px">Nombre</th>
             <th scope="col" style="min-width: 200px">Descripcion</th>
             <th scope="col" style="min-width: 300px">Flyer</th>
+            <th scope="col" style="min-width: 110px;"></th>
+            <th scope="col" style="min-width: 110px;"></th>
         </tr>
     </thead>
     <tbody>
         {% for flyer in listFlyer %}
         <tr>
             <td>{{ flyer.name }}</td>
-            <td style="min-width:150px; width:100%; max-width:250px;text-align: justify;">
+            <td style="min-width:150px; width:100%; max-width:200px;text-align: justify;">
                 <p style="height: 120px; overflow: hidden; overflow-wrap: break-word;">{{ flyer.description }}</p>
             </td>
             <td style="text-align: center;">
                 <img src="data:image/png;base64,{{ flyer.imagen }}" alt="Flyer" style="width: auto; max-width: 350px;"/>
             </td>
-            <td style="width: 350px;">
-                <button onclick="document.location.href='/flyer/edit/{{ flyer.id }}'" class="btn btn-info">
+            <td style="width:fit-content; text-align: justify;">
+                <button onclick="document.location.href='/flyer/edit/{{ flyer.id }}'" class="btn btn-sm btn-info">
                     Editar
-                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span class="fa fa-pen"></span>
                 </button>
             </td>
-            <td style="width: 350px;">
-                <button onclick="document.location.href='/flyer/delete/{{ flyer.id }}'" class="btn btn-danger">
+            <td style="width:fit-content; text-align: justify;">
+                <button onclick="document.location.href='/flyer/delete/{{ flyer.id }}'" class="btn btn-sm btn-danger">
                     Eliminar
-                    <span class="glyphicon glyphicon-trash"></span>
+                    <span class="far fa-trash-alt"></span>
                 </button>
             </td>
         </tr>

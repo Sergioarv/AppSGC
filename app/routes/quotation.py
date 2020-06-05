@@ -1,13 +1,19 @@
 from app import app
 from app.routes import *
+from sqlalchemy import or_, union
 
 #Rutas de Cotizacion
 #Ruta Index cotizacion
-@app.route('/quotation')
+@app.route('/quotation', methods=["GET","POST"])
 def quotation_index():
     if authentication():
-        obj_request = db.session.query(Request, Quotation).filter(Request.id == Quotation.request_id).filter(Request.state != 'Solicitado').all()
-        return render_template('/quotation/index.html', listRequest = obj_request)
+        if request.method == 'POST':
+            search = request.form['search']
+            obj_request = db.session.query(Request, Quotation).filter(Request.id == Quotation.request_id).filter(or_(Request.name.like(search+"%"),Request.address.like(search+"%"),Request.phone.like(search+"%"),Request.destino.like(search+"%"),Quotation.delivery.like(search+"%"))).filter(Request.state != 'Solicitado').all()
+            return render_template('/quotation/index.html', listRequest = obj_request)
+        else:
+            obj_request = db.session.query(Request, Quotation).filter(Request.id == Quotation.request_id).filter(Request.state != 'Solicitado').all()
+            return render_template('/quotation/index.html', listRequest = obj_request)
     else:
         return redirect(url_for('login_in'))
 
@@ -24,15 +30,14 @@ def quotation_detail(id):
 
 #ruta de cambiar estado de cotizacion
 # Aceptar o Rechazar
-@app.route('/quotation/answer//<string:id>,<string:new_state>')
+@app.route('/quotation/answer/<string:id>,<string:new_state>')
 def quotation_answer(id, new_state):
     if authentication():
         q = db.session.query(Request, Quotation).filter(Request.id == Quotation.request_id).filter(Request.id == id,).first()
         if q[0].state == 'Procesado':
             q[0].state = new_state
             db.session.commit()
-            print (q[0].state)
-            q[1].valueT = q[1].value * 5
+            q[1].valueT = q[1].value * q[1].numP
             db.session.commit()
         return redirect('/quotation')
     else:

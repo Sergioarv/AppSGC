@@ -20,51 +20,48 @@
     <div class="row">
         <div class="form-group col-md-6">
             <label>Nombre</label>
-            <input autofocus type="text" class="form-control" name="nameC" id="nameC" placeholder="Ingrese su nombre" required>
+            <input autofocus type="text" class="form-control" name="nameC" id="nameC" placeholder="Ingrese su nombre" pattern="^[a-zA-Z][a-zA-Z\s*]*" maxlength="100" required>
             <span class="valid-feedback">Ok</span>
-            <span class="invalid-feedback">Debe completar el campo</span>
+            <span class="invalid-feedback">Debe completar el campo o Ingresar solo letras</span>
         </div>
         <div class="form-group col-md-6">
             <label>Apellido</label>
-            <input type="text" class="form-control" name="addressC" id="addressC" placeholder="Ingrese su apellido"
-                required>
+            <input type="text" class="form-control" name="addressC" id="addressC" placeholder="Ingrese su apellido" pattern="^[a-zA-Z][a-zA-Z\s*]*" maxlength="100" required>
             <span class="valid-feedback">Ok</span>
-            <span class="invalid-feedback">Debe completar el campo</span>
+            <span class="invalid-feedback">Debe completar el campo o Ingresar solo letras</span>
         </div>
         <div class="form-group col-md-6">
             <label>Correo</label>
-            <input type="email" class="form-control" name="emailC" id="emailC" placeholder="Ingrese su correo" required>
+            <input type="text" class="form-control" name="emailC" id="emailC" placeholder="Ingrese su correo" pattern="^[a-z][a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" maxlength="100" required>
             <span class="valid-feedback">Ok</span>
             <span class="invalid-feedback">Debe completar el campo</span>
         </div>
         <div class="form-group col-md-6">
             <label>Telefono</label>
-            <input type="number" class="form-control" name="phoneC" id="phoneC" min="0"
+            <input type="number" class="form-control" name="phoneC" id="phoneC" min="2000000" max="3600000000"
                 placeholder="Ingrese su telefono" required>
             <span class="valid-feedback">Ok</span>
-            <span class="invalid-feedback">Debe completar el campo</span>
+            <span class="invalid-feedback">Debe completar el campo con Numero telefonicos validos</span>
         </div>
         <div class="form-group col-sm-6">
             <label>Destino</label>
             {% if myFlyer %}
-            <input type="text" class="form-control" name="destinoC" id="destinoC" value="{{ myFlyer.name }}" required>
+            <input type="text" class="form-control" name="destinoC" id="destinoC" value="{{ myFlyer.name }}" pattern="^[a-zA-Z][a-zA-Z]{2,3}[a-zA-Z\s*]*" maxlength="100" required>
             {% else %}
-            <input type="text" class="form-control" name="destinoC" id="destinoC" placeholder="Ingrese el destino"
-                required>
+            <input type="text" class="form-control" name="destinoC" id="destinoC" placeholder="Ingrese el destino" pattern="^[a-zA-Z][a-zA-Z]{2,3}[a-zA-Z\s*]*" maxlength="100" required>
             {% endif %}
             <span class="valid-feedback">Ok</span>
-            <span class="invalid-feedback">Debe completar el campo</span>
+            <span class="invalid-feedback">Debe completar el campo o Ingresar solo letras</span>
         </div>
         <div class="form-group col-sm-6">
             <label>Origen</label>
-            <input type="text" class="form-control" name="originC" id="originC" placeholder="Ingrese su origen"
-                required>
+            <input type="text" class="form-control" name="originC" id="originC" placeholder="Ingrese su origen" pattern="^[a-zA-Z][a-zA-Z]{2,3}[a-zA-Z\s*]*" maxlength="100" required>
             <span class="valid-feedback">Ok</span>
-            <span class="invalid-feedback">Debe completar el campo</span>
+            <span class="invalid-feedback">Debe completar el campo o Ingresar solo letras</span>
         </div>
         <div class="form-group col-sm-12">
             <label>Descripción de la Solicitud</label>
-            <textarea class="form-control" name="descriptionC" id="descriptionC" rows="3"
+            <textarea type="textarea" class="form-control" name="descriptionC" id="descriptionC" rows="3" maxlength="255"
                 placeholder="Ingrese una descripcion de lo que solicita" required></textarea>
             <span class="valid-feedback">Ok</span>
             <span class="invalid-feedback">Debe completar el campo</span>
@@ -74,11 +71,11 @@
     <div class="form-group">
         <button type="submit" id="acept" class="btn btn-success">
             Aceptar
-            <span class="glyphicon glyphicon-check"></span>
+            <span class="fas fa-check"></span>
         </button>
         <button onclick="document.location.href='/'" type="button" class="btn btn-danger">
             Cancelar
-            <span class="glyphicon glyphicon-remove"></span>
+            <span class="far fa-times-circle"></span>
         </button>
     </div>
 </form>
