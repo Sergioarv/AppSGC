@@ -14,7 +14,7 @@ app.permanent_session_lifetime = timedelta(minutes=30)
 def admin_f():
     obj_admin = Admin.query.filter_by(email = email_emp).first()
     if obj_admin is None:
-        obj_admin = Admin(name = 'Administrador', email = email_emp, password = '920812')
+        obj_admin = Admin(name = 'Administrador', email = email_emp, password = 'wilmer@2020')
         db.session.add(obj_admin)
         db.session.commit()
 
@@ -136,7 +136,7 @@ def enviar_mensaje(data, opc):
     elif opc == 4:
         obj_q = db.session.query(Quotation.id).filter(Quotation.request_id == data.id).first()
         message = """En La Casa Del Turismo queremos conocer como fue tu experiencia, ayududanos respondiendo estas preguntas.
-        <a href='https://appsgc.herokuapp.com/survey/quality/%s'>Encuesta de Satisfaccion</a>""" %(obj_q)
+        <a href='https://reservaslacasadelturismo.herokuapp.com/survey/quality/%s'>Encuesta de Satisfaccion</a>""" %(obj_q)
         msg['Subject'] = "Cuentanos tu experiencia"
         msg.attach(MIMEText(message, 'html'))
     server = smtplib.SMTP('smtp.gmail.com: 587')

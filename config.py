@@ -1,7 +1,7 @@
 import os
 
 # Base en Produccion Online
-DBURL = 'postgres://vmrcezxgjwbrpt:90d2fa1f9c1c70555d59405d8d86d59739b91a32b92810e6675c6d6ec1ddc898@ec2-52-201-55-4.compute-1.amazonaws.com:5432/d7daj79bdhcjoi'
+DBURL = 'postgres://yzubujzmwvbekx:e2c0d5e629709e662870395f8319a687488a5bcec8ce6d7b8f2a6a915385eba0@ec2-18-232-143-90.compute-1.amazonaws.com:5432/d1gbqo3l69tins'
 
 class Config(object):
     DEBUG = False
