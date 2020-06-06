@@ -49,7 +49,7 @@
                 <p style="height: min-content;max-height: 50px; overflow: hidden; overflow-wrap: break-word;">
                     {{ request.description }}</p>
             </td>
-            <td style="width:fit-content; text-align: justify;">
+            <td style="min-width: 120px; width:fit-content; text-align: justify;">
                 <button onclick="document.location.href='/request/answer/{{ request.id }}'" class="btn btn-md btn-info">
                     Responder
                     <span class="fas fa-reply fa-flip-horizontal"></span>
