@@ -84,7 +84,7 @@ def sale_time(d,an):
             c = ['#0040FF','#088A4B','#FF0000','#FF8000']
             data = []
             valor = []
-            cur2 = db.session.query(Quotation.dateO).filter(and_(Quotation.delivery >= anio+str("-01-01"), Quotation.delivery <= anio+str("-12-31"))).group_by(Quotation.dateO).all()
+            cur2 = db.session.query(Quotation.dateO).filter(and_(Quotation.delivery >= anio+str("-01-01"), Quotation.delivery <= anio+str("-12-31"))).group_by(Quotation.delivery).all()
             cur = db.session.query(func.sum(Quotation.valueT).label('mayor')).filter(Quotation.request_id == Request.id, or_(Request.state == 'Aceptado', Request.state == 'Completado')).filter(and_(Quotation.delivery >= anio+str("-01-01"), Quotation.delivery <= anio+str("-12-31"))).group_by(Quotation.dateO).all()
             for i in cur:
                 data.append(i.mayor)
