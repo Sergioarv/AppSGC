@@ -37,7 +37,9 @@
         {% for request in listRequest %}
         <tr>
             <td style="overflow-wrap: break-word; width:250px;">{{ request[0].name }} {{ request[0].address }}</td>
-            <td style="min-width: fit-content; width:80px; overflow: hidden;">{{ request[0].email }}</td>
+            <td style="min-width: fit-content; width:80px; ">
+                <p style="height: min-content;max-height: 50px; overflow: hidden; overflow-wrap: break-word;">
+                {{ request[0].email }}</p></td>
             <td style="min-width: fit-content; width:80px; max-width: 100px; text-align: justify;">
                 <p style="height: min-content;max-height: 50px; overflow: hidden; overflow-wrap: break-word;">
                     {{ request[0].phone }}</p>
