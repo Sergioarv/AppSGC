@@ -8,8 +8,8 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///'+ os.path.abspath('./dbsgc.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = 'mysecretkey'
-    MAIL_USERNAME = 'sarv9208@gmail.com'
-    MAIL_PASSW = 'nxmgrqskcwbticku'
+    MAIL_USERNAME = 'reservas.lacasadelturismo@gmail.com'
+    MAIL_PASSW = 'oabrzpafnwphzbok'
 
 class TestConfig(Config):
     DEBUG = False
