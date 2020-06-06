@@ -1,14 +1,24 @@
 from app import app
 from app.routes import *
-from sqlalchemy import or_, union
+from sqlalchemy import or_, and_, distinct
 
 #Rutas de Cotizacion
 #Ruta Index cotizacion
 @app.route('/quotation', methods=["GET","POST"])
 def quotation_index():
     if authentication():
-        obj_request = db.session.query(Request, Quotation).filter(Request.id == Quotation.request_id).filter(Request.state != 'Solicitado').all()
-        return render_template('/quotation/index.html', listRequest = obj_request)
+        if request.method == 'POST':
+            search = request.form['search']
+            if search != "":
+                obj_request = db.session.query(Request, Quotation).filter(Request.id == Quotation.request_id).filter(or_(Request.name == search, Request.address == search, Request.phone == search, Request.destino == search)).filter(Request.state != 'Solicitado').group_by(Request.id).all()
+                if len(obj_request) == 0:
+                    obj_request = db.session.query(Request, Quotation).filter(Request.id == Quotation.request_id).filter(Request.state != 'Solicitado').filter(and_(Quotation.delivery >= search+str("-01-01"), Quotation.delivery <= search+str("-12-31"))).group_by(Quotation.id).all()
+                return render_template('/quotation/index.html', listRequest = obj_request)
+            else:
+                return redirect(url_for('quotation_index'))
+        else:
+            obj_request = db.session.query(Request, Quotation).filter(Request.id == Quotation.request_id).filter(Request.state != 'Solicitado').all()
+            return render_template('/quotation/index.html', listRequest = obj_request)
     else:
         return redirect(url_for('login_in'))
 

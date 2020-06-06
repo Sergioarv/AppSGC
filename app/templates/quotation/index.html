@@ -14,92 +14,103 @@
 <br />
 <h2>Cotizaciones</h2>
 <br>
+<form method="POST">
+    <div class="form-row">
+        <div class="form-group col-md-9">
+            <input class="form-control" name="search" placeholder="Nombre, Apellido, Telefono, Destino o Año"></input>
+        </div>
+        <div class="form-group col-md-3">
+            <button type="submit" class="btn btn-md btn-info">Filtrar</button>
+        </div>
+    </div>
 
-<table class="table table-responsive justify-content-center">
-    <caption>Lista de Cotizaciones 2020</caption>
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col" style="min-width: 100px; width: fit-content;">Cliente</th>
-            <th scope="col" style="min-width: 100px; width: fit-content;">Correo</th>
-            <th scope="col" style="min-width: 100px; width: fit-content;">Telefono</th>
-            <th scope="col" style="min-width: 100px; width: fit-content;">Destino</th>
-            <th scope="col" style="min-width: 100px; width: fit-content;">Origen</th>
-            <th scope="col" style="min-width: 100px; width: fit-content;">Fecha Cotizacion</th>
-            <th scope="col" style="min-width: 100px; width: fit-content;">Estado</th>
-            {% if listRequest %}
-            <th scope="col" style="min-width: 50px;"></th>
-            <th scope="col" style="min-width: 50px;"></th>
-            <th scope="col" style="min-width: 50px;"></th>
-            {% endif %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for request in listRequest %}
-        <tr>
-            <td style="overflow-wrap: break-word; width:250px;">{{ request[0].name }} {{ request[0].address }}</td>
-            <td style="min-width: fit-content; width:80px;">{{ request[0].email }}</td>
-            <td style="min-width: fit-content; width:80px; max-width: 100px; text-align: justify;">
-                <p style="height: min-content;max-height: 50px; overflow: hidden; overflow-wrap: break-word;">
-                    {{ request[0].phone }}</p>
-            </td>
-            <td style="min-width: fit-content; width:80px;">
-                <p style="height: min-content;max-height: 50px; overflow: hidden; overflow-wrap: break-word;">
-                    {{ request[0].destino }}</p>
-            </td>
-            <td style="min-width: fit-content; width:100px;">
-                <p style="height: min-content;max-height: 50px; overflow: hidden; overflow-wrap: break-word;">
-                    {{ request[0].origin }}</p>
-            </td>
-            <td style="min-width: fit-content; width:150px;">{{ request[1].dateO }}</td>
-            <td style="min-width: fit-content; width:100px; max-width: 150px; text-align: justify;">
-                {% if request[0].state == 'Rechazado' %}
-                <em class="far fa-times-circle fa-3x fa-lg" style="color:#FF0000;"></em>
-                {% elif request[0].state == 'Procesado' %}
-                <em class="fas fa-spinner fa-3x fa-lg" style="color:#FF8000;"></em>
-                {% else %}
-                <em class="fas fa-check fa-3x fa-lg" style="color:#088A4B;"></em>
+    <table class="table table-responsive justify-content-center">
+        <caption>Lista de Cotizaciones 2020</caption>
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" style="min-width: 100px; width: fit-content;">Cliente</th>
+                <th scope="col" style="min-width: 100px; width: fit-content;">Correo</th>
+                <th scope="col" style="min-width: 100px; width: fit-content;">Telefono</th>
+                <th scope="col" style="min-width: 100px; width: fit-content;">Destino</th>
+                <th scope="col" style="min-width: 100px; width: fit-content;">Origen</th>
+                <th scope="col" style="min-width: 100px; width: fit-content;">Fecha Cotizacion</th>
+                <th scope="col" style="min-width: 100px; width: fit-content;">Estado</th>
+                {% if listRequest %}
+                <th scope="col" style="min-width: 50px;"></th>
+                <th scope="col" style="min-width: 50px;"></th>
+                <th scope="col" style="min-width: 50px;"></th>
                 {% endif %}
-            </td>
-            <td style="min-width: 120px; width:fit-content; max-width: 150px; text-align: center;">
-                <button onclick="document.location.href='/quotation/detail/{{ request[0].id }}'"
-                    class="btn btn-sm btn-info">
-                    Vizualizar
-                    <span class="far fa-eye"></span>
-                </button>
-            </td>
-            {% if request[0].state == 'Procesado' %}
-            <td style="min-width: 120px; width: fit-content; max-width: 150px; text-align: center;">
-                <button onclick="document.location.href='/quotation/answer/{{ request[0].id }},Aceptado';"
-                    class="btn btn-sm btn-success">
-                    Aceptar
-                    <span class="far fa-check-circle"></span>
-                </button>
-            </td>
-            <td style="min-width: 120px; width: fit-content; max-width: 150px; text-align: center;">
-                <button onclick="document.location.href='/quotation/answer/{{ request[0].id }},Rechazado'"
-                    class="btn btn-sm btn-danger">
-                    Rechazar
-                    <span class="far fa-times-circle"></span>
-                </button>
-            </td>
-            {% elif request[0].state == 'Aceptado' %}
-            <td style="min-width: 120px; width: fit-content; max-width: 150px; text-align: center;">
-                <button onclick="document.location.href='/survey/{{ request[1].id }}'" class="btn btn-sm btn-secondary">
-                    Encuestar
-                    <span class="far fa-paper-plane"></span>
-                </button>
-            </td>
-            {% elif request[0].state == 'Completado' %}
-            <td style="min-width: 120px; width: fit-content; max-width: 150px; text-align: center;">
-                <button onclick="document.location.href='/survey/detail/{{ request[1].id }}'"
-                    class="btn btn-sm btn-secondary">
-                    Encuesta
-                    <span class="far fa-clipboard"></span>
-                </button>
-            </td>
-            {% endif %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in listRequest %}
+            <tr>
+                <td style="overflow-wrap: break-word; width:250px;">{{ request[0].name }} {{ request[0].address }}</td>
+                <td style="min-width: fit-content; width:80px;">{{ request[0].email }}</td>
+                <td style="min-width: fit-content; width:80px; max-width: 100px; text-align: justify;">
+                    <p style="height: min-content;max-height: 50px; overflow: hidden; overflow-wrap: break-word;">
+                        {{ request[0].phone }}</p>
+                </td>
+                <td style="min-width: fit-content; width:80px;">
+                    <p style="height: min-content;max-height: 50px; overflow: hidden; overflow-wrap: break-word;">
+                        {{ request[0].destino }}</p>
+                </td>
+                <td style="min-width: fit-content; width:100px;">
+                    <p style="height: min-content;max-height: 50px; overflow: hidden; overflow-wrap: break-word;">
+                        {{ request[0].origin }}</p>
+                </td>
+                <td style="min-width: fit-content; width:150px;">{{ request[1].dateO }}</td>
+                <td style="min-width: fit-content; width:100px; max-width: 150px; text-align: justify;">
+                    {% if request[0].state == 'Rechazado' %}
+                    <em class="far fa-times-circle fa-3x fa-lg" style="color:#FF0000;"></em>
+                    {% elif request[0].state == 'Procesado' %}
+                    <em class="fas fa-spinner fa-3x fa-lg" style="color:#FF8000;"></em>
+                    {% else %}
+                    <em class="fas fa-check fa-3x fa-lg" style="color:#088A4B;"></em>
+                    {% endif %}
+                </td>
+                <td style="min-width: 120px; width:fit-content; max-width: 150px; text-align: center;">
+                    <button onclick="document.location.href='/quotation/detail/{{ request[0].id }}'"
+                        class="btn btn-sm btn-info">
+                        Vizualizar
+                        <span class="far fa-eye"></span>
+                    </button>
+                </td>
+                {% if request[0].state == 'Procesado' %}
+                <td style="min-width: 120px; width: fit-content; max-width: 150px; text-align: center;">
+                    <button onclick="document.location.href='/quotation/answer/{{ request[0].id }},Aceptado';"
+                        class="btn btn-sm btn-success">
+                        Aceptar
+                        <span class="far fa-check-circle"></span>
+                    </button>
+                </td>
+                <td style="min-width: 120px; width: fit-content; max-width: 150px; text-align: center;">
+                    <button onclick="document.location.href='/quotation/answer/{{ request[0].id }},Rechazado'"
+                        class="btn btn-sm btn-danger">
+                        Rechazar
+                        <span class="far fa-times-circle"></span>
+                    </button>
+                </td>
+                {% elif request[0].state == 'Aceptado' %}
+                <td style="min-width: 120px; width: fit-content; max-width: 150px; text-align: center;">
+                    <button onclick="document.location.href='/survey/{{ request[1].id }}'"
+                        class="btn btn-sm btn-secondary">
+                        Encuestar
+                        <span class="far fa-paper-plane"></span>
+                    </button>
+                </td>
+                {% elif request[0].state == 'Completado' %}
+                <td style="min-width: 120px; width: fit-content; max-width: 150px; text-align: center;">
+                    <button onclick="document.location.href='/survey/detail/{{ request[1].id }}'"
+                        class="btn btn-sm btn-secondary">
+                        Encuesta
+                        <span class="far fa-clipboard"></span>
+                    </button>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
 {% endblock %}
